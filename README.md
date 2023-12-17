@@ -1,2 +1,2 @@
 # advent-of-code-2023
-Solving https://adventofcode.com/2022 and learning Rust
+Solving https://adventofcode.com/2023 and practicing Haskell
