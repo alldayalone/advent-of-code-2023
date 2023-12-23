@@ -80,3 +80,35 @@ executable problem062
     build-depends:    base ^>=4.17.2.0
     hs-source-dirs:   src/06_2
     default-language: Haskell2010
+
+executable problem071
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0
+    hs-source-dirs:   src/07_1
+    default-language: Haskell2010
+
+test-suite problem071-test
+    main-is:          Test.hs
+    import:           warnings
+    default-language: Haskell2010
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   src/07_1
+    other-modules:    Main
+    ghc-options: -main-is Test
+    build-depends:    base ^>=4.17.2.0,HUnit
+
+executable problem072
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0
+    hs-source-dirs:   src/07_2
+    default-language: Haskell2010
+
+test-suite problem072-test
+    main-is:          Test.hs
+    import:           warnings
+    default-language: Haskell2010
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   src/07_2
+    other-modules:    Main
+    ghc-options: -main-is Test
+    build-depends:    base ^>=4.17.2.0,HUnit
