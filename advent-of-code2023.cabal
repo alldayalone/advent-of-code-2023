@@ -68,3 +68,15 @@ test-suite problem052-test
     main-is:          Test.hs
     other-modules:    Main
     build-depends:    base ^>=4.17.2.0,split,ghc,HUnit
+
+executable problem061
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0
+    hs-source-dirs:   src/06_1
+    default-language: Haskell2010
+
+executable problem062
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0
+    hs-source-dirs:   src/06_2
+    default-language: Haskell2010
