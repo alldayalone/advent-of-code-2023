@@ -1,10 +1,10 @@
 module Main (main) where
-import Data.List (find)
+import Data.List (find, findIndices)
 
 main :: IO ()
 main = do
   contents <- readFile "src/08_2/input.txt"
-  print . iterationsCount . parseInput $ contents
+  print . foldl1 lcm . process . parseInput $ contents
 
 parseInput :: String -> (String, [(String, String, String)])
 parseInput = parse1 . lines
@@ -20,12 +20,16 @@ tuplify3 _ = error "Invalid input"
 fstOf3 :: (a, b, c) -> a
 fstOf3 (x, _, _) = x
 
-iterationsCount :: (String, [(String, String, String)]) -> Int
-iterationsCount (p, list) = length . takeWhile (any ((/= 'Z') . last)) $ scanl iterate accStart $ (take 2000000 . cycle) p
--- length . takeWhile (all ((/= "ZZZ") . last)) $
-  where
-    accStart = filter ((== 'A') . last) . map fstOf3 $ list
+endpoint :: String -> Bool
+endpoint = (== 'Z') . last
 
+process :: (String, [(String, String, String)]) -> [Int]
+process (p,list) = map ((\x -> x !! 1 - head x) . iterationsCount (p, list)) starts
+  where starts = filter ((== 'A') . last) . map fstOf3 $ list
+
+iterationsCount :: (String, [(String, String, String)]) -> String -> [Int]
+iterationsCount (p, list) accStart = findIndices (any endpoint) $ scanl iterate [accStart] $ (take 100000 . cycle) p
+  where
     iterate :: [String] -> Char -> [String]
     iterate current direction = map (`iterateOne` direction) current
 
