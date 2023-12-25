@@ -130,3 +130,9 @@ executable problem091
     build-depends:    base ^>=4.17.2.0
     hs-source-dirs:   src/09_1
     default-language: Haskell2010
+
+executable problem092
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0
+    hs-source-dirs:   src/09_2
+    default-language: Haskell2010

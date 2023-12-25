@@ -4,7 +4,7 @@ import Debug.Trace (trace)
 
 main :: IO ()
 main = do
-  contents <- readFile "src/09_1/input.txt"
+  contents <- readFile "src/09_2/input.txt"
   print . sum . map (backtrack . scan) . parse $ contents
 
 parse :: String -> [[Int]]
@@ -23,7 +23,12 @@ zipShift1 :: [Int] -> [(Int, Int)]
 zipShift1 sequence = zip (drop 1 sequence) sequence
 
 backtrack :: [[Int]] -> Int
-backtrack = sum . map last
+backtrack = sum . mapEven negate . map head
+
+mapEven :: (a -> a) -> [a] -> [a]
+mapEven _ [] = []
+mapEven _ [x] = [x] 
+mapEven f (x:y:xs) = x : f y : mapEven f xs
 
 takeWhileInclusive :: (a -> Bool) -> [a] -> [a]
 takeWhileInclusive _ [] = []
