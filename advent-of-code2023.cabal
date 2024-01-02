@@ -142,3 +142,9 @@ executable problem101
     build-depends:    base ^>=4.17.2.0,split,ghc,containers,graphite
     hs-source-dirs:   src/10_1
     default-language: Haskell2010
+
+executable problem102
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0,split,ghc,containers,graphite
+    hs-source-dirs:   src/10_2
+    default-language: Haskell2010

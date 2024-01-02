@@ -1,23 +1,28 @@
 module Main (main) where
-import Data.List.Split (splitOn)
-import Data.List (zip5,delete,elemIndex,findIndex)
+import Data.List.Split (splitOn, chunksOf)
+import Data.List (zip5,delete,elemIndex,find,findIndex,maximumBy)
 import GHC.Plugins (fstOf3)
 import Debug.Trace (trace)
-import Data.Graph ( Graph, Edge, Vertex, buildG, Bounds, scc )
+import Data.Ord (comparing)
+import Data.Foldable (toList)
+import Data.Graph ( Graph, Tree, Edge, Vertex, vertices, buildG, Bounds, scc )
 -- import Data.Graph.Visualise (plotUGraphPng )
 
 main :: IO ()
 main = do
-  contents <- readFile "src/10_1/input.txt"
-  print . (`div` 2) . maximum . map length . scc . createGraph . concatMap getEdges . parse $ contents
+  contents <- readFile "src/10_2/input.txt"
+  print . parse $ contents
 
 -- mapM_ print .
 type CharVertex = (Char, Vertex)
 -- (original, up, right, down, left)
 type InputUnit = (CharVertex, Maybe CharVertex, Maybe CharVertex, Maybe CharVertex, Maybe CharVertex)
 
-createGraph :: [Edge] -> Graph
-createGraph edges = buildG (getBounds edges) edges
+findVertices :: [InputUnit] -> [Int]
+findVertices = toList . maximumBy (comparing length) . scc . createGraph
+
+createGraph :: [InputUnit] -> Graph
+createGraph parsed = buildG (1, length parsed - 1) (concatMap getEdges parsed)
 
 getBounds :: [Edge] -> Bounds
 getBounds [] = error "Empty edges"
@@ -65,8 +70,8 @@ leftEdges v1 left =  case left of
   _ -> []
 
 -- zip5 with shifted lists to get neighbours
-parse :: String -> [InputUnit]
-parse contents = zip5 stream up right down left
+parse :: String -> Int
+parse contents = sum . map (fstOf3 . foldl (folderfn vertices) (0,0,'?')) . chunksOf n $ zipped
   where
     Just n = elemIndex '\n' contents
     stream = zip (removeItem '\n' contents) [1..]
@@ -75,6 +80,56 @@ parse contents = zip5 stream up right down left
     right = replaceNth (n-1) Nothing (drop 1 maybeStream) ++ [Nothing]
     down = drop n maybeStream ++ replicate n Nothing
     left = Nothing : replaceNth (n-1) Nothing maybeStream
+    zipped = zip5 stream up right down left
+    vertices = findVertices zipped
+
+folderfn :: [Int] -> (Int,Int,Char) -> InputUnit -> (Int,Int,Char) 
+folderfn vertices (total,wallscount,ch) unit@((chnext,rank),_,_,_,_) = case find (==rank) vertices of 
+  Just _ -> case (if chnext == 'S' then getSChar unit else chnext) of 
+    '|' -> (total, wallscount + 1, chnext)
+    'F' -> (total, wallscount, chnext)
+    'J' -> case ch of
+      'F' -> (total, wallscount + 1, chnext)
+      _ -> (total, wallscount, chnext)
+    'L' -> (total, wallscount, chnext)
+    '7' -> case ch of 
+      'L' -> (total, wallscount + 1, chnext)
+      _ -> (total, wallscount, chnext)
+    '-' -> (total, wallscount, ch)
+    _ -> (total, wallscount, chnext)
+  _ -> if wallscount `mod` 2 == 1 then (total+1,wallscount,chnext) else (total,wallscount,chnext)
+
+getSChar (_,up,right,down,left)
+  | isUp && isDown = '|'
+  | isUp && isLeft = 'J'
+  | isUp && isRight = 'L'
+  | isDown && isRight = 'F'
+  | isDown && isLeft = '7'
+  | isRight && isLeft = '-'
+  | otherwise = '.'
+
+  where 
+    isUp = case up of 
+      Just ('|',_) -> True
+      Just ('7',_) -> True
+      Just ('F',_) -> True
+      _ -> False
+    isDown = case up of 
+      Just ('|',_) -> True
+      Just ('J',_) -> True
+      Just ('L',_) -> True
+      _ -> False
+    isRight = case up of 
+      Just ('-',_) -> True
+      Just ('J',_) -> True
+      Just ('7',_) -> True
+      _ -> False
+    isLeft = case up of 
+      Just ('-',_) -> True
+      Just ('F',_) -> True
+      Just ('L',_) -> True
+      _ -> False
+
 
 replaceNth :: Int -> a -> [a] -> [a]
 replaceNth n y xs = countdown n xs where
