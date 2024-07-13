@@ -148,3 +148,15 @@ executable problem102
     build-depends:    base ^>=4.17.2.0,split,ghc,containers,graphite
     hs-source-dirs:   src/10_2
     default-language: Haskell2010
+
+executable problem111
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0,vector,ghc
+    hs-source-dirs:   src/11_1
+    default-language: Haskell2010
+
+executable problem112
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0,vector,ghc
+    hs-source-dirs:   src/11_2
+    default-language: Haskell2010
