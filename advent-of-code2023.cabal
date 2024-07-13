@@ -160,3 +160,25 @@ executable problem112
     build-depends:    base ^>=4.17.2.0,vector,ghc
     hs-source-dirs:   src/11_2
     default-language: Haskell2010
+
+executable problem121
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0,split
+    hs-source-dirs:   src/12_1
+    default-language: Haskell2010
+
+test-suite problem121-test
+    main-is:          Test.hs
+    import:           warnings
+    default-language: Haskell2010
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   src/12_1
+    other-modules:    Main
+    ghc-options: -main-is Test
+    build-depends:    base ^>=4.17.2.0,HUnit,split
+
+executable problem122
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0,split
+    hs-source-dirs:   src/12_2
+    default-language: Haskell2010
