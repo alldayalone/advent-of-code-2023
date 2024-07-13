@@ -4,18 +4,19 @@ import Data.List.Split (splitOn,split)
 main :: IO ()
 main = do
   contents <- readFile "src/12_2/input_test.txt"
-  print . sum . map (solve' . parse) . take 1 . drop 1 . lines $ contents
+  print  . map (solve' . parse) . lines $ contents
 
 parse :: String -> (String, [Int])
-parse line = (unfoldedStrings, unfoldedNumbers)
+parse line = (hotStringsStr, lengths)
   where 
     (hotStringsStr : lengthStr : _) = splitOn " " line
     lengths = map read $ splitOn "," lengthStr
-    unfoldedStrings = unfoldTheRecords hotStringsStr "?" 5
-    unfoldedNumbers = unfoldTheRecords lengths [] 5
 
 solve' :: (String, [Int]) -> Int
-solve' (s, i) = solve s i Nothing
+solve' (s, i) = classicSolution * unfoldedSolution ^ 4
+  where 
+    classicSolution = solve s i Nothing
+    unfoldedSolution = solve (s++"?") i Nothing
 
 solve :: String -> [Int] -> Maybe Char -> Int
 solve [] [] _ = 1
