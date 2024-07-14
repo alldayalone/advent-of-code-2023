@@ -1,5 +1,9 @@
+{-# LANGUAGE DeriveGeneric, TypeOperators, TypeFamilies #-}
+
 module Main (main, solve) where
 import Data.List.Split (splitOn,split)
+import Data.MemoTrie
+import GHC.Generics (Generic) 
 
 main :: IO ()
 main = do
@@ -11,30 +15,35 @@ parse line = (unfoldedStrings, unfoldedNumbers)
   where 
     (hotStringsStr : lengthStr : _) = splitOn " " line
     lengths = map read $ splitOn "," lengthStr
-    unfoldedStrings = unfoldTheRecords hotStringsStr "?" 2
-    unfoldedNumbers = unfoldTheRecords lengths [] 2
+    unfoldedStrings = unfoldTheRecords hotStringsStr "?" 5
+    unfoldedNumbers = unfoldTheRecords lengths [] 5
 
 solve' :: (String, [Int]) -> Int
-solve' (s, i) = solve s i Nothing (brokenCount - hashesCount) (questionsCount - (brokenCount - hashesCount))
-  where
-    questionsCount = count '?' s
-    hashesCount = count '#' s
-    brokenCount = sum i
+solve' (s, i) = solveMemoized (Node (s, i, Nothing))
+newtype Node = Node (String, [Int], Maybe Char)
+  deriving (Generic) 
 
-solve :: String -> [Int] -> Maybe Char -> Int -> Int -> Int
-solve []     []      _          c g = 1
-solve []      _      _          c g = 0
-solve ('.':s) _      (Just '#') c g = 0
-solve ('.':s) i      _          c g = solve s i Nothing c g
-solve ('#':s) _      (Just '.') c g = 0
-solve ('#':s) []     _          c g = 0
-solve ('#':s) (1:is) _          c g = solve s is (Just '.') c g
-solve ('#':s) (x:is) _          c g = solve s (x-1:is) (Just '#') c g
-solve ('?':s) i      b          c 0 = solve ('#':s) i b (c - 1) 0
-solve ('?':s) i      b          0 g = solve ('.':s) i b 0 (g - 1)
-solve ('?':s) i      (Just '#') c g = solve ('#':s) i Nothing (c - 1) g
-solve ('?':s) i      (Just '.') c g = solve ('.':s) i Nothing c (g - 1)
-solve ('?':s) i      Nothing    c g = solve ('.':s) i Nothing c (g - 1) + solve ('#':s) i Nothing (c - 1) g
+solve :: Node -> Int
+solve (Node ([],      [], _       )) = 1
+solve (Node ([],       _, _       )) = 0
+solve (Node ('.':s,    _, Just '#')) = 0
+solve (Node ('.':s,   i , _       )) = solve (Node (s, i,      Nothing ))
+solve (Node ('#':s,   _ , Just '.')) = 0
+solve (Node ('#':s,   [], _       )) = 0
+solve (Node ('#':s, 1:is, _       )) = solve (Node (s, is,     Just '.'))
+solve (Node ('#':s, x:is, _       )) = solve (Node (s, x-1:is, Just '#')) 
+solve (Node ('?':s,    i, Just '#')) = solve (Node ('#':s, i,  Nothing ))
+solve (Node ('?':s,    i, Just '.')) = solve (Node ('.':s, i,  Nothing )) 
+solve (Node ('?':s,    i, Nothing )) = solve (Node ('.':s, i,  Nothing )) + solve (Node ('#':s,i, Nothing))
+
+instance HasTrie Node where
+  newtype (Node :->: b) = NodeTrie { unNodeTrie :: Reg Node :->: b } 
+  trie      = trieGeneric NodeTrie 
+  untrie    = untrieGeneric unNodeTrie
+  enumerate = enumerateGeneric unNodeTrie
+
+solveMemoized :: Node -> Int
+solveMemoized = memo solve
 
 unfoldTheRecords :: [a] -> [a] -> Int -> [a]
 unfoldTheRecords x _ 1 = x

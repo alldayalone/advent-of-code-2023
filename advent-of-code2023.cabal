@@ -179,6 +179,6 @@ test-suite problem121-test
 
 executable problem122
     main-is:          Main.hs
-    build-depends:    base ^>=4.17.2.0,split
+    build-depends:    base ^>=4.17.2.0,split,MemoTrie
     hs-source-dirs:   src/12_2
     default-language: Haskell2010
