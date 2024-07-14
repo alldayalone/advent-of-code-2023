@@ -182,3 +182,9 @@ executable problem122
     build-depends:    base ^>=4.17.2.0,split,MemoTrie
     hs-source-dirs:   src/12_2
     default-language: Haskell2010
+
+executable problem131
+    main-is:          Main.hs
+    build-depends:    base ^>=4.17.2.0,vector,split
+    hs-source-dirs:   src/13_1
+    default-language: Haskell2010
