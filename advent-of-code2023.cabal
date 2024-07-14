@@ -188,3 +188,13 @@ executable problem131
     build-depends:    base ^>=4.17.2.0,vector,split
     hs-source-dirs:   src/13_1
     default-language: Haskell2010
+
+test-suite problem131-test
+    main-is:          Test.hs
+    import:           warnings
+    default-language: Haskell2010
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   src/13_1
+    other-modules:    Main
+    ghc-options: -main-is Test
+    build-depends:    base ^>=4.17.2.0,HUnit,vector,split
