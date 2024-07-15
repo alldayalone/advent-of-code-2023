@@ -12,8 +12,8 @@ import GHC.Generics (Generic)
 
 main :: IO ()
 main = do
-  contents <- readFile "src/13_2/input_test.txt"
-  print . sum . map (solveWithSmudge . Matrix.fromLists . lines) . splitOn "\n\n" $ contents
+  contents <- readFile "src/13_2/input.txt"
+  mapM_ print . map (solveWithSmudge . Matrix.fromLists . lines) . splitOn "\n\n" $ contents
 
 mapTuple :: (a -> b) -> (a, a) -> (b, b)
 mapTuple f (a1, a2) = (f a1, f a2)
@@ -21,7 +21,7 @@ mapTuple f (a1, a2) = (f a1, f a2)
 tupleToList :: (a, a) -> [a]
 tupleToList (a1, a2) = [a1, a2]
 
-solveWithSmudge m = lpValue . fromJust $ theOtherSolution
+solveWithSmudge m = lpValue originalSolution
   where 
     originalSolutions = solve Nothing m
     originalSolution = if fst3 (fst originalSolutions) == 0 then snd originalSolutions else fst originalSolutions
@@ -31,7 +31,7 @@ solveWithSmudge m = lpValue . fromJust $ theOtherSolution
 
 
 lpValue :: Solution -> Int
-lpValue (len, pos, Horizontal) = 100 * len `div` 2 + pos
+lpValue (len, pos, Horizontal) = 100 * (len `div` 2 + pos)
 lpValue (len, pos, Vertical) = len `div` 2 + pos
 
 fixSmudgeWith :: Eq a => (a -> a) -> Matrix a -> (Int, Int) -> a -> Matrix a
