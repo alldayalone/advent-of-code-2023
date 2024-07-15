@@ -1,0 +1,3 @@
+aabbac
+abbac
+abbaabb
