@@ -13,7 +13,7 @@ import GHC.Generics (Generic)
 main :: IO ()
 main = do
   contents <- readFile "src/13_2/input.txt"
-  mapM_ print . map (solveWithSmudge . Matrix.fromLists . lines) . splitOn "\n\n" $ contents
+  print . sum .map (solveWithSmudge . Matrix.fromLists . lines) . splitOn "\n\n" $ contents
 
 mapTuple :: (a -> b) -> (a, a) -> (b, b)
 mapTuple f (a1, a2) = (f a1, f a2)
@@ -50,8 +50,8 @@ solve origSol x = if lenHorizontal > lenVertical then solutionHorizontal else so
     lpVertical = longestPalindrome origVertical . Vector.fromList . Matrix.toLists . Matrix.transpose $ x
     lenHorizontal = Vector.length . fst $ lpHorizontal
     lenVertical = Vector.length . fst $ lpVertical
-    solutionVertical = (lenHorizontal, snd lpHorizontal, Horizontal)
-    solutionHorizontal = (lenVertical, snd lpVertical, Vertical)
+    solutionHorizontal = (lenHorizontal, snd lpHorizontal, Horizontal)
+    solutionVertical = (lenVertical, snd lpVertical, Vertical)
 
 data Direction = Horizontal | Vertical deriving (Show, Eq)
 
