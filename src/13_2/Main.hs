@@ -4,16 +4,17 @@ module Main (main, longestPalindrome) where
 import Data.Vector as Vector (Vector, eqBy, take, tail, reverse, fromList, length, replicate, slice, (//), empty, singleton)
 import Data.Matrix as Matrix
 import Data.List.Split (splitOn)
-import Data.List (transpose, find)
+import Data.List (transpose, find, maximumBy, sortBy)
 import Data.Maybe (fromMaybe,isJust,fromJust,isNothing)
 import Data.Tuple.Extra (fst3, snd3, thd3)
 import Data.MemoTrie 
 import GHC.Generics (Generic)
+import Data.Ord (comparing)
 
 main :: IO ()
 main = do
   contents <- readFile "src/13_2/input.txt"
-  print . sum .map (solveWithSmudge . Matrix.fromLists . lines) . splitOn "\n\n" $ contents
+  print . sum . map (solveWithSmudge . Matrix.fromLists . lines) . splitOn "\n\n" $ contents
 
 mapTuple :: (a -> b) -> (a, a) -> (b, b)
 mapTuple f (a1, a2) = (f a1, f a2)
@@ -21,12 +22,12 @@ mapTuple f (a1, a2) = (f a1, f a2)
 tupleToList :: (a, a) -> [a]
 tupleToList (a1, a2) = [a1, a2]
 
-solveWithSmudge m = lpValue originalSolution
+solveWithSmudge m = lpValue theOtherSolution
   where 
     originalSolution = solve Nothing m
     allPossibleSmudges = Matrix.toList $ Matrix.mapPos (fixSmudgeWith (toggle '.' '#') m) m
     allPossibleSolutions = map (solve (Just originalSolution)) allPossibleSmudges
-    theOtherSolution = find (\sol -> fst3 sol > 0) . map (solve (Just originalSolution)) $ allPossibleSmudges
+    theOtherSolution = Prelude.head $ Prelude.reverse $ sortBy (comparing fst3) allPossibleSolutions
 
 
 lpValue :: Solution -> Int
@@ -58,7 +59,6 @@ data Direction = Horizontal | Vertical deriving (Show, Eq)
 longestPalindrome :: Eq a => Maybe Solution -> Vector a -> (Vector a, Int)
 longestPalindrome origSol v = case n of
   0 -> (Vector.empty, 0)
-  1 -> (Vector.empty, 0) -- only odd length palindromes allowed
   _ -> if isPalindrome origSol 0 v then (v, 0) else if Vector.length leftLongest > Vector.length rightLongest then (leftLongest, 0) else (rightLongest, posRight)
     where 
       leftLongest = longestPalindromeLeft origSol (Vector.take (n-1) v)
@@ -69,7 +69,6 @@ longestPalindrome origSol v = case n of
 longestPalindromeLeft :: Eq a => Maybe Solution -> Vector a -> Vector a
 longestPalindromeLeft origSol v = case n of
   0 -> Vector.empty
-  1 -> Vector.empty -- only odd length palindromes allowed
   _ -> if isPalindrome origSol 0 v then v else longestPalindromeLeft origSol (Vector.take (n-1) v)
   where 
     n = Vector.length v
@@ -77,10 +76,9 @@ longestPalindromeLeft origSol v = case n of
 longestPalindromeRight :: Eq a => Maybe Solution -> (Vector a, Int) -> (Vector a, Int)
 longestPalindromeRight origSol (v, pos) = case n of
   0 -> (Vector.empty, 0)
-  1 -> (Vector.empty, 0) -- only odd length palindromes allowed
   _ -> if isPalindrome origSol pos v then (v, pos) else longestPalindromeRight origSol (Vector.tail v, pos + 1)
   where 
     n = Vector.length v
    
 isPalindrome :: Eq a => Maybe Solution -> Int -> Vector a -> Bool
-isPalindrome origSol pos v = Vector.eqBy (==) v (Vector.reverse v) && (isNothing origSol || isJust origSol && ((fst3 . fromJust $ origSol) /= Vector.length v || (snd3 . fromJust $ origSol) /= pos))
+isPalindrome origSol pos v = Vector.eqBy (==) v (Vector.reverse v) && even (Vector.length v) && (isNothing origSol || isJust origSol && ((fst3 . fromJust $ origSol) /= Vector.length v || (snd3 . fromJust $ origSol) /= pos))
