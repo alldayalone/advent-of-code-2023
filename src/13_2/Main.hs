@@ -23,11 +23,10 @@ tupleToList (a1, a2) = [a1, a2]
 
 solveWithSmudge m = lpValue originalSolution
   where 
-    originalSolutions = solve Nothing m
-    originalSolution = if fst3 (fst originalSolutions) == 0 then snd originalSolutions else fst originalSolutions
+    originalSolution = solve Nothing m
     allPossibleSmudges = Matrix.toList $ Matrix.mapPos (fixSmudgeWith (toggle '.' '#') m) m
     allPossibleSolutions = map (solve (Just originalSolution)) allPossibleSmudges
-    theOtherSolution = find (\sol -> fst3 sol > 0) . concatMap (tupleToList . solve (Just originalSolution)) $ allPossibleSmudges
+    theOtherSolution = find (\sol -> fst3 sol > 0) . map (solve (Just originalSolution)) $ allPossibleSmudges
 
 
 lpValue :: Solution -> Int
@@ -42,8 +41,8 @@ toggle v1 v2 x = if x == v1 then v2 else v1
 
 type Solution = (Int, Int, Direction)
 
-solve :: Eq a => Maybe Solution -> Matrix a -> (Solution, Solution)
-solve origSol x = ((lenHorizontal, snd lpHorizontal, Horizontal), (lenVertical, snd lpVertical, Vertical))
+solve :: Eq a => Maybe Solution -> Matrix a -> Solution
+solve origSol x = if lenHorizontal > lenVertical then solutionHorizontal else solutionVertical
   where 
     origHorizontal = if isJust origSol && (thd3 . fromJust $ origSol) == Horizontal then origSol else Nothing
     origVertical = if isJust origSol && (thd3 . fromJust $ origSol) == Vertical then origSol else Nothing
@@ -51,6 +50,8 @@ solve origSol x = ((lenHorizontal, snd lpHorizontal, Horizontal), (lenVertical, 
     lpVertical = longestPalindrome origVertical . Vector.fromList . Matrix.toLists . Matrix.transpose $ x
     lenHorizontal = Vector.length . fst $ lpHorizontal
     lenVertical = Vector.length . fst $ lpVertical
+    solutionVertical = (lenHorizontal, snd lpHorizontal, Horizontal)
+    solutionHorizontal = (lenVertical, snd lpVertical, Vertical)
 
 data Direction = Horizontal | Vertical deriving (Show, Eq)
 
