@@ -201,6 +201,6 @@ test-suite problem131-test
 
 executable problem132
     main-is:          Main.hs
-    build-depends:    base ^>=4.17.2.0,vector,matrix,split,MemoTrie,ghc
+    build-depends:    base ^>=4.17.2.0,vector,matrix,split,MemoTrie,ghc,extra
     hs-source-dirs:   src/13_2
     default-language: Haskell2010
