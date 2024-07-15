@@ -21,12 +21,12 @@ mapTuple f (a1, a2) = (f a1, f a2)
 tupleToList :: (a, a) -> [a]
 tupleToList (a1, a2) = [a1, a2]
 
-solveWithSmudge m = allPossibleSolutions --fstOf3 . fromJust $ theOtherSolution
+solveWithSmudge m = fstOf3 . fromJust $ theOtherSolution
   where 
     originalSolutions = solve m
     originalSolution = if fstOf3 (fst originalSolutions) == 0 then snd originalSolutions else fst originalSolutions
     allPossibleSmudges = Matrix.toList $ Matrix.mapPos (fixSmudgeWith (toggle '.' '#') m) m
-    allPossibleSolutions = map solve allPossibleSmudges
+    -- allPossibleSolutions = map solve allPossibleSmudges
     theOtherSolution = find (\(value, pos, dir) -> value > 0 && (dir /= thdOf3 originalSolution || pos /= sndOf3 originalSolution) ) . concatMap (tupleToList . solve) $ allPossibleSmudges
 
 
@@ -42,7 +42,7 @@ toggle v1 v2 x = if x == v1 then v2 else v1
 type Solution a = (Int, Int, Direction)
 
 solve :: Eq a => Matrix a -> (Solution a, Solution a)
-solve x = ((100 * lpValue lpHorizontal, snd lpHorizontal, Horizontal), (lpValue lpVertical, snd lpHorizontal, Vertical))
+solve x = ((100 * lpValue lpHorizontal, snd lpHorizontal, Horizontal), (lpValue lpVertical, snd lpVertical, Vertical))
   where 
     lpHorizontal = longestPalindrome . Vector.fromList . Matrix.toLists $ x
     lpVertical = longestPalindrome . Vector.fromList . Matrix.toLists . Matrix.transpose $ x
