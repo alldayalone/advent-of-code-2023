@@ -20,12 +20,10 @@ parse :: String -> [String]
 parse = transpose . lines
 
 solve :: String -> Int
-solve s = fn n s 
-  where n = length s
+solve = calcLoad 
 
--- | tcd - total count down
-fn :: Int -> String -> Int
--- fn tcd v | trace ("fn " ++ show tcd ++ " " ++ v) False = undefined
-fn tcd [] = 0
-fn tcd ('O':xs) = tcd + fn (tcd - 1) xs
-fn tcd (_:xs) = fn (tcd - 1) xs
+calcLoad :: String -> Int
+-- calcLoad v | trace ("fn " ++ v) False = undefined
+calcLoad [] = 0
+calcLoad ('O':xs) = length xs + 1 + calcLoad xs
+calcLoad (_:xs) = calcLoad xs
