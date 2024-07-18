@@ -6,7 +6,7 @@ import Data.List (transpose)
 
 -- Plan:
 -- Rewrite solve into 2 separate functions:
---  1. Moving Os
+--  1. [x] Moving Os
 --  2. [x] Calculating the load
 -- [x] Write a function that takes current matrix and direction and returns the next matrix
 -- Start iterating cycles, and find the pattern - when matrix + direction is repeated
@@ -14,14 +14,14 @@ import Data.List (transpose)
 
 main :: IO ()
 main = do
-  contents <- readFile "src/14_2/input_test.txt"
-  print  . parse $ contents
+  contents <- readFile "src/14_2/input.txt"
+  print . solve . tilt . parse $ contents
 
 parse :: String -> State
-parse = turn . turn . eastState . lines
+parse = turn . eastState . lines
 
-solve :: String -> Int
-solve = calcLoad 
+solve :: State -> Int
+solve (State m _) = sum . map calcLoad $ m 
 
 data Direction = North | West | South | East deriving (Show, Bounded, Eq, Enum)
 data State = State { matrix :: [String], direction :: Direction } deriving (Show, Eq)
@@ -34,6 +34,22 @@ eastState m = State m East
 
 turn :: State -> State
 turn (State m dir) = State (transpose m) (next dir)
+
+tilt :: State -> State
+tilt (State m dir) = State (map tiltRow m) dir
+
+tiltRow :: String -> String
+tiltRow = tiltRow' 0 0
+
+tiltRow' :: Int -> Int -> String -> String
+tiltRow' cO cDot [] = generateSection cO cDot
+tiltRow' cO cDot ('#':xs) = generateSection cO cDot ++ "#" ++ tiltRow xs
+tiltRow' cO cDot ('O':xs) = tiltRow' (cO + 1) cDot xs
+tiltRow' cO cDot ('.':xs) = tiltRow' cO (cDot + 1) xs
+
+generateSection :: Int -> Int -> String
+generateSection cO cDot = replicate cO 'O' ++ replicate cDot '.'
+
 
 calcLoad :: String -> Int
 -- calcLoad v | trace ("fn " ++ v) False = undefined
