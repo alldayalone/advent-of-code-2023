@@ -1,6 +1,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Main (main) where
+import Data.Matrix as Matrix (Matrix, fromLists)
 import Debug.Trace (trace)
 import Data.List (transpose)
 
@@ -9,33 +10,51 @@ import Data.List (transpose)
 --  1. [x] Moving Os
 --  2. [x] Calculating the load
 -- [x] Write a function that takes current matrix and direction and returns the next matrix
--- Start iterating cycles, and find the pattern - when matrix + direction is repeated
+-- Start iterating cycles
+-- Find the pattern - when matrix + direction is repeated
 -- Skip unnecessary cycles mathematically
 
 main :: IO ()
 main = do
-  contents <- readFile "src/14_2/input.txt"
-  print . solve . tilt . parse $ contents
+  contents <- readFile "src/14_2/input_test.txt"
+  print . spinCycle . parse $ contents
 
 parse :: String -> State
-parse = turn . eastState . lines
+parse = northState . transpose . lines
 
 solve :: State -> Int
 solve (State m _) = sum . map calcLoad $ m 
 
 data Direction = North | West | South | East deriving (Show, Bounded, Eq, Enum)
-data State = State { matrix :: [String], direction :: Direction } deriving (Show, Eq)
+data State = State { matrix :: [String], direction :: Direction } deriving (Eq)
+
+instance Show State where
+  show (State m East) = show (Matrix.fromLists m)
+  show s@(State m North) = show . turn . turn . turn $ s
+  show s@(State m West) = show . turn . turn $ s
+  show s@(State m South) = show . turn $ s
 
 next :: (Eq a, Bounded a, Enum a) => a -> a
 next x = if x == maxBound then minBound else succ x
+
+northState :: [String] -> State
+northState m = State m North
 
 eastState :: [String] -> State
 eastState m = State m East
 
 turn :: State -> State
-turn (State m dir) = State (transpose m) (next dir)
+-- turn s | trace ("turn " ++ show s) False = undefined
+turn (State m East) = State (transpose m) North
+turn (State m North) = State (transpose m) West
+turn (State m West) = State (map reverse . transpose $ m) South
+turn (State m South) = State (transpose . map reverse $ m) East
+
+spinCycle :: State -> State
+spinCycle = applyNtimes 4 (turn . tilt)
 
 tilt :: State -> State
+tilt s | trace ("tilt " ++ show s) False = undefined
 tilt (State m dir) = State (map tiltRow m) dir
 
 tiltRow :: String -> String
@@ -50,9 +69,12 @@ tiltRow' cO cDot ('.':xs) = tiltRow' cO (cDot + 1) xs
 generateSection :: Int -> Int -> String
 generateSection cO cDot = replicate cO 'O' ++ replicate cDot '.'
 
-
 calcLoad :: String -> Int
 -- calcLoad v | trace ("fn " ++ v) False = undefined
 calcLoad [] = 0
 calcLoad ('O':xs) = length xs + 1 + calcLoad xs
 calcLoad (_:xs) = calcLoad xs
+
+applyNtimes :: (Num n, Ord n) => n -> (a -> a) -> a -> a
+applyNtimes 1 f x = f x
+applyNtimes n f x = f (applyNtimes (n-1) f x)
