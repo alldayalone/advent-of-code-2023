@@ -7,9 +7,10 @@ module Main (main) where
 import Data.Matrix as Matrix (Matrix, fromLists)
 import Debug.Trace (trace)
 import Data.List (transpose)
-import Data.HashMap.Strict as HashMap (HashMap, insert, empty)
+import Data.HashMap.Strict as HashMap (HashMap, insert, empty, lookup)
 import Data.Hashable (Hashable, hash)
 import GHC.Generics (Generic)
+import Data.Maybe (isJust, fromJust)
 
 -- Plan:
 -- Rewrite solve into 2 separate functions:
@@ -17,13 +18,13 @@ import GHC.Generics (Generic)
 --  2. [x] Calculating the load
 -- [x] Write a function that takes current matrix and direction and returns the next matrix
 -- [x] Start iterating cycles
--- Find the pattern - when matrix + direction is repeated
+-- [x] Find the pattern - when matrix + direction is repeated
 -- Skip unnecessary cycles mathematically
 
 main :: IO ()
 main = do
   contents <- readFile "src/14_2/input_test.txt"
-  print . applyNtimes 4 Main.iterate . initialStep . parse $ contents
+  print . findLoop . initialStep . parse $ contents
 
 initialStep :: State -> IterationStep 
 initialStep s = IterationStep HashMap.empty s 1
@@ -54,6 +55,11 @@ eastState m = State m East
 
 data IterationStep = IterationStep { memory :: HashMap State Int, currentState :: State, step :: Int } deriving (Show, Eq, Generic, Hashable)
 
+findLoop :: IterationStep -> (Int, Int)
+findLoop is@(IterationStep memory currentState step) = if isJust existingStep then (fromJust existingStep, nextStep) else findLoop (Main.iterate is)
+  where nextState = turn . tilt $ currentState
+        nextStep = step + 1
+        existingStep = HashMap.lookup nextState memory
 
 iterate :: IterationStep -> IterationStep
 iterate (IterationStep memory currentState step) = IterationStep (HashMap.insert currentState step memory) (turn . tilt $ currentState) (step + 1)
