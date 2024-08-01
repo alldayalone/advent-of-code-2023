@@ -19,12 +19,22 @@ import Data.Maybe (isJust, fromJust)
 -- [x] Write a function that takes current matrix and direction and returns the next matrix
 -- [x] Start iterating cycles
 -- [x] Find the pattern - when matrix + direction is repeated
--- Skip unnecessary cycles mathematically
+-- [x] Skip unnecessary cycles mathematically
 
 main :: IO ()
 main = do
-  contents <- readFile "src/14_2/input_test.txt"
-  print . findLoop . initialStep . parse $ contents
+  contents <- readFile "src/14_2/input.txt"
+  print . solve . turnToNorth . getState . skipSteps . findLoop . initialStep . parse $ contents
+
+
+totalIterations = 4000000000
+
+skipSteps :: (Int, IterationStep) -> IterationStep
+skipSteps (existingStep, IterationStep _ state nextStep) = applyNtimes iterCount Main.iterate (IterationStep HashMap.empty state startingPoint)
+  where diff = nextStep - existingStep
+        loopsCount = (totalIterations - existingStep + 1)  `div` diff
+        startingPoint = existingStep + loopsCount * diff
+        iterCount = totalIterations - startingPoint
 
 initialStep :: State -> IterationStep 
 initialStep s = IterationStep HashMap.empty s 1
@@ -55,10 +65,16 @@ eastState m = State m East
 
 data IterationStep = IterationStep { memory :: HashMap State Int, currentState :: State, step :: Int } deriving (Show, Eq, Generic, Hashable)
 
-findLoop :: IterationStep -> (Int, Int)
-findLoop is@(IterationStep memory currentState step) = if isJust existingStep then (fromJust existingStep, nextStep) else findLoop (Main.iterate is)
+getState :: IterationStep -> State
+getState (IterationStep _ s _) = s
+
+getStep :: IterationStep -> Int
+getStep (IterationStep _ _ i) = i
+
+findLoop :: IterationStep -> (Int, IterationStep)
+findLoop is@(IterationStep memory currentState step) = if isJust existingStep then (fromJust existingStep, nextStep) else findLoop nextStep
   where nextState = turn . tilt $ currentState
-        nextStep = step + 1
+        nextStep = Main.iterate is
         existingStep = HashMap.lookup nextState memory
 
 iterate :: IterationStep -> IterationStep
@@ -70,6 +86,12 @@ turn (State m East) = State (transpose . map reverse $ m) North
 turn (State m North) = State (transpose m) West
 turn (State m West) = State (transpose . reverse $ m) South
 turn (State m South) = State (map reverse . reverse . transpose $ m) East
+
+turnToNorth :: State -> State
+turnToNorth (State m East) = State (transpose . map reverse $ m) North
+turnToNorth (State m North) = State m North
+turnToNorth (State m West) = State (transpose m) North
+turnToNorth (State m South) = State (map reverse m) East
 
 spinCycle :: State -> State
 spinCycle = applyNtimes 4 (turn . tilt)
