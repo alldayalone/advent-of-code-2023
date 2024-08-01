@@ -1,23 +1,32 @@
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveAnyClass #-}
 
 module Main (main) where
 import Data.Matrix as Matrix (Matrix, fromLists)
 import Debug.Trace (trace)
 import Data.List (transpose)
+import Data.HashMap.Strict as HashMap (HashMap, insert, empty)
+import Data.Hashable (Hashable, hash)
+import GHC.Generics (Generic)
 
 -- Plan:
 -- Rewrite solve into 2 separate functions:
 --  1. [x] Moving Os
 --  2. [x] Calculating the load
 -- [x] Write a function that takes current matrix and direction and returns the next matrix
--- Start iterating cycles
+-- [x] Start iterating cycles
 -- Find the pattern - when matrix + direction is repeated
 -- Skip unnecessary cycles mathematically
 
 main :: IO ()
 main = do
   contents <- readFile "src/14_2/input_test.txt"
-  print . spinCycle . parse $ contents
+  print . applyNtimes 4 Main.iterate . initialStep . parse $ contents
+
+initialStep :: State -> IterationStep 
+initialStep s = IterationStep HashMap.empty s 1
 
 parse :: String -> State
 parse = northState . transpose . lines
@@ -25,8 +34,8 @@ parse = northState . transpose . lines
 solve :: State -> Int
 solve (State m _) = sum . map calcLoad $ m 
 
-data Direction = North | West | South | East deriving (Show, Bounded, Eq, Enum)
-data State = State { matrix :: [String], direction :: Direction } deriving (Eq)
+data Direction = North | West | South | East deriving (Show, Bounded, Eq, Generic, Enum, Hashable)
+data State = State { matrix :: [String], direction :: Direction } deriving (Eq, Generic, Hashable)
 
 instance Show State where
   show (State m West) = unlines m
@@ -43,6 +52,12 @@ northState m = State m North
 eastState :: [String] -> State
 eastState m = State m East
 
+data IterationStep = IterationStep { memory :: HashMap State Int, currentState :: State, step :: Int } deriving (Show, Eq, Generic, Hashable)
+
+
+iterate :: IterationStep -> IterationStep
+iterate (IterationStep memory currentState step) = IterationStep (HashMap.insert currentState step memory) (turn . tilt $ currentState) (step + 1)
+
 turn :: State -> State
 -- turn s | trace ("turn " ++ show s) False = undefined
 turn (State m East) = State (transpose . map reverse $ m) North
@@ -54,7 +69,7 @@ spinCycle :: State -> State
 spinCycle = applyNtimes 4 (turn . tilt)
 
 tilt :: State -> State
-tilt s | trace ("tilt\n" ++ show s) False = undefined
+-- tilt s | trace ("tilt\n" ++ show s) False = undefined
 tilt (State m dir) = State (map tiltRow m) dir
 
 tiltRow :: String -> String

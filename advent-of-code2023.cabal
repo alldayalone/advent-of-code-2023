@@ -213,6 +213,6 @@ executable problem141
 
 executable problem142
     main-is:          Main.hs
-    build-depends:    base ^>=4.17.2.0,matrix
+    build-depends:    base ^>=4.17.2.0,matrix,unordered-containers,hashable
     hs-source-dirs:   src/14_2
     default-language: Haskell2010
