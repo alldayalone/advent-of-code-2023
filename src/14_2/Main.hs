@@ -29,10 +29,10 @@ data Direction = North | West | South | East deriving (Show, Bounded, Eq, Enum)
 data State = State { matrix :: [String], direction :: Direction } deriving (Eq)
 
 instance Show State where
-  show (State m East) = show (Matrix.fromLists m)
-  show s@(State m North) = show . turn . turn . turn $ s
-  show s@(State m West) = show . turn . turn $ s
-  show s@(State m South) = show . turn $ s
+  show (State m West) = unlines m
+  show s@(State m North) = show . turn $ s
+  show s@(State m East) = show . turn . turn $ s
+  show s@(State m South) = show . turn . turn . turn $ s
 
 next :: (Eq a, Bounded a, Enum a) => a -> a
 next x = if x == maxBound then minBound else succ x
@@ -45,16 +45,16 @@ eastState m = State m East
 
 turn :: State -> State
 -- turn s | trace ("turn " ++ show s) False = undefined
-turn (State m East) = State (transpose m) North
+turn (State m East) = State (transpose . map reverse $ m) North
 turn (State m North) = State (transpose m) West
-turn (State m West) = State (map reverse . transpose $ m) South
-turn (State m South) = State (transpose . map reverse $ m) East
+turn (State m West) = State (transpose . reverse $ m) South
+turn (State m South) = State (map reverse . reverse . transpose $ m) East
 
 spinCycle :: State -> State
 spinCycle = applyNtimes 4 (turn . tilt)
 
 tilt :: State -> State
-tilt s | trace ("tilt " ++ show s) False = undefined
+tilt s | trace ("tilt\n" ++ show s) False = undefined
 tilt (State m dir) = State (map tiltRow m) dir
 
 tiltRow :: String -> String
