@@ -1,3 +1,5 @@
+{-# LANGUAGE TupleSections #-}
+
 module Main (main) where
 import Cell (Cell(..), addLight, north, empty, lightExists, energized)
 import Data.Matrix as Matrix (Matrix, fromLists, setElem, (!), ncols, nrows)
@@ -19,10 +21,10 @@ solve matrix = map (\x -> sum . fmap Cell.energized . tick [x] $ matrix) $ candi
 candidates :: Matrix Cell -> [((Int, Int), Int)]
 candidates matrix = northers ++ easters ++ southers ++ westers
   where
-    northers = zip (zip (repeat (Matrix.nrows matrix)) [1..Matrix.ncols matrix]) (repeat 1)
-    easters = zip (zip [1..Matrix.nrows matrix] (repeat 1)) (repeat 2)
-    southers = zip (zip (repeat 1) [1..Matrix.ncols matrix]) (repeat 4)
-    westers = zip (zip [1..Matrix.nrows matrix] (repeat (Matrix.ncols matrix)) ) (repeat 8)
+    northers = map (curry (, 1) (Matrix.nrows matrix)) [1..Matrix.ncols matrix]
+    easters = map (curry (, 2) 1) [1..Matrix.nrows matrix]
+    southers = map (curry (, 4) 1) [1..Matrix.ncols matrix]
+    westers = map (curry (, 8) (Matrix.ncols matrix)) [1..Matrix.nrows matrix]
 
 
 parse = fmap Cell.empty . Matrix.fromLists . lines
