@@ -1,4 +1,4 @@
-module Cell (Cell(..), empty, north, west, east, south, addLight, lightExists) where
+module Cell (Cell(..), empty, north, west, east, south, addLight, lightExists, energized) where
 
 import Data.Bits
 
@@ -24,6 +24,9 @@ west = 8
 
 lightExists :: Int -> Cell  -> Bool
 lightExists direction cell = light cell .&. direction /= 0
+
+energized :: Cell -> Int 
+energized cell = if light cell /= 0 then 1 else 0
 
 instance Show Cell where
   -- show (Cell _ light) = if light == 0 then "." else "#" -- view energized cells

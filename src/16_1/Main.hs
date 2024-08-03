@@ -1,5 +1,5 @@
 module Main (main) where
-import Cell (Cell(..), addLight, north, empty, lightExists)
+import Cell (Cell(..), addLight, north, empty, lightExists, energized)
 import Data.Matrix as Matrix (Matrix, fromLists, setElem, (!), ncols, nrows)
 import Debug.Trace (trace)
 
@@ -11,13 +11,13 @@ import Debug.Trace (trace)
 
 main :: IO ()
 main = do
-  contents <- readFile "src/16_1/input_test.txt"
-  print . tick [((1,1),2)] . parse $ contents
+  contents <- readFile "src/16_1/input.txt"
+  print . sum . fmap Cell.energized . tick [((1,1),2)] . parse $ contents
 
 parse = fmap Cell.empty . Matrix.fromLists . lines
 
 tick :: [((Int, Int), Int)] -> Matrix Cell -> Matrix Cell
-tick ((pos, dir):xs) _ | trace (show (pos, dir)) False = undefined
+-- tick ((pos, dir):xs) _ | trace (show (pos, dir)) False = undefined
 tick [] matrix = matrix
 tick ((pos, dir):xs) matrix = if skip (pos, dir) matrix then tick xs matrix else tick (newCandidates ++ xs) $ Matrix.setElem cell pos matrix
   where
