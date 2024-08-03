@@ -1,10 +1,11 @@
 module Main (main, hash) where
 import Data.Char (ord)
+import Data.List.Split (splitOn)
 
 main :: IO ()
 main = do
-  contents <- readFile "src/15_1/input_test.txt"
-  print . lines $ contents
+  contents <- readFile "src/15_1/input.txt"
+  print . sum . map hash . splitOn "," $ contents
 
 hash :: String -> Int
 hash = hash' 0
