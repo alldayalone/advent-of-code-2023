@@ -245,3 +245,10 @@ executable problem161
     build-depends:    base, matrix
     hs-source-dirs:   src/16_1
     default-language: Haskell2010
+
+executable problem162
+    main-is:          Main.hs
+    other-modules:    Cell
+    build-depends:    base, matrix
+    hs-source-dirs:   src/16_2
+    default-language: Haskell2010
