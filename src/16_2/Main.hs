@@ -11,8 +11,19 @@ import Debug.Trace (trace)
 
 main :: IO ()
 main = do
-  contents <- readFile "src/16_2/input_test.txt"
-  print . sum . fmap Cell.energized . tick [((1,1),2)] . parse $ contents
+  contents <- readFile "src/16_2/input.txt"
+  print . maximum . solve . parse $ contents
+
+solve matrix = map (\x -> sum . fmap Cell.energized . tick [x] $ matrix) $ candidates matrix
+
+candidates :: Matrix Cell -> [((Int, Int), Int)]
+candidates matrix = northers ++ easters ++ southers ++ westers
+  where
+    northers = zip (zip (repeat (Matrix.nrows matrix)) [1..Matrix.ncols matrix]) (repeat 1)
+    easters = zip (zip [1..Matrix.nrows matrix] (repeat 1)) (repeat 2)
+    southers = zip (zip (repeat 1) [1..Matrix.ncols matrix]) (repeat 4)
+    westers = zip (zip [1..Matrix.nrows matrix] (repeat (Matrix.ncols matrix)) ) (repeat 8)
+
 
 parse = fmap Cell.empty . Matrix.fromLists . lines
 
