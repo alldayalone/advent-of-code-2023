@@ -1,6 +1,6 @@
 module Main (main) where
-import Cell (Cell, empty)
-import Data.Matrix as Matrix (Matrix, fromLists)
+import Cell (Cell(..), addLight, north, empty)
+import Data.Matrix as Matrix (Matrix, fromLists, setElem)
 
 -- Algo draft
 -- 1. pop the queue
@@ -13,4 +13,4 @@ main = do
   contents <- readFile "src/16_1/input_test.txt"
   print . parse $ contents
 
-parse = fmap Cell.empty . Matrix.fromLists . lines
+parse = fmap (Cell.addLight north) . fmap Cell.empty . Matrix.fromLists . lines
