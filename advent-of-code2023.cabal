@@ -232,3 +232,9 @@ test-suite problem151-test
     other-modules:    Main
     ghc-options: -main-is Test
     build-depends:    base, HUnit
+
+executable problem152
+    main-is:          Main.hs
+    build-depends:    base, split
+    hs-source-dirs:   src/15_2
+    default-language: Haskell2010
