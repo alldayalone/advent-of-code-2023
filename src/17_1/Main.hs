@@ -4,10 +4,11 @@
 module Main (main) where
 import Debug.Trace (trace)
 
-import Data.Matrix as Matrix (Matrix(..), (!), setElem, fromLists)
+import Data.Matrix as Matrix (Matrix(..), (!), setElem, safeGet, fromLists)
 import Data.Char (digitToInt)
 import Data.Maybe as Maybe (isJust)
 import Data.Sequence as Sequence (Seq (..), reverse, take, findIndexL, singleton, empty, viewr)
+import Data.List (sortBy)
 
 main :: IO ()
 main = do
@@ -57,8 +58,14 @@ solve State { grid, path }
     newHeatLoss' = newHeatLoss path grid
     cell' = Cell { heatLoss = heatLoss cell, minResult = newHeatLoss' }
     grid' = Matrix.setElem cell' pos grid
-    candidateDirections = map (\f -> f (dir, pos)) [goStraight, turnRight, turnLeft]
+    candidateDirections = sortBy (cmpDirs grid') . map (\f -> f (dir, pos)) $ [goStraight, turnRight, turnLeft]
     candidatePaths = map (path :|>) candidateDirections
+
+cmpDirs :: Matrix Cell -> (Direction, (Int, Int)) -> (Direction, (Int, Int)) -> Ordering
+cmpDirs grid (_, pos1) (_, pos2) = compare (safeGetHeatLoss grid pos1) (safeGetHeatLoss grid pos2)
+
+safeGetHeatLoss :: Matrix Cell -> (Int, Int) -> Int
+safeGetHeatLoss grid pos = maybe maxBound minResult (uncurry Matrix.safeGet pos grid)
 
 bestResult :: Matrix Cell -> Int
 bestResult grid = minResult $ grid Matrix.! (Matrix.nrows grid, Matrix.ncols grid)
@@ -97,7 +104,7 @@ turnRight (West, (y, x)) = (North, (y - 1, x))
 
 alleq :: Eq a => Maybe a -> Seq a -> Bool
 alleq _ Sequence.Empty = True
-alleq Nothing (h:<|t )  = alleq (Just h) t 
-alleq (Just e) (h:<|t) 
+alleq Nothing (h:<|t )  = alleq (Just h) t
+alleq (Just e) (h:<|t)
   | h == e = alleq (Just e) t
   | otherwise = False
