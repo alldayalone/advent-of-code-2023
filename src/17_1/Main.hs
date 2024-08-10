@@ -16,6 +16,8 @@ main = do
 
 parse = initialState . fmap initialCell . Matrix.fromLists . lines
 
+n = 141
+
 data Cell = Cell {
   heatLoss :: Int,
   minResult :: Int
@@ -49,7 +51,7 @@ solve State { grid, path }
   | (\x -> length x == 4 && alleq Nothing x) . fmap fst . Sequence.take 4 . Sequence.reverse $ path = State { grid, path = initPath }
   | newHeatLoss' > minResult cell || newHeatLoss' > bestResult grid = State { grid, path = initPath }
   | Maybe.isJust (Sequence.findIndexL (\(_, p) -> p == pos) initPath) = State { grid, path = initPath }
-  | pos == (Matrix.nrows grid, Matrix.ncols grid) = State { grid = grid', path }
+  | pos == (n, n) = State { grid = grid', path }
   | otherwise = foldl mainFolder (State { grid = grid', path }) candidatePaths
   where
     (initPath:|>(dir, pos)) = path
@@ -74,31 +76,27 @@ newHeatLoss (_:|>(_, prevPos):|>(dir, pos)) grid = minResult (grid Matrix.! prev
 newHeatLoss (_:|>(dir, pos)) grid = heatLoss $ grid Matrix.! pos
 
 invalidBounds :: (Int, Int) -> Matrix Cell -> Bool
-invalidBounds (x, y) matrix = x < 1 || y < 1 || x > Matrix.ncols matrix || y > Matrix.nrows matrix
-
-goStraight :: (Direction, (Int, Int)) -> (Direction, (Int, Int))
-goStraight (North, (y, x)) = (North, (y - 1, x))
-goStraight (East, (y, x)) = (East, (y, x + 1))
-goStraight (South, (y, x)) = (South, (y + 1, x))
-goStraight (West, (y, x)) = (West, (y, x - 1))
-
-turnLeft :: (Direction, (Int, Int)) -> (Direction, (Int, Int))
-turnLeft (North, (y, x)) = (West, (y, x - 1))
-turnLeft (East, (y, x)) = (North, (y - 1, x))
-turnLeft (South, (y, x)) = (East, (y, x + 1))
-turnLeft (West, (y, x)) = (South, (y + 1, x))
-
-turnRight :: (Direction, (Int, Int)) -> (Direction, (Int, Int))
-turnRight (North, (y, x)) = (East, (y, x + 1))
-turnRight (East, (y, x)) = (South, (y + 1, x))
-turnRight (South, (y, x)) = (West, (y, x - 1))
-turnRight (West, (y, x)) = (North, (y - 1, x))
+invalidBounds (x, y) matrix = x > n || y > n
 
 -- Prefer to go East or South
-candidateDirections :: (Num b, Num a) => (Direction, (a, b)) -> [(Direction, (a, b))]
+candidateDirections :: (Direction, (Int, Int)) -> [(Direction, (Int, Int))]
+candidateDirections (North, (1, 1)) = [(East,  (1, 2))]
+candidateDirections (North, (1, x)) = [(East,  (1, x + 1)), (West,  (1, x - 1))]
+candidateDirections (North, (y, 1)) = [(East,  (y, 2)), (North, (y - 1, 1))]
 candidateDirections (North, (y, x)) = [(East,  (y, x + 1)), (West,  (y, x - 1)), (North, (y - 1, x))]
+
+candidateDirections (East,  (1, x)) = [(East,  (1, x + 1)), (South, (2, x))]
+candidateDirections (East,  (y, 1)) = [(East,  (y, 2)), (South, (y + 1, 1)), (North, (y - 1, 1))]
 candidateDirections (East,  (y, x)) = [(East,  (y, x + 1)), (South, (y + 1, x)), (North, (y - 1, x))]
+
+candidateDirections (South, (1, 1)) = [(South, (2, 1)), (East,  (1, 2))]
+candidateDirections (South, (1, x)) = [(South, (2, x)), (East,  (1, x + 1)), (West,  (1, x - 1))]
+candidateDirections (South, (y, 1)) = [(South, (y + 1, 1)), (East,  (y, 2))]
 candidateDirections (South, (y, x)) = [(South, (y + 1, x)), (East,  (y, x + 1)), (West,  (y, x - 1))]
+
+candidateDirections (West,  (1, 1)) = [(South, (2, 1))]
+candidateDirections (West,  (1, x)) = [(South, (2, x)), (West,  (1, x - 1))]
+candidateDirections (West,  (y, 1)) = [(South, (y + 1, 1)), (North, (y - 1, 1))]
 candidateDirections (West,  (y, x)) = [(South, (y + 1, x)), (North, (y - 1, x)), (West,  (y, x - 1))]
 
 alleq :: Eq a => Maybe a -> Seq a -> Bool
