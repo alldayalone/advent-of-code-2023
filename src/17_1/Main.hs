@@ -57,8 +57,7 @@ solve State { grid, path }
     newHeatLoss' = newHeatLoss path grid
     cell' = Cell { heatLoss = heatLoss cell, minResult = newHeatLoss' }
     grid' = Matrix.setElem cell' pos grid
-    candidateDirections = map (\f -> f (dir, pos)) [goStraight, turnRight, turnLeft]
-    candidatePaths = map (path :|>) candidateDirections
+    candidatePaths = map (path :|>) . candidateDirections $ (dir, pos)
 
 bestResult :: Matrix Cell -> Int
 bestResult grid = minResult $ grid Matrix.! (Matrix.nrows grid, Matrix.ncols grid)
@@ -94,6 +93,13 @@ turnRight (North, (y, x)) = (East, (y, x + 1))
 turnRight (East, (y, x)) = (South, (y + 1, x))
 turnRight (South, (y, x)) = (West, (y, x - 1))
 turnRight (West, (y, x)) = (North, (y - 1, x))
+
+-- Prefer to go East or South
+candidateDirections :: (Num b, Num a) => (Direction, (a, b)) -> [(Direction, (a, b))]
+candidateDirections (North, (y, x)) = [(East,  (y, x + 1)), (West,  (y, x - 1)), (North, (y - 1, x))]
+candidateDirections (East,  (y, x)) = [(East,  (y, x + 1)), (South, (y + 1, x)), (North, (y - 1, x))]
+candidateDirections (South, (y, x)) = [(South, (y + 1, x)), (East,  (y, x + 1)), (West,  (y, x - 1))]
+candidateDirections (West,  (y, x)) = [(South, (y + 1, x)), (North, (y - 1, x)), (West,  (y, x - 1))]
 
 alleq :: Eq a => Maybe a -> Seq a -> Bool
 alleq _ Sequence.Empty = True
