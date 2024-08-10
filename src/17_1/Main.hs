@@ -7,12 +7,12 @@ import Debug.Trace (trace)
 import Data.Matrix as Matrix (Matrix(..), (!), setElem, fromLists)
 import Data.Char (digitToInt)
 import Data.Maybe as Maybe (isJust)
-import Data.Sequence as Sequence (Seq (..), findIndexL, singleton, ViewR, empty, viewr)
+import Data.Sequence as Sequence (Seq (..), reverse, take, findIndexL, singleton, empty, viewr)
 
 main :: IO ()
 main = do
-  contents <- readFile "src/17_1/input_test.txt"
-  print . solve . parse $ contents
+  contents <- readFile "src/17_1/input.txt"
+  print . bestResult' . solve . parse $ contents
 
 parse = initialState . fmap initialCell . Matrix.fromLists . lines
 
@@ -27,7 +27,7 @@ instance Show Cell where
 initialCell :: Char -> Cell
 initialCell char = Cell { heatLoss = digitToInt char, minResult = maxBound }
 
-data Direction = North | East | South | West deriving (Show)
+data Direction = North | East | South | West deriving (Eq, Show)
 data State = State {
   grid :: Matrix Cell,
   path :: Seq (Direction, (Int, Int))
@@ -43,10 +43,11 @@ zeroFirstCell :: Matrix Cell -> Matrix Cell
 zeroFirstCell = Matrix.setElem (Cell { heatLoss = 0, minResult = 0 }) (1, 1)
 
 solve :: State -> State
-solve s | trace (show s) False = undefined
+solve s | trace (show (bestResult' s)) False = undefined
 solve State { grid, path }
   | invalidBounds pos grid = State { grid, path = initPath }
-  | newHeatLoss' > minResult cell = State { grid, path = initPath }
+  | (\x -> length x == 4 && alleq Nothing x) . fmap fst . Sequence.take 4 . Sequence.reverse $ path = State { grid, path = initPath }
+  | newHeatLoss' > minResult cell || newHeatLoss' > bestResult grid = State { grid, path = initPath }
   | Maybe.isJust (Sequence.findIndexL (\(_, p) -> p == pos) initPath) = State { grid, path = initPath }
   | pos == (Matrix.nrows grid, Matrix.ncols grid) = State { grid = grid', path }
   | otherwise = foldl mainFolder (State { grid = grid', path }) candidatePaths
@@ -58,6 +59,12 @@ solve State { grid, path }
     grid' = Matrix.setElem cell' pos grid
     candidateDirections = map (\f -> f (dir, pos)) [goStraight, turnRight, turnLeft]
     candidatePaths = map (path :|>) candidateDirections
+
+bestResult :: Matrix Cell -> Int
+bestResult grid = minResult $ grid Matrix.! (Matrix.nrows grid, Matrix.ncols grid)
+
+bestResult' :: State -> Int
+bestResult' State { grid } = bestResult grid
 
 mainFolder :: State -> Seq (Direction, (Int, Int)) -> State
 mainFolder (State { grid , path }) path' = solve (State { grid = grid, path = path' })
@@ -87,3 +94,10 @@ turnRight (North, (y, x)) = (East, (y, x + 1))
 turnRight (East, (y, x)) = (South, (y + 1, x))
 turnRight (South, (y, x)) = (West, (y, x - 1))
 turnRight (West, (y, x)) = (North, (y - 1, x))
+
+alleq :: Eq a => Maybe a -> Seq a -> Bool
+alleq _ Sequence.Empty = True
+alleq Nothing (h:<|t )  = alleq (Just h) t 
+alleq (Just e) (h:<|t) 
+  | h == e = alleq (Just e) t
+  | otherwise = False
