@@ -7,7 +7,7 @@ import Debug.Trace (trace)
 import Data.Matrix as Matrix (Matrix(..), (!), setElem, fromLists)
 import Data.Char (digitToInt)
 import Data.Maybe as Maybe (isJust)
-import Data.Sequence as Sequence (Seq (..), reverse, take, findIndexL, singleton, empty, viewr)
+import Data.Sequence as Sequence (Seq (..), reverse, filter, take, findIndexL, singleton, empty, viewr)
 
 main :: IO ()
 main = do
@@ -49,17 +49,22 @@ solve s | trace (show (bestResult' s)) False = undefined
 solve State { grid, path }
   | invalidBounds pos grid = State { grid, path = initPath }
   | (\x -> length x == 4 && alleq Nothing x) . fmap fst . Sequence.take 4 . Sequence.reverse $ path = State { grid, path = initPath }
-  | newHeatLoss' > minResult cell || newHeatLoss' > bestResult grid = State { grid, path = initPath }
-  | Maybe.isJust (Sequence.findIndexL (\(_, p) -> p == pos) initPath) = State { grid, path = initPath }
+  | newHeatLoss' > bestResult grid = State { grid, path = initPath }
+  -- | Maybe.isJust (Sequence.findIndexL (\(_, p) -> p == pos) initPath) = State { grid, path = initPath }
+  | (>1) . length . Sequence.filter (\(_, pos2) -> isNeighbour pos pos2) $ initPath = State { grid, path = initPath }
   | pos == (n, n) = State { grid = grid', path }
   | otherwise = foldl mainFolder (State { grid = grid', path }) candidatePaths
   where
     (initPath:|>(dir, pos)) = path
+    (y,x) = pos
     cell = grid Matrix.! pos
     newHeatLoss' = newHeatLoss path grid
     cell' = Cell { heatLoss = heatLoss cell, minResult = newHeatLoss' }
     grid' = Matrix.setElem cell' pos grid
     candidatePaths = map (path :|>) . candidateDirections $ (dir, pos)
+
+isNeighbour :: (Int, Int) -> (Int, Int) -> Bool
+isNeighbour (y1, x1) (y2, x2) = y1 == y2 && x1 == x2 - 1 || y1 == y2 && x1 == x2 + 1 || x1 == x2 && y1 == y2 - 1 || x1 == x2 && y1 == y2 + 1
 
 bestResult :: Matrix Cell -> Int
 bestResult grid = minResult $ grid Matrix.! (Matrix.nrows grid, Matrix.ncols grid)
