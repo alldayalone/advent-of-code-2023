@@ -9,13 +9,18 @@ import Data.Char (digitToInt)
 import Data.Maybe as Maybe (isJust)
 import Data.Sequence as Sequence (Seq (..), reverse, filter, take, findIndexL, singleton, empty, viewr)
 import Data.List (filter, sortBy)
+import Data.List.Split (splitOn)
 
 main :: IO ()
 main = do
   contents <- readFile "src/17_1/input.txt"
-  print . solve maxBound . parse $ contents
+  estimatesFile <- readFile "src/17_1/estimates3.txt"
+  print . solve (parseEstimates estimatesFile) maxBound . parse $ contents
 
 parse = initialState . fmap initialCell . Matrix.fromLists . lines
+
+parseEstimates :: String -> Matrix Int
+parseEstimates = fmap read . Matrix.fromLists . map (splitOn " ") . lines
 
 n = 141
 
@@ -45,23 +50,23 @@ initialState grid = State { grid = zeroFirstCell grid, path = Sequence.singleton
 zeroFirstCell :: Matrix Cell -> Matrix Cell
 zeroFirstCell = Matrix.setElem (Cell { heatLoss = 0, minResult = 0 }) (1, 1)
 
-solve :: Int -> State -> Int
-solve best _ | trace (show best) False = undefined
-solve best State { grid, path }
+solve :: Matrix Int ->  Int ->  State -> Int
+solve _ best _ | trace (show best) False = undefined
+solve estimates best  State { grid, path }
   | (\x -> length x == 4 && alleq Nothing x) . fmap fst . Sequence.take 4 . Sequence.reverse $ path = best
-  | calc grid path + calcEstimate grid path > best = best
+  | calc grid path + estimates Matrix.! pos > best = best
   | Maybe.isJust (Sequence.findIndexL (\(_, p) -> p == pos) initPath) = best
   | (>1) . length . Sequence.filter (\(_, pos2) -> isNeighbour pos pos2) $ initPath = best
-  | pos == (n, n) = calc grid path
-  | otherwise = foldl solve best $ map (\path -> State { grid, path }) candidatePaths
+  | pos == (n, n) = min (calc grid path) best
+  | otherwise = foldl (solve estimates) best $ map (\path -> State { grid, path }) candidatePaths
   where
     (initPath:|>(dir, pos)) = path
     (y,x) = pos
     cell = grid Matrix.! pos
-    candidatePaths = map (path :|>) . Data.List.filter validBounds . candidateDirections $ (dir, pos)
+    candidatePaths = map (path :|>) . sortBy (sorter grid estimates) . Data.List.filter validBounds . candidateDirections $ (dir, pos)
 
--- sorter :: Matrix Cell -> Seq (Direction, (Int, Int)) -> Seq (Direction, (Int, Int)) -> Ordering
--- sorter grid path1 path2 = compare (newHeatLoss path1 grid) (newHeatLoss path2 grid)
+sorter :: Matrix Cell -> Matrix Int -> (Direction, (Int, Int)) ->  (Direction, (Int, Int)) -> Ordering
+sorter grid estimates (_, pos1) (_,pos2) = compare ( estimates Matrix.! pos1) (estimates Matrix.! pos2)
 
 calc :: Matrix Cell -> Seq (Direction, (Int, Int)) -> Int
 calc grid = foldl (\acc (_, pos) -> acc + heatLoss (grid Matrix.! pos)) 0

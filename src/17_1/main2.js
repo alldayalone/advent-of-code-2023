@@ -1,7 +1,7 @@
 // @ts-check
 const fs = require('node:fs');
 
-const N = 13;
+const N = 141;
 
 /**
  * @template T
@@ -16,8 +16,11 @@ function generateNDimensionalGrid(values, defaultValue) {
   return Array.from({ length: values[0] }, () => generateNDimensionalGrid(values.slice(1), defaultValue));
 }
 
-const input = fs.readFileSync('src/17_1/input_test.txt').toString().trim().split('\n');
+const input = fs.readFileSync('src/17_1/input.txt').toString().trim().split('\n');
 const grid = input.map(line => line.split('').map(char => parseInt(char)));
+
+grid.reverse();
+grid.forEach(line => line.reverse());
 
 function main() {
   const g = generateNDimensionalGrid([N, N], Infinity);
@@ -63,10 +66,15 @@ function main() {
   // showGrid(g);
   showGrid(f);
 
-  return g[N-1][N-1];
+  g.reverse();
+  g.forEach(line => line.reverse());
+
+  return g
 }
 
 const result = main();
+
+fs.writeFileSync('src/17_1/estimates3.txt', showGrid(result));
 
 function findMin(Q, f) {
   let minIndex = 0;
@@ -131,5 +139,5 @@ function validPos([i, j]) {
 }
 
 function showGrid(grid) {
-  console.log(grid.map(line => line.map(x => String(x).padEnd(4)).join(' ')).join('\n'));
+  return grid.map(line => line.map(x => String(x)).join(' ')).join('\n');
 }
