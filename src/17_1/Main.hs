@@ -48,8 +48,8 @@ zeroFirstCell = Matrix.setElem (Cell { heatLoss = 0, minResult = 0 }) (1, 1)
 solve :: Int -> State -> Int
 solve best _ | trace (show best) False = undefined
 solve best State { grid, path }
-  -- | (\x -> length x == 4 && alleq Nothing x) . fmap fst . Sequence.take 4 . Sequence.reverse $ path = best
-  | calc grid path + (n - y) + (n - x) + 1 > best = best
+  | (\x -> length x == 4 && alleq Nothing x) . fmap fst . Sequence.take 4 . Sequence.reverse $ path = best
+  | calc grid path + calcEstimate grid path > best = best
   | Maybe.isJust (Sequence.findIndexL (\(_, p) -> p == pos) initPath) = best
   | (>1) . length . Sequence.filter (\(_, pos2) -> isNeighbour pos pos2) $ initPath = best
   | pos == (n, n) = calc grid path
@@ -65,6 +65,9 @@ solve best State { grid, path }
 
 calc :: Matrix Cell -> Seq (Direction, (Int, Int)) -> Int
 calc grid = foldl (\acc (_, pos) -> acc + heatLoss (grid Matrix.! pos)) 0
+
+calcEstimate :: Matrix Cell -> Seq (Direction, (Int, Int)) -> Int
+calcEstimate grid (_:|>(_,(y,x))) = (n - y + n - x) * 4 + 1
 
 isNeighbour :: (Int, Int) -> (Int, Int) -> Bool
 isNeighbour (y1, x1) (y2, x2) = y1 == y2 && x1 == x2 - 1 || y1 == y2 && x1 == x2 + 1 || x1 == x2 && y1 == y2 - 1 || x1 == x2 && y1 == y2 + 1

@@ -30,12 +30,11 @@ const STEP3 = 2;
 const STEPS = [STEP1, STEP2, STEP3];
 
 function main() {
-  const input = fs.readFileSync('src/17_1/input_test.txt').toString().trim().split('\n');
+  const input = fs.readFileSync('src/17_1/input_test3.txt').toString().trim().split('\n');
   const grid = input.map(line => line.split('').map(char => parseInt(char)));
 
   const bestGrid = generateNDimensionalGrid([N, N, 4, 3], Infinity);
 
-  console.log(bestGrid);
   const visited = generateNDimensionalGrid([N, N, 4, 3], false);
   bestGrid[0][0][EAST][STEP1] = 0;
   bestGrid[0][0][EAST][STEP2] = 0;
@@ -54,7 +53,13 @@ function main() {
   bestGrid[0][0][WEST][STEP3] = 0;
 
   /** @type {any[]} */
-  const queue = [[0, 0, EAST, STEP1]];
+  const queue = [[0, 1, EAST, STEP1], [1, 0, SOUTH, STEP1]];
+
+  visited[0][1][EAST][STEP1] = true;
+  bestGrid[0][1][EAST][STEP1] = grid[0][1];
+
+  visited[1][0][SOUTH][STEP1] = true;
+  bestGrid[1][0][SOUTH][STEP1] = grid[1][0];
 
   while (queue.length) {
     const pos = queue.shift();
@@ -65,7 +70,7 @@ function main() {
     const neighbours = getNeighbours(pos);
     const candidates = neighbours.filter(nbr => !visited[nbr[0]][nbr[1]][nbr[2]][nbr[3]]);
 
-    candidates.sort((a, b) => grid[a[0]][a[1]] - grid[b[0]][b[1]]);
+    candidates.sort((a, b) => a[3] - b[3] || grid[a[0]][a[1]] - grid[b[0]][b[1]]);
     candidates.forEach(nbr => {
       visited[nbr[0]][nbr[1]][nbr[2]][nbr[3]] = true;
     })
@@ -74,16 +79,11 @@ function main() {
     
 
     for (const nbr of neighbours) {
-     
+      const newVal = bestGrid[i][j][dir][step] + grid[nbr[0]][nbr[1]];
 
-      bestGrid[nbr[0]][nbr[1]][nbr[2]][nbr[3]] = Math.min(
-        bestGrid[nbr[0]][nbr[1]][nbr[2]][nbr[3]],
-        bestGrid[i][j][dir][pos] + grid[nbr[0]][nbr[1]]
-      );
-
-      if (Number.isNaN(bestGrid[nbr[0]][nbr[1]][nbr[2]][nbr[3]])) {
-        console.log('NaN', nbr);
-        throw new Error('NaN');
+      if (newVal < bestGrid[nbr[0]][nbr[1]][nbr[2]][nbr[3]]) {
+        bestGrid[nbr[0]][nbr[1]][nbr[2]][nbr[3]] = newVal;
+        visited[nbr[0]][nbr[1]][nbr[2]][nbr[3]] = false;
       }
     }
   }
@@ -92,6 +92,9 @@ function main() {
 }
 
 const result = main();
+
+console.log(result[0][2]);
+
 
 // candidateDirections (North, (y, x)) = [(East,  (y, x + 1)), (West,  (y, x - 1)), (North, (y - 1, x))]
 // candidateDirections (East,  (y, x)) = [(East,  (y, x + 1)), (South, (y + 1, x)), (North, (y - 1, x))]
@@ -141,5 +144,3 @@ function validPos([i, j, dir, step]) {
 function showGrid(grid) {
   console.log(grid.map(line => line.map(x => String(x).padEnd(4)).join(' ')).join('\n'));
 }
-
-showGrid(result);
