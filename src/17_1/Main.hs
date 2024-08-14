@@ -20,7 +20,7 @@ main :: IO ()
 main = do
   contents <- readFile "src/17_1/input.txt"
   estimatesFile <- readFile "src/17_1/estimates3.txt"
-  print . solve (parseEstimates estimatesFile) HashMap.empty [Sequence.singleton (East, (1, 1))] maxBound . parse $ contents
+  print . solve (parseEstimates estimatesFile) HashMap.empty [Sequence.singleton (East, (1, 1))] 1169 . parse $ contents
 
 parse = initialState . fmap initialCell . Matrix.fromLists . lines
 
