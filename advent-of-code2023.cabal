@@ -255,6 +255,6 @@ executable problem162
 
 executable problem171
     main-is:          Main.hs
-    build-depends:    base, matrix, containers, ghc, split
+    build-depends:    base, matrix, containers, ghc, split, unordered-containers, hashable
     hs-source-dirs:   src/17_1
     default-language: Haskell2010

@@ -1,6 +1,10 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 
+{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DerivingStrategies #-}
+{-# LANGUAGE DeriveAnyClass #-}
+
 module Main (main) where
 import Debug.Trace (trace)
 
@@ -10,19 +14,22 @@ import Data.Maybe as Maybe (isJust)
 import Data.Sequence as Sequence (Seq (..), reverse, filter, take, findIndexL, singleton, empty, viewr)
 import Data.List (filter, sortBy)
 import Data.List.Split (splitOn)
+import Data.HashMap.Strict as HashMap (HashMap, insert, empty, lookup, member)
+import Data.Hashable (Hashable, hash)
+import GHC.Generics (Generic)
 
 main :: IO ()
 main = do
-  contents <- readFile "src/17_1/input.txt"
-  estimatesFile <- readFile "src/17_1/estimates3.txt"
-  print . solve (parseEstimates estimatesFile) maxBound . parse $ contents
+  contents <- readFile "src/17_1/input_test.txt"
+  estimatesFile <- readFile "src/17_1/estimates_test2.txt"
+  print . solve (parseEstimates estimatesFile) HashMap.empty [Sequence.singleton (East, (1, 1))] maxBound . parse $ contents
 
 parse = initialState . fmap initialCell . Matrix.fromLists . lines
 
 parseEstimates :: String -> Matrix Int
 parseEstimates = fmap read . Matrix.fromLists . map (splitOn " ") . lines
 
-n = 141
+n = 13
 
 data Cell = Cell {
   heatLoss :: Int,
@@ -35,7 +42,7 @@ instance Show Cell where
 initialCell :: Char -> Cell
 initialCell char = Cell { heatLoss = digitToInt char, minResult = maxBound }
 
-data Direction = North | East | South | West deriving (Eq, Show)
+data Direction = North | East | South | West deriving (Eq, Show, Generic, Hashable)
 data State = State {
   grid :: Matrix Cell,
   path :: Seq (Direction, (Int, Int))
@@ -50,20 +57,24 @@ initialState grid = State { grid = zeroFirstCell grid, path = Sequence.singleton
 zeroFirstCell :: Matrix Cell -> Matrix Cell
 zeroFirstCell = Matrix.setElem (Cell { heatLoss = 0, minResult = 0 }) (1, 1)
 
-solve :: Matrix Int ->  Int ->  State -> Int
-solve _ best _ | trace (show best) False = undefined
-solve estimates best  State { grid, path }
-  | (\x -> length x == 4 && alleq Nothing x) . fmap fst . Sequence.take 4 . Sequence.reverse $ path = best
-  | calc grid path + estimates Matrix.! pos > best = best
-  | Maybe.isJust (Sequence.findIndexL (\(_, p) -> p == pos) initPath) = best
-  | (>1) . length . Sequence.filter (\(_, pos2) -> isNeighbour pos pos2) $ initPath = best
-  | pos == (n, n) = min (calc grid path) best
-  | otherwise = foldl (solve estimates) best $ map (\path -> State { grid, path }) candidatePaths
+solve :: Matrix Int -> HashMap (Seq (Direction, (Int, Int))) Bool -> [Seq (Direction, (Int, Int))] -> Int ->  State ->  Int
+solve _ hm i best _ | trace (show best ++ " " ++ show i ) False = undefined
+solve _ _ [] best _ = best
+solve estimates hm candidatePaths best State { grid, path }
+  | HashMap.member greatPath hm = solve estimates hm' paths best (State { grid, path = greatPath })
+  | (\x -> length x == 4 && alleq Nothing x) . fmap fst . Sequence.take 4 . Sequence.reverse $ greatPath = solve estimates hm' paths best (State { grid, path = greatPath })
+  | calc grid greatPath + estimates Matrix.! pos > best = solve estimates hm' paths best (State { grid, path = greatPath })
+  | Maybe.isJust (Sequence.findIndexL (\(_, p) -> p == pos) initPath) = solve estimates hm' paths best (State { grid, path = greatPath })
+  | (>1) . length . Sequence.filter (\(_, pos2) -> isNeighbour pos pos2) $ initPath = solve estimates hm' paths best (State { grid, path = greatPath })
+  | pos == (n, n) = solve estimates hm' paths (min best (calc grid greatPath)) (State { grid, path = greatPath })
+  | otherwise = solve estimates hm' newCandidatePaths best (State { grid, path = greatPath })
   where
-    (initPath:|>(dir, pos)) = path
+    (greatPath:paths) = candidatePaths
+    (initPath:|>(dir, pos)) = greatPath
     (y,x) = pos
     cell = grid Matrix.! pos
-    candidatePaths = map (path :|>) . sortBy (sorter grid estimates) . Data.List.filter validBounds . candidateDirections $ (dir, pos)
+    newCandidatePaths = (++) paths . map (greatPath :|>) . Data.List.filter validBounds . candidateDirections $ (dir, pos)
+    hm' = HashMap.insert greatPath True hm
 
 sorter :: Matrix Cell -> Matrix Int -> (Direction, (Int, Int)) ->  (Direction, (Int, Int)) -> Ordering
 sorter grid estimates (_, pos1) (_,pos2) = compare ( estimates Matrix.! pos1) (estimates Matrix.! pos2)
