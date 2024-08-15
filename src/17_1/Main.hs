@@ -20,7 +20,7 @@ main :: IO ()
 main = do
   contents <- readFile "src/17_1/input.txt"
   estimatesFile <- readFile "src/17_1/estimates3.txt"
-  print . solve (parseEstimates estimatesFile) HashMap.empty [Sequence.singleton (East, (1, 1))] 1169 . parse $ contents
+  print . solve (parseEstimates estimatesFile) HashMap.empty [Sequence.singleton (East, (1, 1))] maxBound . parse $ contents
 
 parse = initialState . fmap initialCell . Matrix.fromLists . lines
 
@@ -55,8 +55,13 @@ initialState grid = State { grid = zeroFirstCell grid, path = Sequence.singleton
 zeroFirstCell :: Matrix Cell -> Matrix Cell
 zeroFirstCell = Matrix.setElem (Cell { heatLoss = 0, minResult = 0 }) (1, 1)
 
+median :: Matrix Cell -> Matrix Int -> [Seq (Direction, (Int, Int))] -> Int
+median grid estimates paths = estimates Matrix.! pos
+  where 
+    (_:|>(_, pos)) = head paths
+
 solve :: Matrix Int -> HashMap (Seq (Direction, (Int, Int))) Bool -> [Seq (Direction, (Int, Int))] -> Int ->  State ->  Int
-solve _ hm i best State { path} | trace (show best ++ " " ++ show (length i) ) False = undefined
+solve estimates hm i best State { grid, path} | trace (show best ++ " " ++ show (median grid estimates i) ) False = undefined
 solve _ _ [] best _ = best
 solve estimates hm candidatePaths best State { grid, path }
   | HashMap.member greatPath hm = solve estimates hm' paths best (State { grid, path = greatPath })
@@ -75,9 +80,12 @@ solve estimates hm candidatePaths best State { grid, path }
     hm' = HashMap.insert greatPath True hm
 
 sorter :: Matrix Cell -> Matrix Int -> Seq (Direction, (Int, Int)) ->  Seq (Direction, (Int, Int)) -> Ordering
-sorter grid estimates (_:|>(_,pos1)) (_:|>(_,pos2)) = compare (estimates Matrix.! pos1) (estimates Matrix.! pos2)
+sorter grid estimates path1 path2 = compare (smartEval grid estimates path1) (smartEval grid estimates path2)
 -- sorter grid estimates path1 path2 = compare (length path2) (length path1)
 -- 
+smartEval :: Matrix Cell -> Matrix Int -> Seq (Direction, (Int, Int)) -> Float
+smartEval grid estimates (path:|>(_,pos)) = fromIntegral(estimates Matrix.! pos)
+
 eval :: Matrix Cell -> Matrix Int -> Seq (Direction, (Int, Int)) -> Int
 eval grid estimates path = calc grid path + estimates Matrix.! pos
   where
