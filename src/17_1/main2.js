@@ -21,11 +21,14 @@ const WEST = 3;
 
 const DIRS = [NORTH, EAST, SOUTH, WEST];
 
-const STEP1 = 0;
-const STEP2 = 1;
-const STEP3 = 2;
-
-const STEPS = [STEP1, STEP2, STEP3];
+function printDir(dir) {
+  switch (dir) {
+    case NORTH: return 'NORTH';
+    case EAST: return 'EAST';
+    case SOUTH: return 'SOUTH';
+    case WEST: return 'WEST';
+  }
+}
 
 const input = fs.readFileSync('src/17_1/input.txt').toString().trim().split('\n');
 const grid = input.map(line => line.split('').map(char => parseInt(char)));
@@ -41,32 +44,35 @@ function gridVal(point) {
 }
 
 class Point {
-  constructor(x, y, dir, steps) {
+  constructor(x, y, dir) {
     this.x = x;
     this.y = y;
     this.dir = dir;
-    this.steps = steps;
   }
   
   hash() {
-    return `${this.x}_${this.y}_${this.dir}_${this.steps}`;
+    return `${this.x}_${this.y}_${this.dir}`;
   }
 }
 
 const LAST_VALUE = gridVal(new Point(N-1, N-1))
 function main() {
+  console.log("STARTING")
   /** @type {Record<string, number>} */
   const g = {};
+  /** @type {Record<string, Point[]>} */
+  const bestPaths = {};
   /** @type {Record<string, number>} */
   const f = {};
 
   const U = [];
   const Q = [];
 
-  const startPoint = new Point(0, 0, SOUTH, 0);
+  const startPoint = new Point(0, 0, NORTH);
 
   Q.push(startPoint);
 
+  bestPaths[startPoint.hash()] = [startPoint];
   g[startPoint.hash()] = 0;
   f[startPoint.hash()] = estimateH(startPoint);
 
@@ -75,31 +81,33 @@ function main() {
   while (Q.length) {
     const [current, currentIndex] = findMin(Q, f);
 
+    // console.log(current.x, current.y, current.dir, g[current.hash()])
     if (maxPoint.x + maxPoint.y < current.x + current.y) {
       maxPoint = current;
       console.log(maxPoint.x, maxPoint.y, f[maxPoint.hash()])
     }
 
-    if (current.x === N-1 && current.y === N-1) {
-      break;
-    }
+    // if (current.x === N-1 && current.y === N-1) {
+    //   break;
+    // }
   
     Q.splice(currentIndex, 1);
     U.push(current);
 
     const neighbours = getNeighbours(current);  
 
-    for (const nbr of neighbours) {
-      const tentativeScore = g[current.hash()] + gridVal(nbr);
+    for (const [nbr, val] of neighbours) {
+      const tentativeScore = g[current.hash()] + val;
       if (U.find(p => p.hash() === nbr.hash() && tentativeScore >= (g[nbr.hash()] ?? Infinity))) {
         continue;
       }
 
-      if (!U.find(p => (p.hash() === nbr.hash())) || tentativeScore < (g[nbr.hash()] ?? Infinity)) {
+      if (!Q.find(p => (p.hash() === nbr.hash())) || tentativeScore < (g[nbr.hash()] ?? Infinity)) {
 
 
         g[nbr.hash()] = tentativeScore;
         f[nbr.hash()] = g[nbr.hash()] + estimateH(nbr);
+        bestPaths[nbr.hash()] = bestPaths[current.hash()].concat(nbr);
 
         if (!Q.find(p => p.hash() === nbr.hash())) {
           Q.push(nbr);
@@ -112,8 +120,10 @@ function main() {
 
   // g.reverse();
   // g.forEach(line => line.reverse());/
-  console.log(f)
-console.log(cross([N-1], [N-1], DIRS, STEPS).map(p => g[p.hash()]));
+  console.log(g)
+console.log(cross([N-1], [N-1], DIRS).map(p => g[p.hash()]));
+console.log(cross([N-1], [N-1], DIRS).map(p => bestPaths[p.hash()]));
+
 fs.writeFileSync('f.json', JSON.stringify(f));
   return g
 }
@@ -123,11 +133,10 @@ fs.writeFileSync('f.json', JSON.stringify(f));
  * @param {number[]} arr1 
  * @param {number[]} arr2 
  * @param {number[]} arr3 
- * @param {number[]} arr4 
  * @returns {Point[]}
  */
-function cross(arr1, arr2, arr3, arr4) {
-  return arr1.flatMap(x => arr2.flatMap(y => arr3.flatMap(dir => arr4.flatMap(steps => new Point(x, y, dir, steps)))));
+function cross(arr1, arr2, arr3) {
+  return arr1.flatMap(x => arr2.flatMap(y => arr3.flatMap(dir => new Point(x, y, dir))));
 }
 
 const result = main();
@@ -149,7 +158,7 @@ function findMin(Q, f) {
     let pos = Q[k];
     let val = f[pos.hash()];
 
-    if (val <= min) {
+    if (val < min) {
       minIndex = k;
       minPos = pos;
       min = val
@@ -192,15 +201,51 @@ function estimatePath(path) {
 /**
  * 
  * @param {Point} p point 
- * @returns {Point[]}
+ * @returns {[Point, number][]}
  */
 function getNeighbours(p) {
   return [
-    new Point(p.x, p.y + 1, EAST, p.dir === EAST ? p.steps + 1 : STEP1),
-    new Point(p.x, p.y - 1, WEST, p.dir === WEST ? p.steps + 1 : STEP1),
-    new Point(p.x + 1, p.y, SOUTH, p.dir === SOUTH ? p.steps + 1 : STEP1),
-    new Point(p.x - 1, p.y, NORTH, p.dir === NORTH ? p.steps + 1 : STEP1),
-  ].filter(p => typeof p !== 'boolean').filter(validPos);
+    p.dir !== EAST && p.dir !== WEST && [
+      new Point(p.x, p.y + 1, EAST),
+      new Point(p.x, p.y + 2, EAST),
+      new Point(p.x, p.y + 3, EAST),
+    ],
+    p.dir !== WEST && p.dir !== EAST && [
+    new Point(p.x, p.y - 1, WEST),
+    new Point(p.x, p.y - 2, WEST),
+    new Point(p.x, p.y - 3, WEST),
+    ],
+    p.dir !== SOUTH &&  p.dir !== NORTH && [
+      new Point(p.x + 1, p.y, SOUTH),
+      new Point(p.x + 2, p.y, SOUTH),
+      new Point(p.x + 3, p.y, SOUTH),
+    ],
+    p.dir !== NORTH &&  p.dir !== SOUTH && [
+      new Point(p.x - 1, p.y, NORTH),
+      new Point(p.x - 2, p.y, NORTH),
+      new Point(p.x - 3, p.y, NORTH),
+    ]
+  ]
+  .filter(p => typeof p !== 'boolean')
+  .map(pts => pts.filter(validPos))
+  .flatMap(wrapVals)
+}
+
+/**
+ * 
+ * @param {Point[]} pts 
+ * @returns {[Point, number][]}
+ */
+function wrapVals(pts) {
+  let val = 0;
+  let wrapped = []
+
+  for (const p of pts) {
+    val += gridVal(p);
+    wrapped.push(/** @type {[Point, number]} */ ([p, val]));
+  }
+
+  return wrapped;
 }
 
 /**
@@ -209,7 +254,7 @@ function getNeighbours(p) {
  * @returns {Boolean}
  */
 function validPos(p) {
-  return p.x >= 0 && p.x < N && p.y >= 0 && p.y < N && p.steps <= STEP3;
+  return p.x >= 0 && p.x < N && p.y >= 0 && p.y < N;
 }
 
 function showGrid(grid) {
