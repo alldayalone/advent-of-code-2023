@@ -28,10 +28,10 @@ const STEP2 = 1;
 const STEP3 = 2;
 
 const STEPS = [STEP1, STEP2, STEP3];
+const input = fs.readFileSync('src/17_1/input_test3.txt').toString().trim().split('\n');
+const grid = input.map(line => line.split('').map(char => parseInt(char)));
 
 function main() {
-  const input = fs.readFileSync('src/17_1/input_test3.txt').toString().trim().split('\n');
-  const grid = input.map(line => line.split('').map(char => parseInt(char)));
 
   const bestGrid = generateNDimensionalGrid([N, N, 4, 3], Infinity);
 
@@ -89,6 +89,14 @@ function main() {
   }
 
   return bestGrid;
+}
+
+function estimateH(i, j) {
+  if (i === N-1 && j === N-1) {
+    return 0;
+  }
+
+  return N - 1 - i + N - 1 - j + grid[N-1][N-1] - 1;
 }
 
 const result = main();

@@ -16,6 +16,10 @@ import Data.HashMap.Strict as HashMap (HashMap, insert, empty, lookup, member)
 import Data.Hashable (Hashable, hash)
 import GHC.Generics (Generic)
 
+
+-- Next idea - store not the whole paths BUT only the last 1-4 steps
+-- and  start improving the estimates
+
 main :: IO ()
 main = do
   contents <- readFile "src/17_1/input.txt"
@@ -60,17 +64,25 @@ median grid estimates paths = estimates Matrix.! pos
   where 
     (_:|>(_, pos)) = head paths
 
+fourInRow :: Seq (Direction, (Int, Int)) -> Bool
+fourInRow Sequence.Empty = False
+fourInRow ((North,_):<|(North,_):<|(North,_):<|(North,_):<|_) = True
+fourInRow ((East,_):<|(East,_):<|(East,_):<|(East,_):<|_) = True
+fourInRow ((South,_):<|(South,_):<|(South,_):<|(South,_):<|_) = True
+fourInRow ((West,_):<|(West,_):<|(West,_):<|(West,_):<|_) = True
+fourInRow (_:<|t) = fourInRow t
+
 solve :: Matrix Int -> HashMap (Seq (Direction, (Int, Int))) Bool -> [Seq (Direction, (Int, Int))] -> Int ->  State ->  Int
-solve estimates hm i best State { grid, path} | trace (show best ++ " " ++ show (median grid estimates i) ) False = undefined
+solve estimates hm i best State { grid, path} | trace (show best ++ " " ++ (if null i then show path else "")) False = undefined
 solve _ _ [] best _ = best
 solve estimates hm candidatePaths best State { grid, path }
-  | HashMap.member greatPath hm = solve estimates hm' paths best (State { grid, path = greatPath })
-  | (\x -> length x == 4 && alleq Nothing x) . fmap fst . Sequence.take 4 . Sequence.reverse $ greatPath = solve estimates hm' paths best (State { grid, path = greatPath })
-  | calc grid greatPath + estimates Matrix.! pos > best = solve estimates hm' paths best (State { grid, path = greatPath })
-  | Maybe.isJust (Sequence.findIndexL (\(_, p) -> p == pos) initPath) = solve estimates hm' paths best (State { grid, path = greatPath })
-  | (>1) . length . Sequence.filter (\(_, pos2) -> isNeighbour pos pos2) $ initPath = solve estimates hm' paths best (State { grid, path = greatPath })
+  | HashMap.member greatPath hm = solve estimates hm' paths best (State { grid, path })
+  | fourInRow greatPath = solve estimates hm' paths best (State { grid, path })
+  | calc grid greatPath + estimates Matrix.! pos > best = solve estimates hm' paths best (State { grid, path })
+  | Maybe.isJust (Sequence.findIndexL (\(_, p) -> p == pos) initPath) = solve estimates hm' paths best (State { grid, path })
+  | (>1) . length . Sequence.filter (\(_, pos2) -> isNeighbour pos pos2) $ initPath = solve estimates hm' paths best (State { grid, path })
   | pos == (n, n) = solve estimates hm' paths (min best (calc grid greatPath)) (State { grid, path = greatPath })
-  | otherwise = solve estimates hm' newCandidatePaths best (State { grid, path = greatPath })
+  | otherwise = solve estimates hm' newCandidatePaths best (State { grid, path })
   where
     (greatPath:paths) = candidatePaths
     (initPath:|>(dir, pos)) = greatPath
