@@ -64,17 +64,22 @@ function main() {
   const bestPaths = {};
   /** @type {Record<string, number>} */
   const f = {};
-
-  const U = [];
+  /** @type {Record<string, boolean>} */
+  const U = {};
   const Q = [];
 
   const startPoint = new Point(0, 0, NORTH);
+  const startPoint2 = new Point(0, 0, WEST);
 
-  Q.push(startPoint);
+  Q.push(startPoint, startPoint2);
 
   bestPaths[startPoint.hash()] = [startPoint];
   g[startPoint.hash()] = 0;
   f[startPoint.hash()] = estimateH(startPoint);
+
+  bestPaths[startPoint2.hash()] = [startPoint2];
+  g[startPoint2.hash()] = 0;
+  f[startPoint2.hash()] = estimateH(startPoint2);
 
   let maxPoint = startPoint;
 
@@ -87,18 +92,18 @@ function main() {
       console.log(maxPoint.x, maxPoint.y, f[maxPoint.hash()])
     }
 
-    // if (current.x === N-1 && current.y === N-1) {
-    //   break;
-    // }
+    if (current.x === N-1 && current.y === N-1) {
+      break;
+    }
   
     Q.splice(currentIndex, 1);
-    U.push(current);
+    U[current.hash()] = true;
 
     const neighbours = getNeighbours(current);  
 
     for (const [nbr, val] of neighbours) {
       const tentativeScore = g[current.hash()] + val;
-      if (U.find(p => p.hash() === nbr.hash() && tentativeScore >= (g[nbr.hash()] ?? Infinity))) {
+      if (U[nbr.hash()] && tentativeScore >= (g[nbr.hash()] ?? Infinity)) {
         continue;
       }
 
