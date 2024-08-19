@@ -30,10 +30,11 @@ function printDir(dir) {
   }
 }
 
-const input = fs.readFileSync('src/17_1/input.txt').toString().trim().split('\n');
+const input = fs.readFileSync('src/17_2/input.txt').toString().trim().split('\n');
 const grid = input.map(line => line.split('').map(char => parseInt(char)));
 
 const N = grid.length;
+const M = grid[0].length;
 
 // grid.reverse();
 // grid.forEach(line => line.reverse());
@@ -53,9 +54,34 @@ class Point {
   hash() {
     return `${this.x}_${this.y}_${this.dir}`;
   }
+  
+  /**
+   * @param {number} inc 
+   */
+  move(inc) {
+    switch (this.dir) {
+      case NORTH: {
+        this.x -= inc;
+        break;
+      }
+      case EAST: {
+        this.y += inc;
+        break;
+      }
+      case SOUTH: {
+        this.x += inc;
+        break;
+      }
+      case WEST: {
+        this.y -= inc;
+      }
+    }
+
+    return this;
+  }
 }
 
-const LAST_VALUE = gridVal(new Point(N-1, N-1))
+const LAST_VALUE = gridVal(new Point(N-1, M-1))
 function main() {
   console.log("STARTING")
   /** @type {Record<string, number>} */
@@ -92,7 +118,7 @@ function main() {
       console.log(maxPoint.x, maxPoint.y, f[maxPoint.hash()])
     }
 
-    if (current.x === N-1 && current.y === N-1) {
+    if (current.x === N-1 && current.y === M-1) {
       break;
     }
   
@@ -126,8 +152,8 @@ function main() {
   // g.reverse();
   // g.forEach(line => line.reverse());/
   console.log(g)
-console.log(cross([N-1], [N-1], DIRS).map(p => g[p.hash()]));
-console.log(cross([N-1], [N-1], DIRS).map(p => bestPaths[p.hash()]));
+console.log(cross([N-1], [M-1], DIRS).map(p => g[p.hash()]));
+console.log(cross([N-1], [M-1], DIRS).map(p => bestPaths[p.hash()]));
 
 fs.writeFileSync('f.json', JSON.stringify(f));
   return g
@@ -179,18 +205,18 @@ function findMin(Q, f) {
  * @returns 
  */
 function estimateH(p) {
-  if (p.x === N-1 && p.y === N-1) {
+  if (p.x === N-1 && p.y === M-1) {
     return 0;
   }
 
-  return N - 1 - p.x + N - 1 - p.y + LAST_VALUE - 1;
+  return N - 1 - p.x + M - 1 - p.y + LAST_VALUE - 1;
 }
 
 function estimatePath(path) {
   const g = path.reduce((acc, [i, j]) => acc + grid[i][j], 0);
 
   const [i,j] = path[path.length - 1];
-  const h = grid[N-1][N-1] + N - i + N - j - 3; // estimate
+  const h = grid[N-1][M-1] + N - i + M - j - 3; // estimate
 
   return g + h;
 }
@@ -203,6 +229,8 @@ function estimatePath(path) {
 // candidateDirections (South, (y, x)) = [(South, (y + 1, x)), (East,  (y, x + 1)), (West,  (y, x - 1))]
 // candidateDirections (West,  (y, x)) = [(South, (y + 1, x)), (North, (y - 1, x)), (West,  (y, x - 1))]
 
+
+
 /**
  * 
  * @param {Point} p point 
@@ -210,26 +238,10 @@ function estimatePath(path) {
  */
 function getNeighbours(p) {
   return [
-    p.dir !== EAST && p.dir !== WEST && [
-      new Point(p.x, p.y + 1, EAST),
-      new Point(p.x, p.y + 2, EAST),
-      new Point(p.x, p.y + 3, EAST),
-    ],
-    p.dir !== WEST && p.dir !== EAST && [
-    new Point(p.x, p.y - 1, WEST),
-    new Point(p.x, p.y - 2, WEST),
-    new Point(p.x, p.y - 3, WEST),
-    ],
-    p.dir !== SOUTH &&  p.dir !== NORTH && [
-      new Point(p.x + 1, p.y, SOUTH),
-      new Point(p.x + 2, p.y, SOUTH),
-      new Point(p.x + 3, p.y, SOUTH),
-    ],
-    p.dir !== NORTH &&  p.dir !== SOUTH && [
-      new Point(p.x - 1, p.y, NORTH),
-      new Point(p.x - 2, p.y, NORTH),
-      new Point(p.x - 3, p.y, NORTH),
-    ]
+    p.dir !== EAST && p.dir !== WEST && new Array(10).fill(0).map((_, i) => new Point(p.x, p.y, EAST).move(i + 1)),
+    p.dir !== EAST && p.dir !== WEST && new Array(10).fill(0).map((_, i) => new Point(p.x, p.y, WEST).move(i + 1)),
+    p.dir !== NORTH && p.dir !== SOUTH && new Array(10).fill(0).map((_, i) => new Point(p.x, p.y, NORTH).move(i + 1)),
+    p.dir !== NORTH && p.dir !== SOUTH && new Array(10).fill(0).map((_, i) => new Point(p.x, p.y, SOUTH).move(i + 1)),
   ]
   .filter(p => typeof p !== 'boolean')
   .map(pts => pts.filter(validPos))
@@ -250,6 +262,10 @@ function wrapVals(pts) {
     wrapped.push(/** @type {[Point, number]} */ ([p, val]));
   }
 
+  wrapped.shift();
+  wrapped.shift();
+  wrapped.shift();
+
   return wrapped;
 }
 
@@ -259,7 +275,7 @@ function wrapVals(pts) {
  * @returns {Boolean}
  */
 function validPos(p) {
-  return p.x >= 0 && p.x < N && p.y >= 0 && p.y < N;
+  return p.x >= 0 && p.x < N && p.y >= 0 && p.y < M;
 }
 
 function showGrid(grid) {

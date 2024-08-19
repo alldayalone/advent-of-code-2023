@@ -30,7 +30,7 @@ function printDir(dir) {
   }
 }
 
-const input = fs.readFileSync('src/17_1/input.txt').toString().trim().split('\n');
+const input = fs.readFileSync('src/17_1/input_test.txt').toString().trim().split('\n');
 const grid = input.map(line => line.split('').map(char => parseInt(char)));
 
 const N = grid.length;
