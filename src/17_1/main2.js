@@ -30,7 +30,7 @@ function printDir(dir) {
   }
 }
 
-const input = fs.readFileSync('src/17_1/input_test.txt').toString().trim().split('\n');
+const input = fs.readFileSync('src/17_1/input.txt').toString().trim().split('\n');
 const grid = input.map(line => line.split('').map(char => parseInt(char)));
 
 const N = grid.length;
@@ -97,13 +97,13 @@ function main() {
     }
   
     Q.splice(currentIndex, 1);
-    U[current.hash()] = true;
+    // U[current.hash()] = true;
 
     const neighbours = getNeighbours(current);  
 
     for (const [nbr, val] of neighbours) {
       const tentativeScore = g[current.hash()] + val;
-      if (U[nbr.hash()] && tentativeScore >= (g[nbr.hash()] ?? Infinity)) {
+      if (tentativeScore >= (g[nbr.hash()] ?? Infinity)) {
         continue;
       }
 
