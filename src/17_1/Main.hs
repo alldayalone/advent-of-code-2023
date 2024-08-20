@@ -19,9 +19,12 @@ import GHC.Generics (Generic)
 import Data.PSQueue as PSQ (PSQ(..), empty, lookup, insert, minView, null, adjust)
 import Data.PSQueue.Internal (Binding(..))
 
+-- there has to be a bug cause it's giving 96 instead of 102, and 1024 instead of 1023
+-- But I literally spend couple hours moving JS code into haskell. And it worked out first try. WTF??!?!?!!?!
+
 main :: IO ()
 main = do
-  contents <- readFile "src/17_1/input_test.txt"
+  contents <- readFile "src/17_1/input.txt"
   print . solve' . parse $ contents
 
 parse :: String -> Matrix Int
