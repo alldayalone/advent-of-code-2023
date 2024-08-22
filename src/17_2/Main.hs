@@ -87,7 +87,7 @@ folder current estimate (q, g) (nbr, value)
     q' = PSQ.insert nbr ((g' HashMap.! nbr) + estimate nbr) q
 
 getNeighbors :: Cell -> [Cell]
-getNeighbors cell = [move cell step | cell <- map (\ dir -> cell {dir}) newDirs, step <- [1, 2, 3]]
+getNeighbors cell = [move cell step | cell <- map (\ dir -> cell {dir}) newDirs, step <- [4..10]]
   where
     newDirs = if dir cell `elem` [North, South] then [East, West] else [North, South]
 
