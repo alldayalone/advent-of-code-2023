@@ -8,7 +8,7 @@ module Main (main) where
 import Debug.Trace (trace)
 import Data.Matrix as Matrix (Matrix(..), (!), setElem, fromLists)
 import Data.Char (digitToInt)
-import Data.Maybe as Maybe (isJust, isNothing)
+import Data.Maybe as Maybe (isJust, isNothing, fromJust)
 
 import Data.Ord (compare)
 import Data.List (filter, sortBy)
@@ -65,9 +65,10 @@ data Direction = North | East | South | West deriving (Eq, Show, Ord, Generic, H
 
 solve :: PSQ Cell Int -> HashMap Cell Int -> Matrix Int -> Int
 solve queue g grid
-  | PSQ.null queue = minimum [g HashMap.! Cell (n-1) (m-1) dir | dir <- [East, South]]
+  | isJust result = fromJust result
   | otherwise = solve queue'' g' grid
   where
+    result = minimum [HashMap.lookup (Cell n m dir) g | dir <- [East, South]]
     (Just (current :-> _, queue')) = PSQ.minView queue
     n = Matrix.nrows grid
     m = Matrix.ncols grid
