@@ -258,3 +258,9 @@ executable problem171
     build-depends:    base, matrix, containers, ghc, split, unordered-containers, hashable, PSQueue
     hs-source-dirs:   src/17_1
     default-language: Haskell2010
+
+executable problem172
+    main-is:          Main.hs
+    build-depends:    base, matrix, containers, ghc, split, unordered-containers, hashable, PSQueue
+    hs-source-dirs:   src/17_2
+    default-language: Haskell2010
