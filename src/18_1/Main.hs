@@ -2,6 +2,8 @@
 
 module Main (main) where
 import Data.Matrix as Matrix (Matrix (nrows, ncols), (!), fromLists, extendTo, setElem)
+import Data.PSQueue as PSQ (PSQ(..), empty, fromList, size, lookup, insert, minView, null, adjust)
+import Data.PSQueue.Internal (Binding(..))
 
 main :: IO ()
 main = do
@@ -35,10 +37,21 @@ applyInstruction (m, (x, y)) (direction, number, color) = (m'', pos')
       "D" -> (x + number, y)
       _ -> error "Wrong direction"
 
-solve :: Matrix String -> (Matrix String, [(Int, Int)])
-solve m = (m, p)
+solve :: Matrix String -> Int
+solve m = bfs m q v
   where
-    p = filter (\pos -> m Matrix.! pos == ".") $ perimeter (1, 1) (Matrix.nrows m, Matrix.ncols m)
+    q = PSQ.fromList . map (\(x, y) -> (x * Matrix.nrows m + y) :-> (x, y)) . filter (\pos -> m Matrix.! pos == ".") $ perimeter (1, 1) (Matrix.nrows m, Matrix.ncols m)
+    v = PSQ.empty
+
+bfs :: Matrix String -> PSQ Int (Int, Int) -> PSQ Int (Int, Int) -> Int
+bfs m q v 
+  | PSQ.null q = Matrix.ncols m * Matrix.nrows m - PSQ.size v
+  | otherwise = bfs m q'' v'
+ where
+   (Just (_ :-> pos, q')) = PSQ.minView q
+   q'' = q'-- push all not visited "." neighbours of pos
+   v' = v -- mark pos visited
+
 
 -- Utils
 posrange :: (Int, Int) -> (Int, Int) -> [(Int, Int)]
