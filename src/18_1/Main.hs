@@ -6,7 +6,7 @@ import Data.Matrix as Matrix (Matrix, fromLists, extendTo, setElem)
 main :: IO ()
 main = do
   contents <- readFile "src/18_1/input_test.txt"
-  print . buildMatrix (Matrix.fromLists [["#"]], (1, 1)) . parse $ contents
+  print . buildMatrix . parse $ contents
 
 type Color = String
 type Direction = String
@@ -20,11 +20,7 @@ parseLine line = (direction, read number, color)
   where
     [direction, number, color] = words line
 
-buildMatrix ::  (Matrix String, (Int, Int)) -> [Instruction] -> (Matrix String, (Int, Int))
-buildMatrix m [] = m
-buildMatrix m ((direction, number, color):is) = buildMatrix m' is
-  where
-    m' = applyInstruction m (direction, number, color)
+buildMatrix = foldl applyInstruction (Matrix.fromLists [["#"]], (1, 1))
 
 applyInstruction :: (Matrix String, (Int, Int)) -> Instruction -> (Matrix String, (Int, Int))
 applyInstruction (m, (x, y)) (direction, number, color) = (m'', pos')
