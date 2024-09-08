@@ -1,12 +1,12 @@
 {-# LANGUAGE TupleSections #-}
 
 module Main (main) where
-import Data.Matrix as Matrix (Matrix, fromLists, extendTo, setElem)
+import Data.Matrix as Matrix (Matrix (nrows, ncols), (!), fromLists, extendTo, setElem)
 
 main :: IO ()
 main = do
   contents <- readFile "src/18_1/input_test.txt"
-  print . buildMatrix . parse $ contents
+  print . solve . buildMatrix . parse $ contents
 
 type Color = String
 type Direction = String
@@ -20,7 +20,8 @@ parseLine line = (direction, read number, color)
   where
     [direction, number, color] = words line
 
-buildMatrix = foldl applyInstruction (Matrix.fromLists [["#"]], (1, 1))
+buildMatrix :: [Instruction] -> Matrix String
+buildMatrix = fst . foldl applyInstruction (Matrix.fromLists [["#"]], (1, 1))
 
 applyInstruction :: (Matrix String, (Int, Int)) -> Instruction -> (Matrix String, (Int, Int))
 applyInstruction (m, (x, y)) (direction, number, color) = (m'', pos')
@@ -34,9 +35,19 @@ applyInstruction (m, (x, y)) (direction, number, color) = (m'', pos')
       "D" -> (x + number, y)
       _ -> error "Wrong direction"
 
+solve :: Matrix String -> (Matrix String, [(Int, Int)])
+solve m = (m, p)
+  where 
+    p = filter (\pos -> m Matrix.! pos == ".") $ perimeter (1, 1) (Matrix.nrows m, Matrix.ncols m)
+
+-- Utils
+
 posrange :: (Int, Int) -> (Int, Int) -> [(Int, Int)]
 posrange (x1, y1) (x2, y2)
   | x1 > x2 = map (,y1) [x1-1,x1-2..x2]
   | x1 < x2 = map (,y1) [x1+1,x1+2..x2]
   | y1 < y2 = map (x1,) [y1+1,y1+2..y2]
   | y1 > y2 = map (x1,) [y1-1,y1-2..y2]
+
+perimeter :: (Int, Int) -> (Int, Int) -> [(Int, Int)]
+perimeter (x1, y1) (x2, y2) = posrange (x1, y1) (x1, y2) ++ posrange (x1, y2) (x2, y2) ++ posrange (x2, y2) (x2, y1) ++ posrange (x2, y1) (x1, y1)
