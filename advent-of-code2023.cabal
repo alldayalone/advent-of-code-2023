@@ -267,6 +267,6 @@ executable problem172
 
 executable problem181
     main-is:          Main.hs
-    build-depends:    base, matrix, PSQueue
+    build-depends:    base, matrix, PSQueue, time
     hs-source-dirs:   src/18_1
     default-language: Haskell2010
