@@ -9,12 +9,16 @@ import Data.Maybe (isNothing, isJust)
 import Data.PSQueue as PSQ (PSQ(..), empty, fromList, size, lookup, insert, minView, null, adjust)
 import Data.PSQueue.Internal (Binding(..))
 import Data.List (find)
+import Data.Char (isDigit)
 
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
   contents <- readFile "src/18_2/input_test.txt"
-  print . buildMatrix . parse $ contents
+  -- print . buildMatrix . parse $ contents
+  print . gcdList . map (\(_,_,c) -> (snd . parseColor) c) . parse $ contents
+  print . (\_ -> gcdList [10, 20, 30, 55]) . parse $ contents
+
 
 type Color = String
 type Direction = String
@@ -32,8 +36,9 @@ buildMatrix :: [Instruction] -> [(String, (Int, Int))]
 buildMatrix = fst . foldl applyInstruction ([], (1, 1))
 
 applyInstruction :: ([(Direction, (Int, Int))], (Int, Int)) -> Instruction -> ([(Direction, (Int, Int))], (Int, Int))
-applyInstruction (v, pos@(x,y)) (direction, number, color) = (v', pos')
+applyInstruction (v, pos@(x,y)) (_, _, color) = (v', pos')
   where
+    (direction, number) = parseColor color
     v' = v ++ [(direction, pos')]
     pos' = case direction of
       "R" -> (x, y + number)
@@ -41,6 +46,30 @@ applyInstruction (v, pos@(x,y)) (direction, number, color) = (v', pos')
       "U" -> (x - number, y)
       "D" -> (x + number, y)
       _ -> error "Wrong direction"
+
+parseColor :: Color -> (Direction, Int)
+parseColor ['(','#',s1,s2,s3,s4,s5,s6,')'] = (hexToDir s6, parseHexString [s1,s2,s3,s4,s5])
+parseColor _ = error "Wrong input"
+
+parseHexString :: String -> Int
+parseHexString = fst . foldr (f . parseHexChar) (0,1)
+  where
+    f x (accSum, accFactor) = (accSum + x * accFactor, accFactor * 16)
+
+parseHexChar :: Char -> Int
+parseHexChar c
+  | isDigit c = fromEnum c - fromEnum '0'
+  | c >= 'a' && c <= 'f' = fromEnum c - fromEnum 'a' + 10
+  | c >= 'A' && c <= 'F' = fromEnum c - fromEnum 'A' + 10
+  | otherwise = error $ "Error: " ++ [c]
+
+
+hexToDir :: Char -> Direction
+hexToDir '0' = "R"
+hexToDir '1' = "D"
+hexToDir '2' = "L"
+hexToDir '3' = "U"
+hexToDir _ = error "Wrong direction"
 
 safeExtendTo :: a -> Int -> Int -> Matrix a -> Matrix a
 safeExtendTo a x y m
@@ -58,7 +87,7 @@ solve m = bfs m q v
     v = PSQ.empty
 
 bfs :: Matrix String -> PSQ Int (Int, Int) -> PSQ Int (Int, Int) -> Int
-bfs m q v 
+bfs m q v
   | PSQ.null q = Matrix.ncols m * Matrix.nrows m - PSQ.size v
   | otherwise = bfs m q'' v'
  where
@@ -113,10 +142,17 @@ posneighbours  (x, y) = [up, down, left, right]
 
 perimeter :: (Int, Int) -> (Int, Int) -> [(Int, Int)]
 perimeter (x1, y1) (x2, y2) = concat $ zipWith posrange pts (rotate 1 pts)
-  where 
+  where
     pts = [(x1, y1), (x1, y2), (x2, y2), (x2, y1)]
 
 -- Amazing *v* https://stackoverflow.com/a/55743500
 rotate :: Int -> [a] -> [a]
 rotate  =  drop <> take
 
+gcdList :: [Int] -> Int
+gcdList [] = error "Empty list"
+gcdList xs = foldr1 gcd xs
+
+gcd' :: Integral t => t -> t -> t
+gcd' a 0 = a
+gcd' a b = gcd' b (a `rem` b)
