@@ -1,23 +1,40 @@
 {-# LANGUAGE TupleSections #-}
 
 module Main (main) where
-import Data.Matrix as Matrix (Matrix (nrows, ncols), (!), fromLists, extendTo, setElem, matrix, mapPos)
-import Data.Matrix ((<|>), (<->))
+import Data.Matrix as Matrix (Matrix (nrows, ncols), (!), fromLists, extendTo, setElem, matrix, mapPos, fromList)
+import Data.Matrix ((<|>), (<->), fromList)
 import Data.Time
 import Data.Vector as Vector (Vector)
 import Data.Maybe (isNothing, isJust)
 import Data.PSQueue as PSQ (PSQ(..), empty, fromList, size, lookup, insert, minView, null, adjust)
 import Data.PSQueue.Internal (Binding(..))
-import Data.List (find)
+import Data.List (find, nub, sort)
 import Data.Char (isDigit)
+import Data.Tuple.Extra (thd3)
 
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
-  contents <- readFile "src/18_2/input_test.txt"
-  -- print . buildMatrix . parse $ contents
-  print . gcdList . map (\(_,_,c) -> (snd . parseColor) c) . parse $ contents
-  print . (\_ -> gcdList [10, 20, 30, 55]) . parse $ contents
+  contents <- readFile "./src/18_2/input_test.txt"
+  print . buildMatrix . parse $ contents
+
+
+
+
+-- R 6 (#70c710)
+-- D 5 (#0dc571)
+-- L 2 (#5713f0)
+-- D 2 (#d2c081)
+
+
+
+
+
+
+
+
+
+
 
 
 type Color = String
@@ -32,13 +49,47 @@ parseLine line = (direction, read number, color)
   where
     [direction, number, color] = words line
 
-buildMatrix :: [Instruction] -> [(String, (Int, Int))]
-buildMatrix = fst . foldl applyInstruction ([], (1, 1))
+buildMatrix :: [Instruction] -> Matrix (Int, Int, Int)
+buildMatrix instructions = grid
+  where
+    chain = fst $ foldl applyInstruction ([], (1, 1)) instructions
+    coords = map snd chain
+    xs = sort . nub . map fst $ coords
+    ys = sort . nub . map snd $ coords
+    grid = Matrix.fromList (length xs) (length ys) [(x, y, if isJust (find (== (x,y)) coords) then 1 else 0) | x <- xs, y <- ys]
+    -- matrix = foldl f 
+
+
+buildCoords :: Foldable t => t Instruction -> [(Int, Int)]
+buildCoords instructions = coords
+  where
+    chain = fst $ foldl applyInstruction ([], (1, 1)) instructions
+    coords = map snd chain
+    xs = sort . nub . map fst $ coords
+    ys = sort . nub . map snd $ coords
+    grid = Matrix.fromList (length xs) (length ys) [(x, y, if isJust (find (== (x,y)) coords) then 1 else 0) | x <- xs, y <- ys]
+
+    -- matrix = foldl f 
+
+
+findIndexInMatrix :: (a -> Bool) -> Matrix a -> Maybe (Int, Int)
+findIndexInMatrix p m =
+    let (rows, cols) = dim m
+    in findFirstMatch p m rows cols
+
+dim :: Matrix a -> (Int, Int)
+dim m = (nrows m, ncols m)
+
+findFirstMatch :: (a -> Bool) -> Matrix a -> Int -> Int -> Maybe (Int, Int)
+findFirstMatch p m rows cols =
+    let allIndices = [(r, c) | r <- [1..rows], c <- [1..cols]]
+    in find (\(r, c) -> p (m ! (r, c))) allIndices
 
 applyInstruction :: ([(Direction, (Int, Int))], (Int, Int)) -> Instruction -> ([(Direction, (Int, Int))], (Int, Int))
-applyInstruction (v, pos@(x,y)) (_, _, color) = (v', pos')
+applyInstruction (v, pos@(x,y)) instruction = (v', pos')
   where
-    (direction, number) = parseColor color
+    (direction, number, _) = instruction
+    -- (direction, number) = parseColor . thd3 $ instruction
     v' = v ++ [(direction, pos')]
     pos' = case direction of
       "R" -> (x, y + number)
@@ -148,11 +199,3 @@ perimeter (x1, y1) (x2, y2) = concat $ zipWith posrange pts (rotate 1 pts)
 -- Amazing *v* https://stackoverflow.com/a/55743500
 rotate :: Int -> [a] -> [a]
 rotate  =  drop <> take
-
-gcdList :: [Int] -> Int
-gcdList [] = error "Empty list"
-gcdList xs = foldr1 gcd xs
-
-gcd' :: Integral t => t -> t -> t
-gcd' a 0 = a
-gcd' a b = gcd' b (a `rem` b)
