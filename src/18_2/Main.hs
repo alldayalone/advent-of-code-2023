@@ -1,10 +1,10 @@
-{-# LANGUAGE TupleSections #-}
+{-# LANGUAGE TupleSections #-} 
+{-# LANGUAGE MultilineStrings #-} 
 
-module Main (main) where
+module Main (main, walk, walk') where
 import Data.Matrix as Matrix (Matrix (nrows, ncols), (!), fromLists, extendTo, setElem, matrix, mapPos, fromList)
 import Data.Matrix ((<|>), (<->), fromList)
 import Data.Time
-import Data.Vector as Vector (Vector)
 import Data.Maybe (isNothing, isJust)
 import Data.PSQueue as PSQ (PSQ(..), empty, fromList, size, lookup, insert, minView, null, adjust)
 import Data.PSQueue.Internal (Binding(..))
@@ -12,30 +12,52 @@ import Data.List (find, nub, sort)
 import Data.Char (isDigit)
 import Data.Tuple.Extra (thd3)
 
+
+import Data.Bifunctor (first, bimap)
+
+walk :: ([Int], Int) -> Int -> ([Int], Int)
+walk ([], pos) steps = error "Empty array" 
+walk (arr, pos) steps
+  | steps < 0 = reversePair (walk (reversePair (arr, pos)) (-steps))
+  | steps == 0 = (arr, pos)
+  | arr == [1] && steps == 1 = (arr ++ [1], pos + 1)
+  | arr == [1] && steps > 1 = (arr ++ [steps - 1, 1], pos + 2)
+  | steps >= x+y = first ([x, y] ++) (walk (drop 2 arr, pos + 2) (steps - (x+y)))
+  | y == 1 = first ([x] ++) (walk (drop 1 arr, pos + 1) (steps - 1))
+  | steps == 1 = ([1,1,y-1] ++ drop 2 arr, pos + 1)
+  | steps == y = ([1,y-1,1] ++ drop 2 arr, pos + 2)
+  | steps > 1 && steps < y = ([1,steps-1,1,y-steps] ++ drop 2 arr, pos + 2)
+  | otherwise = error "Impossible state"
+    where
+      [x,y] = take 2 arr
+      reversePair (arr, pos) = (reverse arr, length arr - pos + 1)
+
+
+input :: String
+input ="""
+U 5 (#70c710)
+R 3 (#70c710)
+D 5 (#70c710)
+R 5 (#70c710)
+U 5 (#70c710)
+R 3 (#70c710)
+D 11 (#70c710)
+R 9 (#70c710)
+D 6 (#70c710)
+L 9 (#70c710)
+U 2 (#70c710)
+L 8 (#70c710)
+U 4 (#70c710)
+L 8 (#70c710)
+U 6 (#70c710)
+R 5 (#70c710)
+"""
+
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
   contents <- readFile "./src/18_2/input_test.txt"
-  print . buildMatrix . parse $ contents
-
-
-
-
--- R 6 (#70c710)
--- D 5 (#0dc571)
--- L 2 (#5713f0)
--- D 2 (#d2c081)
-
-
-
-
-
-
-
-
-
-
-
+  print . buildMatrix . parse $ input
 
 type Color = String
 type Direction = String
@@ -49,28 +71,54 @@ parseLine line = (direction, read number, color)
   where
     [direction, number, color] = words line
 
-buildMatrix :: [Instruction] -> Matrix (Int, Int, Int)
-buildMatrix instructions = grid
+type Position = (Int, Int)
+type Context = (Position, [Int], [Int], Matrix String)
+
+buildMatrix :: [Instruction] -> Context
+buildMatrix = foldl applyInstruction ((1, 1), [1], [1], Matrix.fromList 1 1 ["#"])
+
+
+-- Launches walk from a specified position (walk assumes it's always first element)
+walk' :: ([Int], Int) -> Int -> ([Int], Int)
+walk' (arr, pos) steps
+  | steps > 0 = first ((take (pos-1) arr) ++) (walk (drop (pos-1) arr, pos) steps)
+  | steps == 0 = (arr, pos)
+  | steps < 0 = first (++(drop pos arr)) (walk (take pos arr, pos) steps)
+  | otherwise = error "Impossible state"
+
+applyInstruction :: Context -> Instruction -> Context
+applyInstruction ((x,y), cols, rows, grid) instruction = ((x',y'), cols', rows', grid)
   where
-    chain = fst $ foldl applyInstruction ([], (1, 1)) instructions
-    coords = map snd chain
-    xs = sort . nub . map fst $ coords
-    ys = sort . nub . map snd $ coords
-    grid = Matrix.fromList (length xs) (length ys) [(x, y, if isJust (find (== (x,y)) coords) then 1 else 0) | x <- xs, y <- ys]
-    -- matrix = foldl f 
+    -- TODO - we are here, figure out correct transformation
+    (direction, number, _) = parseInstructionV1 instruction
+    (cols', x') = case direction of
+      "R" -> walk' (cols, x) number
+      "L" -> walk' (cols, x) (-number)
+      "U" -> (cols, x)
+      "D" -> (cols, x)
+      _ -> error "Wrong direction"
+    (rows', y') = case direction of 
+      "R" -> (rows, y)
+      "L" -> (rows, y)
+      "U" -> walk' (rows, y) (-number)
+      "D" -> walk' (rows, y) number
+      _ -> error "Wrong direction"
 
+parseInstructionV1 :: Instruction -> Instruction
+parseInstructionV1 = id
 
-buildCoords :: Foldable t => t Instruction -> [(Int, Int)]
-buildCoords instructions = coords
+parseInstructionV2 :: Instruction -> Instruction
+parseInstructionV2 (_, _, color) = (direction, number, color)
   where
-    chain = fst $ foldl applyInstruction ([], (1, 1)) instructions
-    coords = map snd chain
-    xs = sort . nub . map fst $ coords
-    ys = sort . nub . map snd $ coords
-    grid = Matrix.fromList (length xs) (length ys) [(x, y, if isJust (find (== (x,y)) coords) then 1 else 0) | x <- xs, y <- ys]
-
-    -- matrix = foldl f 
-
+    ['(','#',s1,s2,s3,s4,s5,s6,')'] = color
+    number = parseHexString [s1,s2,s3,s4,s5]
+    direction = case s6 of
+      '0' -> "R"
+      '1' -> "D"
+      '2' -> "L"
+      '3' -> "U"
+      _   -> error "Wrong direction"
+    
 
 findIndexInMatrix :: (a -> Bool) -> Matrix a -> Maybe (Int, Int)
 findIndexInMatrix p m =
@@ -85,23 +133,6 @@ findFirstMatch p m rows cols =
     let allIndices = [(r, c) | r <- [1..rows], c <- [1..cols]]
     in find (\(r, c) -> p (m ! (r, c))) allIndices
 
-applyInstruction :: ([(Direction, (Int, Int))], (Int, Int)) -> Instruction -> ([(Direction, (Int, Int))], (Int, Int))
-applyInstruction (v, pos@(x,y)) instruction = (v', pos')
-  where
-    (direction, number, _) = instruction
-    -- (direction, number) = parseColor . thd3 $ instruction
-    v' = v ++ [(direction, pos')]
-    pos' = case direction of
-      "R" -> (x, y + number)
-      "L" -> (x, y - number)
-      "U" -> (x - number, y)
-      "D" -> (x + number, y)
-      _ -> error "Wrong direction"
-
-parseColor :: Color -> (Direction, Int)
-parseColor ['(','#',s1,s2,s3,s4,s5,s6,')'] = (hexToDir s6, parseHexString [s1,s2,s3,s4,s5])
-parseColor _ = error "Wrong input"
-
 parseHexString :: String -> Int
 parseHexString = fst . foldr (f . parseHexChar) (0,1)
   where
@@ -112,15 +143,7 @@ parseHexChar c
   | isDigit c = fromEnum c - fromEnum '0'
   | c >= 'a' && c <= 'f' = fromEnum c - fromEnum 'a' + 10
   | c >= 'A' && c <= 'F' = fromEnum c - fromEnum 'A' + 10
-  | otherwise = error $ "Error: " ++ [c]
-
-
-hexToDir :: Char -> Direction
-hexToDir '0' = "R"
-hexToDir '1' = "D"
-hexToDir '2' = "L"
-hexToDir '3' = "U"
-hexToDir _ = error "Wrong direction"
+  | otherwise = error $ "Error: " Prelude.++ [c]
 
 safeExtendTo :: a -> Int -> Int -> Matrix a -> Matrix a
 safeExtendTo a x y m
