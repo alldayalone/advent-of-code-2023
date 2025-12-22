@@ -15,15 +15,18 @@ import Data.Tuple.Extra (thd3)
 
 import Data.Bifunctor (first, bimap)
 
+parseInstruction = parseInstructionV2
+file = "./src/18_2/input_test.txt"
+
 walk :: ([Int], Int) -> Int -> ([Int], Int)
-walk ([], pos) steps = error "Empty array" 
+walk ([], pos) steps = error "Empty array"
 walk (arr, pos) steps
   | steps < 0 = reversePair (walk (reversePair (arr, pos)) (-steps))
   | steps == 0 = (arr, pos)
   | arr == [1] && steps == 1 = (arr ++ [1], pos + 1)
   | arr == [1] && steps > 1 = (arr ++ [steps - 1, 1], pos + 2)
-  | steps >= x+y = first ([x, y] ++) (walk (drop 2 arr, pos + 2) (steps - (x+y)))
   | y == 1 = first ([x] ++) (walk (drop 1 arr, pos + 1) (steps - 1))
+  | steps >= x+y = first ([x, y] ++) (walk (drop 2 arr, pos + 2) (steps - (x+y)))
   | steps == 1 = ([1,1,y-1] ++ drop 2 arr, pos + 1)
   | steps == y = ([1,y-1,1] ++ drop 2 arr, pos + 2)
   | steps > 1 && steps < y = ([1,steps-1,1,y-steps] ++ drop 2 arr, pos + 2)
@@ -32,32 +35,11 @@ walk (arr, pos) steps
       [x,y] = take 2 arr
       reversePair (arr, pos) = (reverse arr, length arr - pos + 1)
 
-
-input :: String
-input ="""
-U 5 (#70c710)
-R 3 (#70c710)
-D 5 (#70c710)
-R 5 (#70c710)
-U 5 (#70c710)
-R 3 (#70c710)
-D 11 (#70c710)
-R 9 (#70c710)
-D 6 (#70c710)
-L 9 (#70c710)
-U 2 (#70c710)
-L 8 (#70c710)
-U 4 (#70c710)
-L 8 (#70c710)
-U 6 (#70c710)
-R 5 (#70c710)
-"""
-
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
-  contents <- readFile "./src/18_2/input_test.txt"
-  print . buildMatrix . parse $ input
+  contents <- readFile file
+  print . buildMatrix . parse $ contents
 
 type Color = String
 type Direction = String
@@ -90,7 +72,7 @@ applyInstruction :: Context -> Instruction -> Context
 applyInstruction ((x,y), cols, rows, grid) instruction = ((x',y'), cols', rows', grid)
   where
     -- TODO - we are here, figure out correct transformation
-    (direction, number, _) = parseInstructionV1 instruction
+    (direction, number, _) = parseInstructionV2 instruction
     (cols', x') = case direction of
       "R" -> walk' (cols, x) number
       "L" -> walk' (cols, x) (-number)
