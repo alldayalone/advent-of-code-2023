@@ -40,7 +40,7 @@ main :: IO ()
 main = do
   utcNow   <- getCurrentTime
   contents <- readFile file
-  print . solve . buildMatrix . parse $ contents
+  writeFile ("src/18_2/output" ++ show utcNow ++ ".txt") . show . solve . buildMatrix . parse $ contents
 
 type Color = String
 type Direction = String
@@ -100,9 +100,9 @@ applyInstruction (pos, cols, rows, m, _) instruction = (pos', cols', rows', m'',
       _ -> error "Wrong direction"
     pos' = (x', y')
     m' = case direction of
-      "R" -> Matrix.transpose (extendMatrix (Matrix.transpose m) cols cols')
-      "L" -> Matrix.transpose (extendMatrix (Matrix.transpose m) cols cols')
-      "U" -> extendMatrix m rows rows'
+      "R" -> Matrix.transpose (extendMatrix (Matrix.transpose  m) cols cols')
+      "L" -> (fliplr . Matrix.transpose) (extendMatrix (Matrix.transpose . fliplr $ m) (reverse cols) (reverse cols'))
+      "U" -> flipud (extendMatrix (flipud m) (reverse rows) (reverse rows'))
       "D" -> extendMatrix m rows rows'
       _ -> error "Wrong direction"
       
@@ -112,13 +112,18 @@ applyInstruction (pos, cols, rows, m, _) instruction = (pos', cols', rows', m'',
     -- range = [(x', y'), (x, y), (delta_x, delta_y)]
     range = case direction of
       "R" -> safeposrange pos pos'
-      "L" -> safeposrange (x + delta_x, y) pos' 
-      "U" -> safeposrange (x, y + delta_y) pos'
+      "L" -> safeposrange (x + delta_x, y) pos'
+      "U" -> safeposrange (x, y + delta_y) pos' 
       "D" -> safeposrange pos pos'
       _ -> error "Wrong direction"
     m'' = foldr (Matrix.setElem "#" . fliP) m' range
+
   
+
 fliP (a,b) = (b,a)
+
+flipud m = Matrix.fromLists . reverse . Matrix.toLists $ m
+fliplr m = Matrix.fromLists . map reverse . Matrix.toLists $ m
 
 parseInstructionV1 :: Instruction -> Instruction
 parseInstructionV1 = id
@@ -170,15 +175,21 @@ safeExtendTo a x y m
     upBlock = Matrix.matrix (1 - x) (Matrix.ncols m) (const a)
     leftBlock = Matrix.matrix (Matrix.nrows m) (1 - y) (const a)
 
-solve :: Context -> Int
+solve :: Context -> Integer
 solve c = sum $ Matrix.toList values_m
   where
     (_,cols,rows, m, _) = c
     cols_v = Vector.fromList cols
     rows_v = Vector.fromList rows
-    values_m = Matrix.mapPos (\(x,y) _ -> if isVisited m v (x,y) then 0 else cols_v Vector.! (y - 1) * rows_v Vector.! (x - 1)) m
+    values_m = Matrix.mapPos cellValue m
     q = PSQ.fromList . map (posToBinding m) . filter (\pos -> m Matrix.! pos == ".") $ perimeter (1, 1) (Matrix.nrows m, Matrix.ncols m)
     v = bfs m q PSQ.empty
+    cellValue :: (Int, Int) -> String -> Integer
+    cellValue pos ch = if isVisited m v pos then 0 else super_value pos
+    value_func = super_value
+    simple_value _ = 1
+    super_value :: (Int, Int) -> Integer
+    super_value (x, y) = (toInteger (cols_v Vector.! (y - 1))) * (toInteger (rows_v Vector.! (x - 1)))
 
 bfs :: Matrix String -> PSQ Int (Int, Int) -> PSQ Int (Int, Int) -> PSQ Int (Int, Int)
 bfs m q v

@@ -119,8 +119,6 @@ main = hspec $ do
 
       it "7" $ do
         walk ([1,7,1], 1) 9 `shouldBe` ([1,7,1,1], 4)
-      -- it "throws an exception if used with an empty list" $ do
-      --   evaluate (headm []) `shouldThrow` anyException
   describe "extendGrid" $ do
     describe "forward" $ do
       it "0,3" $ do
@@ -168,20 +166,3 @@ main = hspec $ do
       it "debug2" $ do
         extendMatrix (Matrix.fromLists [["#", "#", "#"]]) [1] [1,4,1]
           `shouldBe` (Matrix.fromLists [["#", "#", "#"], [".", ".", "."], [".", ".", "."]])
-
-      -- it "4" $ do
-      --   extendGrid ([".", "#", "."], [1,2,1], [1,2,1,1], ".") 
-      --     `shouldBe`  [".", "#", ".", "."]
-        
-      -- it "5" $ do
-      --   extendGrid ([".", "#", "."], [1,2,1], [1,2,1,1,1], ".") 
-      --     `shouldBe` [".", "#", ".", ".","."]
-
-      -- it "6" $ do
-      --   extendGrid ( [".", "#", "."], [1,2,1], [1,2,1,2,1], ".") 
-      --     `shouldBe`  [".", "#", ".", ".","."]
-
-      -- it "more steps" $
-      --     property $ \x -> x < 7 || 
-      --       (extendGrid ([".", "#", "."], [1,2,1], [1,2,1,x-5,1], ".")) 
-      --         ==  [".", "#", ".", ".","."]
