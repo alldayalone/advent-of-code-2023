@@ -74,7 +74,7 @@
       "mainArgs": "",
       "ghciPrompt": "H>>= ",
       "ghciInitialPrompt": "> ",
-      "ghciCmd": "cabal repl exe:problem182 -w ghci-dap --repl-no-load --repl-options=-fbreak-on-error --repl-options=-fbyte-code --builddir=${workspaceFolder}/.vscode/dist-cabal-repl",
+      "ghciCmd": "cabal repl exe:problem182 -w ghci --repl-no-load --repl-options=-fbreak-on-error --repl-options=-fbyte-code --builddir=${workspaceFolder}/.vscode/dist-cabal-repl",
       "ghciEnv": {},
       "logFile": "${workspaceFolder}/.vscode/phoityne.log",
       "logLevel": "DEBUG",

@@ -1,9 +1,10 @@
 {-# LANGUAGE TupleSections #-} 
 {-# LANGUAGE MultilineStrings #-} 
 
-module Main (main, walk, walk') where
-import Data.Matrix as Matrix (Matrix (nrows, ncols), (!), fromLists, extendTo, setElem, matrix, mapPos, fromList)
+module Main (main, walk, walk', extendGrid,extendMatrix) where
+import Data.Matrix as Matrix (Matrix (nrows, ncols), (!), fromLists, toList, toLists, extendTo, setElem, matrix, mapPos, fromList, transpose)
 import Data.Matrix ((<|>), (<->), fromList)
+import Data.Vector as Vector (Vector, fromList, (!))
 import Data.Time
 import Data.Maybe (isNothing, isJust)
 import Data.PSQueue as PSQ (PSQ(..), empty, fromList, size, lookup, insert, minView, null, adjust)
@@ -16,7 +17,7 @@ import Data.Tuple.Extra (thd3)
 import Data.Bifunctor (first, bimap)
 
 parseInstruction = parseInstructionV2
-file = "./src/18_2/input_test.txt"
+file = "./src/18_2/input.txt"
 
 walk :: ([Int], Int) -> Int -> ([Int], Int)
 walk ([], pos) steps = error "Empty array"
@@ -39,7 +40,7 @@ main :: IO ()
 main = do
   utcNow   <- getCurrentTime
   contents <- readFile file
-  print . buildMatrix . parse $ contents
+  print . solve . buildMatrix . parse $ contents
 
 type Color = String
 type Direction = String
@@ -54,11 +55,22 @@ parseLine line = (direction, read number, color)
     [direction, number, color] = words line
 
 type Position = (Int, Int)
-type Context = (Position, [Int], [Int], Matrix String)
+type Context = (Position, [Int], [Int], Matrix String, [(Int, Int)])
 
 buildMatrix :: [Instruction] -> Context
-buildMatrix = foldl applyInstruction ((1, 1), [1], [1], Matrix.fromList 1 1 ["#"])
+buildMatrix = foldl applyInstruction ((1, 1), [1], [1], Matrix.fromList 1 1 ["#"], [])
 
+extendGrid :: ([a], [Int], [Int], a) -> [a]
+extendGrid ([], [], [], _) = []
+extendGrid ([], [], (z:zs), filler) = [filler] ++ extendGrid ([], [], zs, filler)
+extendGrid ((x:xs), (y:ys), (z:zs), filler)
+  | z < y = [x] ++ extendGrid ((x:xs), (y-z:ys), zs, filler)
+  | otherwise = [x] ++ extendGrid (xs,ys,zs,filler)
+
+extendMatrix :: Matrix String -> [Int] -> [Int] -> Matrix String
+extendMatrix m a a' = Matrix.fromLists (extendGrid (lists, a, a', replicate (Matrix.ncols m) "."))
+  where 
+    lists = Matrix.toLists m
 
 -- Launches walk from a specified position (walk assumes it's always first element)
 walk' :: ([Int], Int) -> Int -> ([Int], Int)
@@ -69,10 +81,11 @@ walk' (arr, pos) steps
   | otherwise = error "Impossible state"
 
 applyInstruction :: Context -> Instruction -> Context
-applyInstruction ((x,y), cols, rows, grid) instruction = ((x',y'), cols', rows', grid)
+applyInstruction (pos, cols, rows, m, _) instruction = (pos', cols', rows', m'', range)
   where
     -- TODO - we are here, figure out correct transformation
-    (direction, number, _) = parseInstructionV2 instruction
+    (x,y) = pos
+    (direction, number, _) = parseInstruction instruction
     (cols', x') = case direction of
       "R" -> walk' (cols, x) number
       "L" -> walk' (cols, x) (-number)
@@ -85,6 +98,27 @@ applyInstruction ((x,y), cols, rows, grid) instruction = ((x',y'), cols', rows',
       "U" -> walk' (rows, y) (-number)
       "D" -> walk' (rows, y) number
       _ -> error "Wrong direction"
+    pos' = (x', y')
+    m' = case direction of
+      "R" -> Matrix.transpose (extendMatrix (Matrix.transpose m) cols cols')
+      "L" -> Matrix.transpose (extendMatrix (Matrix.transpose m) cols cols')
+      "U" -> extendMatrix m rows rows'
+      "D" -> extendMatrix m rows rows'
+      _ -> error "Wrong direction"
+      
+      -- uncurry (safeExtendTo ".") (length rows', length cols') m
+    delta_x = length cols' - length cols
+    delta_y = length rows' - length rows
+    -- range = [(x', y'), (x, y), (delta_x, delta_y)]
+    range = case direction of
+      "R" -> safeposrange pos pos'
+      "L" -> safeposrange (x + delta_x, y) pos' 
+      "U" -> safeposrange (x, y + delta_y) pos'
+      "D" -> safeposrange pos pos'
+      _ -> error "Wrong direction"
+    m'' = foldr (Matrix.setElem "#" . fliP) m' range
+  
+fliP (a,b) = (b,a)
 
 parseInstructionV1 :: Instruction -> Instruction
 parseInstructionV1 = id
@@ -113,7 +147,7 @@ dim m = (nrows m, ncols m)
 findFirstMatch :: (a -> Bool) -> Matrix a -> Int -> Int -> Maybe (Int, Int)
 findFirstMatch p m rows cols =
     let allIndices = [(r, c) | r <- [1..rows], c <- [1..cols]]
-    in find (\(r, c) -> p (m ! (r, c))) allIndices
+    in find (\(r, c) -> p (m Matrix.! (r, c))) allIndices
 
 parseHexString :: String -> Int
 parseHexString = fst . foldr (f . parseHexChar) (0,1)
@@ -136,15 +170,19 @@ safeExtendTo a x y m
     upBlock = Matrix.matrix (1 - x) (Matrix.ncols m) (const a)
     leftBlock = Matrix.matrix (Matrix.nrows m) (1 - y) (const a)
 
-solve :: Matrix String -> Int
-solve m = bfs m q v
+solve :: Context -> Int
+solve c = sum $ Matrix.toList values_m
   where
+    (_,cols,rows, m, _) = c
+    cols_v = Vector.fromList cols
+    rows_v = Vector.fromList rows
+    values_m = Matrix.mapPos (\(x,y) _ -> if isVisited m v (x,y) then 0 else cols_v Vector.! (y - 1) * rows_v Vector.! (x - 1)) m
     q = PSQ.fromList . map (posToBinding m) . filter (\pos -> m Matrix.! pos == ".") $ perimeter (1, 1) (Matrix.nrows m, Matrix.ncols m)
-    v = PSQ.empty
+    v = bfs m q PSQ.empty
 
-bfs :: Matrix String -> PSQ Int (Int, Int) -> PSQ Int (Int, Int) -> Int
+bfs :: Matrix String -> PSQ Int (Int, Int) -> PSQ Int (Int, Int) -> PSQ Int (Int, Int)
 bfs m q v
-  | PSQ.null q = Matrix.ncols m * Matrix.nrows m - PSQ.size v
+  | PSQ.null q = v
   | otherwise = bfs m q'' v'
  where
    (Just (_ :-> pos, q')) = PSQ.minView q
