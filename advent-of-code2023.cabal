@@ -283,6 +283,6 @@ test-suite problem182-test
 
 executable problem191
     main-is:          Main.hs
-    build-depends:    base, matrix, PSQueue, time, split, hashable, unordered-containers
+    build-depends:    base, matrix, PSQueue, time, split, hashable, unordered-containers, regex-tdfa, pretty-show
     hs-source-dirs:   src/19_1
     default-language: Haskell2010

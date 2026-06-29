@@ -1,0 +1,37 @@
+( fromList
+    [ ( "rfg"
+      , [ MaybeGo ( 3 , "<" , 537 , "gd" )
+        , MaybeGo ( 0 , ">" , 2440 , "R" )
+        , Accept
+        ]
+      )
+    , ( "gd" , [ MaybeGo ( 2 , ">" , 3333 , "R" ) , Reject ] )
+    , ( "A" , [ Accept ] )
+    , ( "qs" , [ MaybeGo ( 3 , ">" , 3448 , "A" ) , Go "lnx" ] )
+    , ( "hdj" , [ MaybeGo ( 1 , ">" , 838 , "A" ) , Go "pv" ] )
+    , ( "pv" , [ MaybeGo ( 2 , ">" , 1716 , "R" ) , Accept ] )
+    , ( "px"
+      , [ MaybeGo ( 2 , "<" , 2006 , "qkq" )
+        , MaybeGo ( 1 , ">" , 2090 , "A" )
+        , Go "rfg"
+        ]
+      )
+    , ( "qqz"
+      , [ MaybeGo ( 3 , ">" , 2770 , "qs" )
+        , MaybeGo ( 1 , "<" , 1801 , "hdj" )
+        , Reject
+        ]
+      )
+    , ( "crn" , [ MaybeGo ( 0 , ">" , 2662 , "A" ) , Reject ] )
+    , ( "R" , [ Reject ] )
+    , ( "qkq" , [ MaybeGo ( 0 , "<" , 1416 , "A" ) , Go "crn" ] )
+    , ( "lnx" , [ MaybeGo ( 1 , ">" , 1548 , "A" ) , Accept ] )
+    , ( "in" , [ MaybeGo ( 3 , "<" , 1351 , "px" ) , Go "qqz" ] )
+    ]
+, [ [ 787 , 2655 , 1222 , 2876 ]
+  , [ 1679 , 44 , 2067 , 496 ]
+  , [ 2036 , 264 , 79 , 2244 ]
+  , [ 2461 , 1339 , 466 , 291 ]
+  , [ 2127 , 1623 , 2188 , 1013 ]
+  ]
+)
