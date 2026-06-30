@@ -16,8 +16,8 @@ import Text.Show.Pretty (pPrint, ppShow)
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
-  contents <- readFile "src/19_1/input_test.txt"
-  writeFile ("src/19_1/output" ++ show utcNow ++ ".txt") . ppShow . solve . parse $ contents
+  contents <- readFile "src/19_1/input.txt"
+  writeFile ("src/19_1/output" ++ show utcNow ++ ".txt") . ppShow . sum . solve . parse $ contents
 
 type Color = String
 type Direction = String
@@ -73,20 +73,20 @@ parseParts = map parsePart . lines
 parsePart :: String -> Part
 parsePart s = map read (getAllTextMatches (s =~ "[0-9]+"))
 
-solve :: (WorkflowMap, [Part]) -> [[String]]
+solve :: (WorkflowMap, [Part]) -> [Int]
 solve (_, []) = []
 solve (wfMap, (part:parts)) = (runWorkflow (go "in") : solve (wfMap, parts))
   where 
     go :: String -> [WorkflowStep]
     go label = fromJust $ HashMap.lookup label wfMap
 
-    runWorkflow :: [WorkflowStep] -> [String]
+    runWorkflow :: [WorkflowStep] -> Int
     runWorkflow (step:steps) = case step of 
-      Accept -> ["A"]
-      Reject -> ["R"]
-      Go label -> [label] ++ runWorkflow (go label)
+      Accept -> sum part
+      Reject -> 0
+      Go label -> runWorkflow (go label)
       MaybeGo (varIndex, sign, value, workflowLabel) ->
-        if doesPartMatch varIndex sign value then [workflowLabel] ++ runWorkflow (go workflowLabel)
+        if doesPartMatch varIndex sign value then runWorkflow (go workflowLabel)
         else runWorkflow steps 
       
     doesPartMatch :: Int -> String -> Int -> Bool
