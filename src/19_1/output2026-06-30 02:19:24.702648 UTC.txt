@@ -1,0 +1,6 @@
+[ [ "qqz" , "qs" , "lnx" , "A" , "A" ]
+, [ "px" , "rfg" , "gd" , "R" ]
+, [ "qqz" , "hdj" , "pv" , "A" ]
+, [ "px" , "qkq" , "crn" , "R" ]
+, [ "px" , "rfg" , "A" ]
+]

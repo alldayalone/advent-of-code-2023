@@ -3,10 +3,9 @@
 module Main (main) where
 import Data.HashMap.Strict as HashMap (HashMap, insert, empty, lookup)
 import Control.Arrow ((***))
-import Data.Matrix as Matrix (Matrix (nrows, ncols), (!), fromLists, extendTo, setElem, matrix, mapPos)
 import Data.Matrix ((<|>), (<->))
 import Data.Time
-import Data.Maybe (isNothing, isJust)
+import Data.Maybe (isNothing, isJust, fromJust)
 import Data.PSQueue as PSQ (PSQ(..), empty, fromList, size, lookup, insert, minView, null, adjust)
 import Data.PSQueue.Internal (Binding(..))
 import Data.List (find)
@@ -28,15 +27,13 @@ type WorkflowLabel = String
 data WorkflowStep = Accept | Reject | Go String | MaybeGo (Int, String, Int, String)
   deriving (Show)
 type WorkflowMap = HashMap WorkflowLabel [WorkflowStep]
-type Part = [Integer]
+type Part = [Int]
 
 parse :: String -> (WorkflowMap, [Part])
 parse = (parseWorkflowMap *** parseParts) . unsafePair . splitOn "\n\n" 
 
 unsafePair :: [a] -> (a, a)
 unsafePair (x : y : _) = (x, y)
-
-
 
 parseWorkflowMap :: String -> WorkflowMap
 parseWorkflowMap = foldr (uncurry HashMap.insert . parseWorkflow) init . lines
@@ -76,20 +73,22 @@ parseParts = map parsePart . lines
 parsePart :: String -> Part
 parsePart s = map read (getAllTextMatches (s =~ "[0-9]+"))
 
--- HashMap.insert currentState step memory
--- parseLine :: String -> Instruction
--- parseLine line = (direction, read number, color)
-  -- where
-    -- [direction, number, color] = words line
+solve :: (WorkflowMap, [Part]) -> [[String]]
+solve (_, []) = []
+solve (wfMap, (part:parts)) = (runWorkflow (go "in") : solve (wfMap, parts))
+  where 
+    go :: String -> [WorkflowStep]
+    go label = fromJust $ HashMap.lookup label wfMap
 
-
--- data Step = (Int) | Accept | Reject
-
--- parse _ = []
-solve x = x
-
--- runWorkflow :: Worflow -> Part -> [String]
--- runWorkflow (step, ...steps) part = case step of 
---   Decision A -> true
---   Decision R -> false
---   otherwise = false
+    runWorkflow :: [WorkflowStep] -> [String]
+    runWorkflow (step:steps) = case step of 
+      Accept -> ["A"]
+      Reject -> ["R"]
+      Go label -> [label] ++ runWorkflow (go label)
+      MaybeGo (varIndex, sign, value, workflowLabel) ->
+        if doesPartMatch varIndex sign value then [workflowLabel] ++ runWorkflow (go workflowLabel)
+        else runWorkflow steps 
+      
+    doesPartMatch :: Int -> String -> Int -> Bool
+    doesPartMatch varIndex "<" value = part !! varIndex < value
+    doesPartMatch varIndex ">" value = part !! varIndex > value
