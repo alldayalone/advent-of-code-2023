@@ -1,8 +1,8 @@
-{-# LANGUAGE TupleSections #-}
+{-# OPTIONS_GHC -Wno-x-partial -Wno-unrecognised-warning-flags #-}
 
-module Main (main) where
-import Data.HashMap.Strict as HashMap (HashMap, insert, empty, lookup)
-import Control.Arrow ((***))
+module Main (main, splitSegment, splitSegmentUnsigned) where
+import Data.HashMap.Strict as HashMap (HashMap, insert, empty, lookup, toList, fromList, adjust)
+import Control.Arrow ((&&&))
 import Data.Matrix ((<|>), (<->))
 import Data.Time
 import Data.Maybe (isNothing, isJust, fromJust)
@@ -17,7 +17,7 @@ main :: IO ()
 main = do
   utcNow   <- getCurrentTime
   contents <- readFile "src/19_2/input.txt"
-  writeFile ("src/19_2/output" ++ show utcNow ++ ".txt") . ppShow . sum . solve . parse $ contents
+  writeFile ("src/19_2/output" ++ show utcNow ++ ".txt") . ppShow . parse $ contents
 
 type Color = String
 type Direction = String
@@ -29,8 +29,8 @@ data WorkflowStep = Accept | Reject | Go String | MaybeGo (Int, String, Int, Str
 type WorkflowMap = HashMap WorkflowLabel [WorkflowStep]
 type Part = [Int]
 
-parse :: String -> (WorkflowMap, [Part])
-parse = (id *** generateParts) . parseWorkflowMap . head . splitOn "\n\n" 
+parse :: String -> (WorkflowMap, SegmentMap)
+parse = (id &&& generateParts) . parseWorkflowMap . head . splitOn "\n\n" 
 
 parseWorkflowMap :: String -> WorkflowMap
 parseWorkflowMap = foldr (uncurry HashMap.insert . parseWorkflow) init . lines
@@ -50,14 +50,32 @@ parseStep "A" = Accept
 parseStep "R" = Reject
 parseStep s = case condition of
   "" -> Go workflowLabel
-  otherwise -> MaybeGo (varLabelToIndex varLabel, sign, read valueStr, workflowLabel)
+  _ -> MaybeGo (varLabelToIndex varLabel, sign, read valueStr, workflowLabel)
   where 
     regex = "(([xmas])([<>])([0-9]+):)?([a-zAR]+)"
     (_, _, _, groups) = s =~ regex :: (String, String, String, [String])
     (condition:varLabel:sign:valueStr:workflowLabel:_) = groups
-  
-generateParts :: WorkflowStep -> [Parts]
-generateParts _ = [[1,1,1,1]] 
+
+type Segment = (Int, Int)
+type SegmentMap = HashMap Int [Segment]
+
+generateParts :: WorkflowMap -> SegmentMap
+generateParts = foldr folder init . concatMap snd . HashMap.toList
+  where
+    init = HashMap.fromList [(0, [(0, 4000)]), (1, [(0, 4000)]), (2, [(0, 4000)]), (3, [(0, 4000)])]
+    folder :: WorkflowStep -> SegmentMap -> SegmentMap
+    folder (MaybeGo (varIndex, sign, value, _)) = HashMap.adjust (splitSegment sign value) varIndex
+    folder _ = id
+
+splitSegment :: String -> Int -> [Segment] -> [Segment]
+splitSegment ">" val xs  = splitSegmentUnsigned val xs 
+splitSegment "<" val xs = splitSegmentUnsigned (val - 1) xs 
+
+splitSegmentUnsigned :: Int -> [Segment] -> [Segment]
+splitSegmentUnsigned val ((l,r):xs)
+  | r < val = (l,r):splitSegmentUnsigned val xs
+  | r == val || l == val = (l,r):xs
+  | r > val = (l,val):(val + 1, r):xs
 
 
 varLabelToIndex :: String -> Int
@@ -69,7 +87,7 @@ varLabelToIndex label = error ("Invalid variable label \"" ++ label ++ "\"")
 
 solve :: (WorkflowMap, [Part]) -> [Int]
 solve (_, []) = []
-solve (wfMap, (part:parts)) = (runWorkflow (go "in") : solve (wfMap, parts))
+solve (wfMap, part:parts) = runWorkflow (go "in") : solve (wfMap, parts)
   where 
     go :: String -> [WorkflowStep]
     go label = fromJust $ HashMap.lookup label wfMap

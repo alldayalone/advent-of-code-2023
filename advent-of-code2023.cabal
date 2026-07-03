@@ -292,3 +292,12 @@ executable problem192
     build-depends:    base, matrix, PSQueue, time, split, hashable, unordered-containers, regex-tdfa, pretty-show
     hs-source-dirs:   src/19_1
     default-language: Haskell2010
+
+test-suite problem192-test
+    main-is:          Test.hs
+    default-language: Haskell2010
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   src/19_2
+    other-modules:    Main
+    ghc-options: -main-is Test
+    build-depends:    base, matrix, PSQueue, time, split, hashable, unordered-containers, regex-tdfa, pretty-show, hspec, QuickCheck
