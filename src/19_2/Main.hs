@@ -16,8 +16,8 @@ import Text.Show.Pretty (pPrint, ppShow)
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
-  contents <- readFile "src/19_1/input.txt"
-  writeFile ("src/19_1/output" ++ show utcNow ++ ".txt") . ppShow . sum . solve . parse $ contents
+  contents <- readFile "src/19_2/input.txt"
+  writeFile ("src/19_2/output" ++ show utcNow ++ ".txt") . ppShow . sum . solve . parse $ contents
 
 type Color = String
 type Direction = String
@@ -30,10 +30,7 @@ type WorkflowMap = HashMap WorkflowLabel [WorkflowStep]
 type Part = [Int]
 
 parse :: String -> (WorkflowMap, [Part])
-parse = (parseWorkflowMap *** parseParts) . unsafePair . splitOn "\n\n" 
-
-unsafePair :: [a] -> (a, a)
-unsafePair (x : y : _) = (x, y)
+parse = (id *** generateParts) . parseWorkflowMap . head . splitOn "\n\n" 
 
 parseWorkflowMap :: String -> WorkflowMap
 parseWorkflowMap = foldr (uncurry HashMap.insert . parseWorkflow) init . lines
@@ -59,6 +56,9 @@ parseStep s = case condition of
     (_, _, _, groups) = s =~ regex :: (String, String, String, [String])
     (condition:varLabel:sign:valueStr:workflowLabel:_) = groups
   
+generateParts :: WorkflowStep -> [Parts]
+generateParts _ = [[1,1,1,1]] 
+
 
 varLabelToIndex :: String -> Int
 varLabelToIndex "x" = 0
@@ -66,12 +66,6 @@ varLabelToIndex "m" = 1
 varLabelToIndex "a" = 2
 varLabelToIndex "s" = 3
 varLabelToIndex label = error ("Invalid variable label \"" ++ label ++ "\"")
-
-parseParts :: String -> [Part]
-parseParts = map parsePart . lines
-
-parsePart :: String -> Part
-parsePart s = map read (getAllTextMatches (s =~ "[0-9]+"))
 
 solve :: (WorkflowMap, [Part]) -> [Int]
 solve (_, []) = []
