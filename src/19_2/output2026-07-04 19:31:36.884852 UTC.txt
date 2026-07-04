@@ -1,0 +1,3637 @@
+( fromList
+    [ ( "dvl"
+      , [ MaybeGo ( 3 , "<" , 3137 , "R" )
+        , MaybeGo ( 1 , ">" , 605 , "R" )
+        , Accept
+        ]
+      )
+    , ( "dcb" , [ MaybeGo ( 1 , ">" , 1700 , "A" ) , Reject ] )
+    , ( "rq"
+      , [ MaybeGo ( 3 , "<" , 541 , "R" )
+        , MaybeGo ( 0 , "<" , 674 , "R" )
+        , Accept
+        ]
+      )
+    , ( "cv" , [ MaybeGo ( 2 , ">" , 2201 , "A" ) , Reject ] )
+    , ( "qb"
+      , [ MaybeGo ( 2 , ">" , 1142 , "lg" )
+        , MaybeGo ( 1 , ">" , 792 , "R" )
+        , Accept
+        ]
+      )
+    , ( "hd"
+      , [ MaybeGo ( 0 , "<" , 3618 , "bf" )
+        , MaybeGo ( 3 , ">" , 1990 , "R" )
+        , MaybeGo ( 3 , "<" , 805 , "pb" )
+        , Accept
+        ]
+      )
+    , ( "qpx" , [ MaybeGo ( 0 , ">" , 1028 , "A" ) , Reject ] )
+    , ( "zmb" , [ MaybeGo ( 1 , "<" , 3304 , "R" ) , Accept ] )
+    , ( "qqm"
+      , [ MaybeGo ( 2 , "<" , 445 , "xz" )
+        , MaybeGo ( 0 , ">" , 2962 , "rgx" )
+        , Go "tr"
+        ]
+      )
+    , ( "fv"
+      , [ MaybeGo ( 1 , "<" , 3880 , "A" )
+        , MaybeGo ( 0 , "<" , 619 , "jvb" )
+        , MaybeGo ( 3 , ">" , 2354 , "R" )
+        , Go "hjq"
+        ]
+      )
+    , ( "xcm" , [ MaybeGo ( 2 , "<" , 1300 , "A" ) , Accept ] )
+    , ( "bt" , [ MaybeGo ( 0 , "<" , 324 , "A" ) , Accept ] )
+    , ( "np" , [ MaybeGo ( 2 , "<" , 775 , "A" ) , Go "dcb" ] )
+    , ( "zvq" , [ MaybeGo ( 1 , "<" , 230 , "R" ) , Accept ] )
+    , ( "scg" , [ MaybeGo ( 3 , "<" , 618 , "A" ) , Reject ] )
+    , ( "ck"
+      , [ MaybeGo ( 1 , "<" , 2051 , "R" )
+        , MaybeGo ( 0 , "<" , 901 , "R" )
+        , Accept
+        ]
+      )
+    , ( "gkt"
+      , [ MaybeGo ( 3 , ">" , 885 , "R" )
+        , MaybeGo ( 2 , "<" , 349 , "rpc" )
+        , Go "rsx"
+        ]
+      )
+    , ( "hjg" , [ MaybeGo ( 3 , "<" , 649 , "fh" ) , Reject ] )
+    , ( "jkj"
+      , [ MaybeGo ( 1 , ">" , 473 , "A" )
+        , MaybeGo ( 0 , "<" , 637 , "R" )
+        , MaybeGo ( 2 , ">" , 261 , "A" )
+        , Accept
+        ]
+      )
+    , ( "fck" , [ MaybeGo ( 2 , ">" , 3188 , "kps" ) , Accept ] )
+    , ( "rtv" , [ MaybeGo ( 1 , ">" , 768 , "cdv" ) , Go "dtt" ] )
+    , ( "svc"
+      , [ MaybeGo ( 0 , ">" , 1649 , "R" )
+        , MaybeGo ( 2 , "<" , 2028 , "R" )
+        , MaybeGo ( 3 , "<" , 549 , "A" )
+        , Accept
+        ]
+      )
+    , ( "nkb"
+      , [ MaybeGo ( 3 , ">" , 1347 , "zr" )
+        , MaybeGo ( 0 , "<" , 734 , "gkt" )
+        , MaybeGo ( 3 , "<" , 583 , "pj" )
+        , Go "lfr"
+        ]
+      )
+    , ( "blv" , [ MaybeGo ( 2 , "<" , 3304 , "hrf" ) , Accept ] )
+    , ( "dsk" , [ MaybeGo ( 3 , ">" , 1588 , "mhb" ) , Go "gd" ] )
+    , ( "dzp"
+      , [ MaybeGo ( 2 , "<" , 1315 , "R" )
+        , MaybeGo ( 2 , ">" , 1344 , "A" )
+        , MaybeGo ( 0 , "<" , 1344 , "R" )
+        , Accept
+        ]
+      )
+    , ( "lbz"
+      , [ MaybeGo ( 2 , "<" , 210 , "A" )
+        , MaybeGo ( 0 , "<" , 3371 , "R" )
+        , Accept
+        ]
+      )
+    , ( "dv"
+      , [ MaybeGo ( 0 , "<" , 1599 , "R" )
+        , MaybeGo ( 1 , "<" , 1517 , "A" )
+        , MaybeGo ( 1 , "<" , 1555 , "R" )
+        , Accept
+        ]
+      )
+    , ( "xf"
+      , [ MaybeGo ( 2 , ">" , 559 , "fg" )
+        , MaybeGo ( 0 , "<" , 1682 , "pf" )
+        , MaybeGo ( 2 , "<" , 362 , "gxx" )
+        , Go "qqm"
+        ]
+      )
+    , ( "mnq"
+      , [ MaybeGo ( 2 , "<" , 1168 , "A" )
+        , MaybeGo ( 0 , "<" , 2692 , "A" )
+        , MaybeGo ( 3 , "<" , 612 , "A" )
+        , Accept
+        ]
+      )
+    , ( "rt" , [ MaybeGo ( 1 , "<" , 2296 , "A" ) , Go "jl" ] )
+    , ( "pnl" , [ MaybeGo ( 0 , "<" , 2813 , "R" ) , Accept ] )
+    , ( "kps" , [ MaybeGo ( 2 , ">" , 3665 , "A" ) , Reject ] )
+    , ( "jhr" , [ MaybeGo ( 2 , "<" , 662 , "ch" ) , Accept ] )
+    , ( "nk"
+      , [ MaybeGo ( 0 , ">" , 863 , "R" )
+        , MaybeGo ( 3 , "<" , 3306 , "A" )
+        , MaybeGo ( 1 , "<" , 223 , "A" )
+        , Accept
+        ]
+      )
+    , ( "fsh"
+      , [ MaybeGo ( 1 , ">" , 2354 , "mqg" )
+        , MaybeGo ( 3 , ">" , 1339 , "bhm" )
+        , MaybeGo ( 2 , ">" , 2579 , "zx" )
+        , Go "rqj"
+        ]
+      )
+    , ( "qz"
+      , [ MaybeGo ( 1 , "<" , 3561 , "nj" )
+        , MaybeGo ( 0 , ">" , 1738 , "mj" )
+        , MaybeGo ( 3 , "<" , 1525 , "lp" )
+        , Go "dzr"
+        ]
+      )
+    , ( "zh" , [ MaybeGo ( 0 , ">" , 1813 , "R" ) , Reject ] )
+    , ( "bq"
+      , [ MaybeGo ( 1 , "<" , 1220 , "A" )
+        , MaybeGo ( 3 , ">" , 975 , "njz" )
+        , Accept
+        ]
+      )
+    , ( "zpt"
+      , [ MaybeGo ( 1 , "<" , 699 , "A" )
+        , MaybeGo ( 2 , ">" , 1194 , "A" )
+        , MaybeGo ( 3 , ">" , 3079 , "R" )
+        , Accept
+        ]
+      )
+    , ( "tbj"
+      , [ MaybeGo ( 3 , "<" , 1246 , "A" )
+        , MaybeGo ( 3 , ">" , 1711 , "hhg" )
+        , MaybeGo ( 2 , "<" , 755 , "R" )
+        , Go "hm"
+        ]
+      )
+    , ( "vg"
+      , [ MaybeGo ( 3 , ">" , 1216 , "A" )
+        , MaybeGo ( 0 , ">" , 102 , "A" )
+        , MaybeGo ( 2 , ">" , 3158 , "R" )
+        , Reject
+        ]
+      )
+    , ( "njz" , [ MaybeGo ( 3 , "<" , 1939 , "A" ) , Accept ] )
+    , ( "cd" , [ MaybeGo ( 2 , ">" , 3197 , "A" ) , Reject ] )
+    , ( "jss"
+      , [ MaybeGo ( 3 , ">" , 1416 , "snm" )
+        , MaybeGo ( 0 , ">" , 461 , "A" )
+        , Go "ph"
+        ]
+      )
+    , ( "bqk" , [ MaybeGo ( 1 , "<" , 375 , "R" ) , Reject ] )
+    , ( "zj"
+      , [ MaybeGo ( 2 , ">" , 706 , "R" )
+        , MaybeGo ( 3 , "<" , 398 , "A" )
+        , Reject
+        ]
+      )
+    , ( "hhg"
+      , [ MaybeGo ( 0 , "<" , 448 , "A" )
+        , MaybeGo ( 0 , "<" , 622 , "R" )
+        , Reject
+        ]
+      )
+    , ( "crl"
+      , [ MaybeGo ( 1 , ">" , 2478 , "ctn" )
+        , MaybeGo ( 3 , "<" , 2428 , "rg" )
+        , Go "hlp"
+        ]
+      )
+    , ( "ql"
+      , [ MaybeGo ( 3 , "<" , 1034 , "gs" )
+        , MaybeGo ( 2 , ">" , 496 , "slk" )
+        , Go "dsk"
+        ]
+      )
+    , ( "jd" , [ MaybeGo ( 2 , "<" , 2886 , "R" ) , Accept ] )
+    , ( "jq"
+      , [ MaybeGo ( 1 , "<" , 586 , "R" )
+        , MaybeGo ( 2 , "<" , 1256 , "A" )
+        , MaybeGo ( 2 , ">" , 1282 , "A" )
+        , Reject
+        ]
+      )
+    , ( "bh"
+      , [ MaybeGo ( 2 , ">" , 851 , "R" )
+        , MaybeGo ( 0 , "<" , 3238 , "A" )
+        , MaybeGo ( 1 , ">" , 3147 , "R" )
+        , Accept
+        ]
+      )
+    , ( "tcf"
+      , [ MaybeGo ( 2 , "<" , 205 , "A" )
+        , MaybeGo ( 1 , ">" , 292 , "A" )
+        , MaybeGo ( 2 , ">" , 410 , "A" )
+        , Reject
+        ]
+      )
+    , ( "mzl"
+      , [ MaybeGo ( 2 , ">" , 1112 , "A" )
+        , MaybeGo ( 1 , "<" , 1575 , "A" )
+        , MaybeGo ( 0 , "<" , 965 , "A" )
+        , Reject
+        ]
+      )
+    , ( "ldq"
+      , [ MaybeGo ( 1 , ">" , 3720 , "lxk" )
+        , MaybeGo ( 2 , ">" , 3288 , "sr" )
+        , Go "ll"
+        ]
+      )
+    , ( "db"
+      , [ MaybeGo ( 2 , ">" , 172 , "R" )
+        , MaybeGo ( 2 , ">" , 87 , "A" )
+        , Reject
+        ]
+      )
+    , ( "bm" , [ MaybeGo ( 1 , ">" , 982 , "R" ) , Go "bn" ] )
+    , ( "qds"
+      , [ MaybeGo ( 0 , ">" , 878 , "A" )
+        , MaybeGo ( 1 , ">" , 3885 , "R" )
+        , MaybeGo ( 1 , ">" , 3846 , "R" )
+        , Reject
+        ]
+      )
+    , ( "mc"
+      , [ MaybeGo ( 2 , "<" , 869 , "R" )
+        , MaybeGo ( 0 , ">" , 960 , "R" )
+        , MaybeGo ( 0 , ">" , 546 , "R" )
+        , Reject
+        ]
+      )
+    , ( "jn" , [ MaybeGo ( 1 , "<" , 1606 , "dv" ) , Reject ] )
+    , ( "kr"
+      , [ MaybeGo ( 0 , "<" , 3292 , "R" )
+        , MaybeGo ( 1 , ">" , 701 , "A" )
+        , MaybeGo ( 0 , "<" , 3394 , "R" )
+        , Go "qgp"
+        ]
+      )
+    , ( "gk"
+      , [ MaybeGo ( 2 , ">" , 283 , "R" )
+        , MaybeGo ( 0 , ">" , 2989 , "R" )
+        , Accept
+        ]
+      )
+    , ( "zjf"
+      , [ MaybeGo ( 3 , "<" , 2605 , "ts" )
+        , MaybeGo ( 0 , ">" , 3507 , "fr" )
+        , Go "kr"
+        ]
+      )
+    , ( "zx" , [ MaybeGo ( 2 , ">" , 2698 , "xls" ) , Go "zp" ] )
+    , ( "fj"
+      , [ MaybeGo ( 0 , ">" , 928 , "R" )
+        , MaybeGo ( 1 , ">" , 1085 , "R" )
+        , Accept
+        ]
+      )
+    , ( "pkp"
+      , [ MaybeGo ( 1 , "<" , 2215 , "R" )
+        , MaybeGo ( 1 , "<" , 2460 , "R" )
+        , Accept
+        ]
+      )
+    , ( "hlx" , [ MaybeGo ( 1 , "<" , 1509 , "A" ) , Accept ] )
+    , ( "sm" , [ MaybeGo ( 1 , "<" , 821 , "R" ) , Accept ] )
+    , ( "jln"
+      , [ MaybeGo ( 0 , ">" , 325 , "R" )
+        , MaybeGo ( 3 , ">" , 3443 , "R" )
+        , MaybeGo ( 2 , "<" , 210 , "A" )
+        , Reject
+        ]
+      )
+    , ( "dnc"
+      , [ MaybeGo ( 0 , "<" , 2550 , "A" )
+        , MaybeGo ( 0 , "<" , 2871 , "A" )
+        , MaybeGo ( 3 , "<" , 3255 , "A" )
+        , Reject
+        ]
+      )
+    , ( "lhd"
+      , [ MaybeGo ( 3 , "<" , 2000 , "A" )
+        , MaybeGo ( 0 , ">" , 376 , "R" )
+        , Reject
+        ]
+      )
+    , ( "klk"
+      , [ MaybeGo ( 3 , "<" , 2623 , "smh" )
+        , MaybeGo ( 2 , ">" , 1109 , "dvl" )
+        , MaybeGo ( 0 , ">" , 1432 , "sk" )
+        , Accept
+        ]
+      )
+    , ( "mkn"
+      , [ MaybeGo ( 2 , ">" , 2659 , "A" )
+        , MaybeGo ( 2 , ">" , 2628 , "A" )
+        , MaybeGo ( 2 , ">" , 2621 , "R" )
+        , Accept
+        ]
+      )
+    , ( "grz"
+      , [ MaybeGo ( 2 , ">" , 678 , "A" )
+        , MaybeGo ( 1 , "<" , 3206 , "R" )
+        , MaybeGo ( 0 , ">" , 1960 , "R" )
+        , Accept
+        ]
+      )
+    , ( "qr" , [ MaybeGo ( 1 , ">" , 3524 , "R" ) , Reject ] )
+    , ( "hm"
+      , [ MaybeGo ( 1 , "<" , 1514 , "A" )
+        , MaybeGo ( 3 , "<" , 1415 , "A" )
+        , MaybeGo ( 0 , "<" , 439 , "A" )
+        , Accept
+        ]
+      )
+    , ( "ffd"
+      , [ MaybeGo ( 0 , ">" , 853 , "A" )
+        , MaybeGo ( 3 , "<" , 3210 , "A" )
+        , MaybeGo ( 0 , "<" , 366 , "A" )
+        , Go "qv"
+        ]
+      )
+    , ( "ctg"
+      , [ MaybeGo ( 0 , "<" , 1283 , "A" )
+        , MaybeGo ( 2 , ">" , 1373 , "A" )
+        , MaybeGo ( 1 , "<" , 566 , "R" )
+        , Reject
+        ]
+      )
+    , ( "gd"
+      , [ MaybeGo ( 0 , ">" , 2473 , "A" )
+        , MaybeGo ( 2 , ">" , 331 , "spt" )
+        , Go "db"
+        ]
+      )
+    , ( "fz" , [ MaybeGo ( 0 , "<" , 607 , "hgz" ) , Accept ] )
+    , ( "cx"
+      , [ MaybeGo ( 2 , "<" , 1042 , "lb" )
+        , MaybeGo ( 3 , "<" , 1432 , "rtv" )
+        , MaybeGo ( 0 , "<" , 745 , "qvv" )
+        , Go "bvk"
+        ]
+      )
+    , ( "hnj" , [ MaybeGo ( 0 , ">" , 401 , "A" ) , Reject ] )
+    , ( "pht"
+      , [ MaybeGo ( 3 , ">" , 1905 , "ck" )
+        , MaybeGo ( 1 , ">" , 2063 , "R" )
+        , MaybeGo ( 3 , ">" , 991 , "A" )
+        , Accept
+        ]
+      )
+    , ( "bg"
+      , [ MaybeGo ( 1 , ">" , 732 , "A" )
+        , MaybeGo ( 0 , "<" , 2224 , "R" )
+        , Accept
+        ]
+      )
+    , ( "hr" , [ MaybeGo ( 0 , "<" , 2598 , "R" ) , Reject ] )
+    , ( "xjs"
+      , [ MaybeGo ( 3 , "<" , 3128 , "qcr" )
+        , MaybeGo ( 0 , "<" , 2113 , "xcv" )
+        , MaybeGo ( 0 , "<" , 2755 , "qvq" )
+        , Go "kg"
+        ]
+      )
+    , ( "glm" , [ MaybeGo ( 2 , ">" , 2786 , "hpn" ) , Go "ht" ] )
+    , ( "A" , [ Accept ] )
+    , ( "cxp" , [ MaybeGo ( 3 , "<" , 1911 , "R" ) , Accept ] )
+    , ( "mhb" , [ MaybeGo ( 0 , ">" , 1851 , "R" ) , Go "qx" ] )
+    , ( "zn"
+      , [ MaybeGo ( 1 , ">" , 3552 , "R" )
+        , MaybeGo ( 3 , ">" , 1435 , "A" )
+        , MaybeGo ( 3 , ">" , 1267 , "A" )
+        , Accept
+        ]
+      )
+    , ( "xqx" , [ MaybeGo ( 3 , ">" , 3582 , "R" ) , Accept ] )
+    , ( "zzs"
+      , [ MaybeGo ( 3 , ">" , 821 , "R" )
+        , MaybeGo ( 0 , ">" , 588 , "R" )
+        , Accept
+        ]
+      )
+    , ( "zbl" , [ MaybeGo ( 3 , "<" , 880 , "zj" ) , Reject ] )
+    , ( "gs" , [ MaybeGo ( 1 , "<" , 2619 , "xn" ) , Go "mf" ] )
+    , ( "qs"
+      , [ MaybeGo ( 3 , "<" , 2928 , "A" )
+        , MaybeGo ( 1 , ">" , 783 , "R" )
+        , MaybeGo ( 3 , "<" , 3382 , "A" )
+        , Reject
+        ]
+      )
+    , ( "qjx"
+      , [ MaybeGo ( 0 , ">" , 3570 , "xvv" )
+        , MaybeGo ( 3 , ">" , 2626 , "R" )
+        , Accept
+        ]
+      )
+    , ( "cxn"
+      , [ MaybeGo ( 3 , ">" , 1043 , "txd" )
+        , MaybeGo ( 1 , ">" , 3720 , "zpx" )
+        , Accept
+        ]
+      )
+    , ( "gxx"
+      , [ MaybeGo ( 1 , ">" , 968 , "sn" )
+        , MaybeGo ( 2 , "<" , 126 , "qm" )
+        , MaybeGo ( 0 , "<" , 3104 , "rtz" )
+        , Go "zm"
+        ]
+      )
+    , ( "smc" , [ MaybeGo ( 2 , ">" , 464 , "R" ) , Accept ] )
+    , ( "ffg"
+      , [ MaybeGo ( 2 , ">" , 298 , "A" )
+        , MaybeGo ( 3 , ">" , 1625 , "A" )
+        , Reject
+        ]
+      )
+    , ( "vx"
+      , [ MaybeGo ( 3 , ">" , 2163 , "dzp" )
+        , MaybeGo ( 1 , "<" , 1317 , "qj" )
+        , MaybeGo ( 1 , ">" , 1518 , "bnf" )
+        , Go "ffv"
+        ]
+      )
+    , ( "vfv" , [ MaybeGo ( 2 , "<" , 444 , "zmb" ) , Reject ] )
+    , ( "sdv" , [ MaybeGo ( 1 , "<" , 931 , "R" ) , Accept ] )
+    , ( "hv"
+      , [ MaybeGo ( 3 , "<" , 2197 , "R" )
+        , MaybeGo ( 0 , "<" , 1939 , "R" )
+        , Reject
+        ]
+      )
+    , ( "vrs"
+      , [ MaybeGo ( 3 , "<" , 1841 , "R" )
+        , MaybeGo ( 0 , "<" , 1291 , "R" )
+        , MaybeGo ( 2 , ">" , 2903 , "R" )
+        , Accept
+        ]
+      )
+    , ( "kxg"
+      , [ MaybeGo ( 0 , ">" , 855 , "R" )
+        , MaybeGo ( 0 , "<" , 791 , "A" )
+        , Accept
+        ]
+      )
+    , ( "jzd"
+      , [ MaybeGo ( 0 , ">" , 2390 , "rd" )
+        , MaybeGo ( 1 , "<" , 1069 , "kks" )
+        , Go "nck"
+        ]
+      )
+    , ( "hqz"
+      , [ MaybeGo ( 1 , "<" , 3697 , "ngb" )
+        , MaybeGo ( 0 , ">" , 892 , "xhv" )
+        , Reject
+        ]
+      )
+    , ( "lz"
+      , [ MaybeGo ( 1 , ">" , 3378 , "A" )
+        , MaybeGo ( 3 , ">" , 1821 , "A" )
+        , Accept
+        ]
+      )
+    , ( "rsr" , [ MaybeGo ( 1 , ">" , 3073 , "jhn" ) , Go "rct" ] )
+    , ( "mz"
+      , [ MaybeGo ( 0 , "<" , 1370 , "R" )
+        , MaybeGo ( 3 , "<" , 1734 , "A" )
+        , Accept
+        ]
+      )
+    , ( "qvv" , [ MaybeGo ( 3 , ">" , 2314 , "fcd" ) , Go "qb" ] )
+    , ( "ll" , [ MaybeGo ( 3 , "<" , 553 , "R" ) , Reject ] )
+    , ( "fcv"
+      , [ MaybeGo ( 2 , "<" , 3531 , "tf" )
+        , MaybeGo ( 1 , "<" , 761 , "A" )
+        , Go "vdq"
+        ]
+      )
+    , ( "jlq"
+      , [ MaybeGo ( 3 , ">" , 1442 , "pnl" )
+        , MaybeGo ( 2 , "<" , 2722 , "mkn" )
+        , MaybeGo ( 3 , ">" , 645 , "dhd" )
+        , Go "mcg"
+        ]
+      )
+    , ( "qp"
+      , [ MaybeGo ( 2 , ">" , 3555 , "A" )
+        , MaybeGo ( 0 , "<" , 1837 , "A" )
+        , MaybeGo ( 0 , "<" , 2044 , "ndg" )
+        , Go "vl"
+        ]
+      )
+    , ( "xg"
+      , [ MaybeGo ( 0 , ">" , 2740 , "A" )
+        , MaybeGo ( 1 , "<" , 754 , "R" )
+        , MaybeGo ( 2 , ">" , 47 , "A" )
+        , Accept
+        ]
+      )
+    , ( "lt"
+      , [ MaybeGo ( 0 , ">" , 2928 , "A" )
+        , MaybeGo ( 0 , "<" , 2780 , "R" )
+        , Accept
+        ]
+      )
+    , ( "lv"
+      , [ MaybeGo ( 3 , "<" , 2619 , "R" )
+        , MaybeGo ( 3 , ">" , 2894 , "R" )
+        , Reject
+        ]
+      )
+    , ( "dm"
+      , [ MaybeGo ( 0 , "<" , 2832 , "A" )
+        , MaybeGo ( 2 , ">" , 753 , "A" )
+        , Accept
+        ]
+      )
+    , ( "jhc"
+      , [ MaybeGo ( 0 , ">" , 275 , "rnk" )
+        , MaybeGo ( 3 , "<" , 3378 , "A" )
+        , MaybeGo ( 1 , "<" , 1341 , "xzs" )
+        , Accept
+        ]
+      )
+    , ( "rqd"
+      , [ MaybeGo ( 2 , "<" , 1012 , "R" )
+        , MaybeGo ( 3 , ">" , 2272 , "A" )
+        , MaybeGo ( 3 , "<" , 804 , "R" )
+        , Reject
+        ]
+      )
+    , ( "kp"
+      , [ MaybeGo ( 0 , "<" , 931 , "kxg" )
+        , MaybeGo ( 0 , ">" , 1022 , "R" )
+        , MaybeGo ( 1 , ">" , 1257 , "mzl" )
+        , Go "sb"
+        ]
+      )
+    , ( "qfp"
+      , [ MaybeGo ( 2 , "<" , 80 , "mq" )
+        , MaybeGo ( 0 , ">" , 2922 , "A" )
+        , Reject
+        ]
+      )
+    , ( "dh"
+      , [ MaybeGo ( 1 , "<" , 3872 , "R" )
+        , MaybeGo ( 3 , ">" , 2643 , "A" )
+        , MaybeGo ( 3 , "<" , 1996 , "A" )
+        , Accept
+        ]
+      )
+    , ( "zz" , [ MaybeGo ( 1 , "<" , 1467 , "A" ) , Accept ] )
+    , ( "xz"
+      , [ MaybeGo ( 3 , "<" , 2053 , "nn" )
+        , MaybeGo ( 1 , "<" , 819 , "jbc" )
+        , MaybeGo ( 1 , "<" , 1387 , "rrq" )
+        , Go "zl"
+        ]
+      )
+    , ( "rhk"
+      , [ MaybeGo ( 0 , "<" , 3091 , "R" )
+        , MaybeGo ( 2 , ">" , 3563 , "xpz" )
+        , Reject
+        ]
+      )
+    , ( "jmf"
+      , [ MaybeGo ( 2 , ">" , 994 , "A" )
+        , MaybeGo ( 0 , ">" , 2248 , "A" )
+        , MaybeGo ( 3 , "<" , 202 , "R" )
+        , Accept
+        ]
+      )
+    , ( "qhs"
+      , [ MaybeGo ( 1 , "<" , 2705 , "R" )
+        , MaybeGo ( 2 , ">" , 3248 , "R" )
+        , Reject
+        ]
+      )
+    , ( "vf"
+      , [ MaybeGo ( 3 , ">" , 3033 , "R" )
+        , MaybeGo ( 3 , "<" , 2916 , "R" )
+        , Accept
+        ]
+      )
+    , ( "bnf"
+      , [ MaybeGo ( 0 , "<" , 1385 , "A" )
+        , MaybeGo ( 1 , ">" , 1657 , "ghh" )
+        , Accept
+        ]
+      )
+    , ( "drf"
+      , [ MaybeGo ( 2 , "<" , 743 , "jhr" )
+        , MaybeGo ( 3 , "<" , 2525 , "bq" )
+        , Go "jtz"
+        ]
+      )
+    , ( "nz"
+      , [ MaybeGo ( 2 , "<" , 3414 , "R" )
+        , MaybeGo ( 2 , ">" , 3627 , "A" )
+        , Reject
+        ]
+      )
+    , ( "kt"
+      , [ MaybeGo ( 1 , ">" , 2215 , "R" )
+        , MaybeGo ( 0 , ">" , 3386 , "A" )
+        , MaybeGo ( 0 , "<" , 3107 , "R" )
+        , Reject
+        ]
+      )
+    , ( "hg"
+      , [ MaybeGo ( 3 , "<" , 2052 , "R" )
+        , MaybeGo ( 1 , "<" , 2485 , "R" )
+        , MaybeGo ( 1 , ">" , 2555 , "A" )
+        , Accept
+        ]
+      )
+    , ( "hpl"
+      , [ MaybeGo ( 3 , ">" , 904 , "A" )
+        , MaybeGo ( 2 , "<" , 1300 , "R" )
+        , MaybeGo ( 3 , ">" , 558 , "R" )
+        , Accept
+        ]
+      )
+    , ( "fhj"
+      , [ MaybeGo ( 3 , "<" , 1885 , "A" )
+        , MaybeGo ( 2 , ">" , 824 , "A" )
+        , MaybeGo ( 1 , "<" , 558 , "R" )
+        , Reject
+        ]
+      )
+    , ( "mkg" , [ MaybeGo ( 3 , "<" , 2420 , "R" ) , Reject ] )
+    , ( "qcr"
+      , [ MaybeGo ( 0 , ">" , 1610 , "R" )
+        , MaybeGo ( 1 , "<" , 2179 , "R" )
+        , Reject
+        ]
+      )
+    , ( "qvt"
+      , [ MaybeGo ( 1 , ">" , 1626 , "np" )
+        , MaybeGo ( 3 , ">" , 2238 , "gz" )
+        , MaybeGo ( 0 , "<" , 907 , "tbj" )
+        , Go "zbl"
+        ]
+      )
+    , ( "rlb"
+      , [ MaybeGo ( 2 , "<" , 2239 , "R" )
+        , MaybeGo ( 0 , ">" , 3333 , "A" )
+        , Accept
+        ]
+      )
+    , ( "jfp" , [ MaybeGo ( 3 , "<" , 1597 , "R" ) , Reject ] )
+    , ( "prx"
+      , [ MaybeGo ( 1 , "<" , 3771 , "A" )
+        , MaybeGo ( 3 , "<" , 430 , "R" )
+        , MaybeGo ( 0 , ">" , 860 , "R" )
+        , Reject
+        ]
+      )
+    , ( "hpj"
+      , [ MaybeGo ( 2 , ">" , 519 , "A" )
+        , MaybeGo ( 2 , ">" , 315 , "A" )
+        , Accept
+        ]
+      )
+    , ( "xbd"
+      , [ MaybeGo ( 3 , "<" , 1931 , "R" )
+        , MaybeGo ( 2 , "<" , 3678 , "qfd" )
+        , MaybeGo ( 1 , ">" , 1997 , "A" )
+        , Reject
+        ]
+      )
+    , ( "dn" , [ MaybeGo ( 3 , "<" , 2289 , "R" ) , Reject ] )
+    , ( "kkj"
+      , [ MaybeGo ( 3 , ">" , 2614 , "R" )
+        , MaybeGo ( 0 , "<" , 2010 , "A" )
+        , MaybeGo ( 3 , "<" , 2264 , "R" )
+        , Accept
+        ]
+      )
+    , ( "mzg"
+      , [ MaybeGo ( 3 , "<" , 1564 , "gnv" )
+        , MaybeGo ( 2 , ">" , 3269 , "crf" )
+        , Go "mqc"
+        ]
+      )
+    , ( "nhj" , [ MaybeGo ( 3 , "<" , 1867 , "jb" ) , Go "jv" ] )
+    , ( "jpj"
+      , [ MaybeGo ( 0 , ">" , 1211 , "A" )
+        , MaybeGo ( 0 , "<" , 1089 , "R" )
+        , Accept
+        ]
+      )
+    , ( "pm"
+      , [ MaybeGo ( 3 , ">" , 2579 , "R" )
+        , MaybeGo ( 0 , "<" , 1132 , "A" )
+        , MaybeGo ( 3 , ">" , 2434 , "A" )
+        , Reject
+        ]
+      )
+    , ( "sn"
+      , [ MaybeGo ( 2 , "<" , 138 , "qfp" )
+        , MaybeGo ( 3 , ">" , 1828 , "kkb" )
+        , Go "nc"
+        ]
+      )
+    , ( "hjq" , [ MaybeGo ( 0 , ">" , 1174 , "A" ) , Accept ] )
+    , ( "hrf"
+      , [ MaybeGo ( 0 , "<" , 442 , "A" )
+        , MaybeGo ( 0 , "<" , 669 , "A" )
+        , MaybeGo ( 0 , ">" , 848 , "R" )
+        , Accept
+        ]
+      )
+    , ( "lff"
+      , [ MaybeGo ( 2 , "<" , 2877 , "A" )
+        , MaybeGo ( 2 , ">" , 2976 , "A" )
+        , Accept
+        ]
+      )
+    , ( "gvm" , [ MaybeGo ( 3 , "<" , 1760 , "nhl" ) , Go "hp" ] )
+    , ( "vr"
+      , [ MaybeGo ( 3 , "<" , 299 , "R" )
+        , MaybeGo ( 0 , "<" , 1347 , "A" )
+        , Accept
+        ]
+      )
+    , ( "bdz"
+      , [ MaybeGo ( 2 , "<" , 2137 , "tqs" )
+        , MaybeGo ( 1 , "<" , 3266 , "vt" )
+        , Go "qz"
+        ]
+      )
+    , ( "rnk" , [ MaybeGo ( 2 , "<" , 347 , "R" ) , Reject ] )
+    , ( "bgp"
+      , [ MaybeGo ( 0 , ">" , 1724 , "rhh" )
+        , MaybeGo ( 2 , "<" , 1212 , "cx" )
+        , MaybeGo ( 0 , "<" , 1026 , "gtg" )
+        , Go "qlc"
+        ]
+      )
+    , ( "lzv" , [ MaybeGo ( 2 , ">" , 1600 , "zt" ) , Go "qd" ] )
+    , ( "cq"
+      , [ MaybeGo ( 1 , ">" , 605 , "A" )
+        , MaybeGo ( 0 , "<" , 937 , "A" )
+        , Reject
+        ]
+      )
+    , ( "bsc" , [ MaybeGo ( 3 , "<" , 1824 , "fk" ) , Go "fz" ] )
+    , ( "qvq"
+      , [ MaybeGo ( 0 , "<" , 2502 , "smc" )
+        , MaybeGo ( 1 , ">" , 2182 , "R" )
+        , Go "rn"
+        ]
+      )
+    , ( "mh" , [ MaybeGo ( 0 , ">" , 1109 , "R" ) , Reject ] )
+    , ( "mmp"
+      , [ MaybeGo ( 3 , ">" , 3446 , "R" )
+        , MaybeGo ( 1 , ">" , 1291 , "A" )
+        , MaybeGo ( 3 , ">" , 3242 , "A" )
+        , Reject
+        ]
+      )
+    , ( "gp"
+      , [ MaybeGo ( 0 , ">" , 1532 , "A" )
+        , MaybeGo ( 1 , ">" , 1022 , "A" )
+        , MaybeGo ( 1 , ">" , 999 , "A" )
+        , Accept
+        ]
+      )
+    , ( "sd" , [ MaybeGo ( 1 , ">" , 3738 , "R" ) , Reject ] )
+    , ( "tdc"
+      , [ MaybeGo ( 3 , "<" , 3243 , "R" )
+        , MaybeGo ( 2 , "<" , 2939 , "R" )
+        , MaybeGo ( 2 , ">" , 3382 , "R" )
+        , Accept
+        ]
+      )
+    , ( "cmx"
+      , [ MaybeGo ( 0 , "<" , 3034 , "A" )
+        , MaybeGo ( 2 , "<" , 375 , "R" )
+        , MaybeGo ( 1 , ">" , 508 , "R" )
+        , Accept
+        ]
+      )
+    , ( "rdn" , [ MaybeGo ( 1 , "<" , 863 , "A" ) , Accept ] )
+    , ( "rj" , [ MaybeGo ( 1 , ">" , 3917 , "R" ) , Reject ] )
+    , ( "xlv" , [ MaybeGo ( 1 , "<" , 863 , "gdq" ) , Go "jm" ] )
+    , ( "gcd"
+      , [ MaybeGo ( 2 , ">" , 690 , "R" )
+        , MaybeGo ( 1 , ">" , 1502 , "R" )
+        , MaybeGo ( 2 , "<" , 637 , "R" )
+        , Reject
+        ]
+      )
+    , ( "xhv"
+      , [ MaybeGo ( 2 , ">" , 3291 , "R" )
+        , MaybeGo ( 1 , "<" , 3743 , "A" )
+        , Accept
+        ]
+      )
+    , ( "pbd"
+      , [ MaybeGo ( 2 , ">" , 720 , "A" )
+        , MaybeGo ( 2 , "<" , 613 , "A" )
+        , Reject
+        ]
+      )
+    , ( "tjp"
+      , [ MaybeGo ( 0 , "<" , 3526 , "A" )
+        , MaybeGo ( 3 , "<" , 504 , "A" )
+        , Accept
+        ]
+      )
+    , ( "qvh"
+      , [ MaybeGo ( 3 , ">" , 2604 , "xcm" )
+        , MaybeGo ( 3 , "<" , 1359 , "dc" )
+        , MaybeGo ( 2 , "<" , 1332 , "ss" )
+        , Go "bcd"
+        ]
+      )
+    , ( "spb"
+      , [ MaybeGo ( 3 , "<" , 896 , "A" )
+        , MaybeGo ( 1 , "<" , 660 , "R" )
+        , MaybeGo ( 3 , "<" , 1276 , "A" )
+        , Accept
+        ]
+      )
+    , ( "jjp"
+      , [ MaybeGo ( 2 , ">" , 1402 , "jzd" )
+        , MaybeGo ( 2 , "<" , 903 , "xf" )
+        , Go "bgp"
+        ]
+      )
+    , ( "hsk"
+      , [ MaybeGo ( 2 , ">" , 697 , "gq" )
+        , MaybeGo ( 0 , ">" , 2818 , "rh" )
+        , Go "sbz"
+        ]
+      )
+    , ( "vc" , [ MaybeGo ( 3 , "<" , 409 , "bv" ) , Go "xs" ] )
+    , ( "tq"
+      , [ MaybeGo ( 0 , "<" , 3396 , "R" )
+        , MaybeGo ( 3 , ">" , 1507 , "kgp" )
+        , MaybeGo ( 0 , "<" , 3427 , "jgt" )
+        , Go "sq"
+        ]
+      )
+    , ( "ts"
+      , [ MaybeGo ( 3 , "<" , 1514 , "R" )
+        , MaybeGo ( 2 , ">" , 1255 , "xc" )
+        , MaybeGo ( 3 , ">" , 2161 , "R" )
+        , Go "zc"
+        ]
+      )
+    , ( "lg" , [ MaybeGo ( 0 , "<" , 274 , "R" ) , Reject ] )
+    , ( "vq"
+      , [ MaybeGo ( 0 , ">" , 3791 , "R" )
+        , MaybeGo ( 1 , "<" , 2600 , "R" )
+        , Accept
+        ]
+      )
+    , ( "vn"
+      , [ MaybeGo ( 1 , "<" , 929 , "R" )
+        , MaybeGo ( 2 , ">" , 324 , "mqs" )
+        , Accept
+        ]
+      )
+    , ( "rgx" , [ MaybeGo ( 0 , ">" , 3360 , "hd" ) , Go "rdn" ] )
+    , ( "lr" , [ MaybeGo ( 3 , "<" , 2659 , "R" ) , Reject ] )
+    , ( "dtt" , [ MaybeGo ( 1 , ">" , 334 , "R" ) , Reject ] )
+    , ( "sdp"
+      , [ MaybeGo ( 0 , "<" , 1476 , "R" )
+        , MaybeGo ( 1 , ">" , 3890 , "R" )
+        , MaybeGo ( 2 , "<" , 3451 , "A" )
+        , Accept
+        ]
+      )
+    , ( "nvd"
+      , [ MaybeGo ( 1 , "<" , 1411 , "cl" )
+        , MaybeGo ( 0 , ">" , 1123 , "jn" )
+        , MaybeGo ( 1 , "<" , 1659 , "lr" )
+        , Go "jss"
+        ]
+      )
+    , ( "pss" , [ MaybeGo ( 3 , ">" , 1672 , "cd" ) , Go "qhs" ] )
+    , ( "srn" , [ MaybeGo ( 1 , "<" , 1000 , "fsx" ) , Reject ] )
+    , ( "lfr"
+      , [ MaybeGo ( 3 , ">" , 877 , "hs" )
+        , MaybeGo ( 2 , ">" , 360 , "cbs" )
+        , Reject
+        ]
+      )
+    , ( "tts" , [ MaybeGo ( 2 , "<" , 1115 , "lk" ) , Accept ] )
+    , ( "gqh"
+      , [ MaybeGo ( 2 , "<" , 1303 , "ptn" )
+        , MaybeGo ( 2 , ">" , 1347 , "A" )
+        , Accept
+        ]
+      )
+    , ( "bvk"
+      , [ MaybeGo ( 0 , ">" , 1121 , "klk" )
+        , MaybeGo ( 1 , ">" , 764 , "kp" )
+        , Go "fp"
+        ]
+      )
+    , ( "zhl" , [ MaybeGo ( 1 , ">" , 3798 , "A" ) , Reject ] )
+    , ( "xqg"
+      , [ MaybeGo ( 3 , ">" , 1662 , "xg" )
+        , MaybeGo ( 0 , "<" , 2774 , "vj" )
+        , MaybeGo ( 1 , ">" , 755 , "qqn" )
+        , Go "spb"
+        ]
+      )
+    , ( "bk"
+      , [ MaybeGo ( 2 , "<" , 3606 , "lpk" )
+        , MaybeGo ( 2 , ">" , 3817 , "fv" )
+        , Go "mxd"
+        ]
+      )
+    , ( "xc"
+      , [ MaybeGo ( 2 , ">" , 1310 , "A" )
+        , MaybeGo ( 0 , ">" , 3386 , "R" )
+        , MaybeGo ( 2 , "<" , 1287 , "R" )
+        , Reject
+        ]
+      )
+    , ( "ffv"
+      , [ MaybeGo ( 1 , ">" , 1422 , "A" )
+        , MaybeGo ( 0 , "<" , 1363 , "jpj" )
+        , MaybeGo ( 1 , ">" , 1361 , "R" )
+        , Go "lmx"
+        ]
+      )
+    , ( "qqn"
+      , [ MaybeGo ( 3 , ">" , 995 , "A" )
+        , MaybeGo ( 2 , ">" , 56 , "R" )
+        , Reject
+        ]
+      )
+    , ( "qtx"
+      , [ MaybeGo ( 2 , "<" , 1800 , "fxb" )
+        , MaybeGo ( 0 , "<" , 1831 , "dhk" )
+        , Go "dnz"
+        ]
+      )
+    , ( "zzp" , [ MaybeGo ( 1 , "<" , 1020 , "lhd" ) , Accept ] )
+    , ( "hlp"
+      , [ MaybeGo ( 3 , "<" , 3320 , "R" )
+        , MaybeGo ( 1 , "<" , 2175 , "A" )
+        , MaybeGo ( 2 , "<" , 3517 , "dlb" )
+        , Go "qh"
+        ]
+      )
+    , ( "smh"
+      , [ MaybeGo ( 3 , "<" , 2163 , "A" )
+        , MaybeGo ( 0 , "<" , 1409 , "A" )
+        , Reject
+        ]
+      )
+    , ( "hq"
+      , [ MaybeGo ( 2 , "<" , 2585 , "vbp" )
+        , MaybeGo ( 0 , "<" , 1122 , "zkr" )
+        , MaybeGo ( 1 , "<" , 3897 , "A" )
+        , Go "lff"
+        ]
+      )
+    , ( "vbp"
+      , [ MaybeGo ( 0 , ">" , 1084 , "A" )
+        , MaybeGo ( 3 , ">" , 1181 , "A" )
+        , Reject
+        ]
+      )
+    , ( "jm" , [ MaybeGo ( 1 , "<" , 1177 , "A" ) , Accept ] )
+    , ( "cbs"
+      , [ MaybeGo ( 2 , "<" , 459 , "R" )
+        , MaybeGo ( 0 , ">" , 1291 , "R" )
+        , MaybeGo ( 1 , "<" , 1391 , "R" )
+        , Reject
+        ]
+      )
+    , ( "fk"
+      , [ MaybeGo ( 1 , ">" , 759 , "R" )
+        , MaybeGo ( 3 , "<" , 803 , "A" )
+        , Go "qlh"
+        ]
+      )
+    , ( "gjq" , [ MaybeGo ( 1 , ">" , 2997 , "qr" ) , Reject ] )
+    , ( "gsq"
+      , [ MaybeGo ( 2 , ">" , 3028 , "A" )
+        , MaybeGo ( 2 , "<" , 1961 , "R" )
+        , MaybeGo ( 2 , ">" , 2431 , "A" )
+        , Accept
+        ]
+      )
+    , ( "pmr"
+      , [ MaybeGo ( 3 , ">" , 1708 , "A" )
+        , MaybeGo ( 1 , "<" , 3460 , "A" )
+        , Accept
+        ]
+      )
+    , ( "vjg"
+      , [ MaybeGo ( 0 , "<" , 2497 , "R" )
+        , MaybeGo ( 0 , "<" , 2749 , "A" )
+        , MaybeGo ( 1 , ">" , 1548 , "A" )
+        , Accept
+        ]
+      )
+    , ( "zl"
+      , [ MaybeGo ( 0 , "<" , 3098 , "vjg" )
+        , MaybeGo ( 3 , ">" , 3015 , "A" )
+        , MaybeGo ( 3 , ">" , 2644 , "R" )
+        , Accept
+        ]
+      )
+    , ( "vd"
+      , [ MaybeGo ( 2 , "<" , 682 , "dx" )
+        , MaybeGo ( 3 , "<" , 1565 , "ng" )
+        , MaybeGo ( 3 , ">" , 2392 , "R" )
+        , Go "fhj"
+        ]
+      )
+    , ( "vlq" , [ MaybeGo ( 1 , "<" , 400 , "R" ) , Reject ] )
+    , ( "xl"
+      , [ MaybeGo ( 3 , "<" , 3195 , "A" )
+        , MaybeGo ( 3 , "<" , 3503 , "A" )
+        , Reject
+        ]
+      )
+    , ( "mf"
+      , [ MaybeGo ( 3 , ">" , 433 , "pd" )
+        , MaybeGo ( 2 , ">" , 622 , "jmf" )
+        , Go "hck"
+        ]
+      )
+    , ( "ns"
+      , [ MaybeGo ( 2 , "<" , 3061 , "R" )
+        , MaybeGo ( 2 , ">" , 3401 , "R" )
+        , MaybeGo ( 3 , "<" , 433 , "A" )
+        , Accept
+        ]
+      )
+    , ( "dnz"
+      , [ MaybeGo ( 0 , ">" , 2559 , "A" )
+        , MaybeGo ( 3 , ">" , 2597 , "A" )
+        , Accept
+        ]
+      )
+    , ( "dlb"
+      , [ MaybeGo ( 0 , "<" , 3684 , "A" )
+        , MaybeGo ( 2 , ">" , 3277 , "R" )
+        , MaybeGo ( 1 , "<" , 2362 , "R" )
+        , Reject
+        ]
+      )
+    , ( "kj"
+      , [ MaybeGo ( 3 , "<" , 2020 , "jp" )
+        , MaybeGo ( 3 , ">" , 2358 , "pm" )
+        , MaybeGo ( 0 , "<" , 1307 , "jkp" )
+        , Go "hv"
+        ]
+      )
+    , ( "mv"
+      , [ MaybeGo ( 3 , ">" , 754 , "R" )
+        , MaybeGo ( 1 , ">" , 997 , "R" )
+        , MaybeGo ( 3 , ">" , 359 , "A" )
+        , Reject
+        ]
+      )
+    , ( "zg"
+      , [ MaybeGo ( 2 , "<" , 203 , "pph" )
+        , MaybeGo ( 0 , "<" , 973 , "R" )
+        , MaybeGo ( 0 , "<" , 1362 , "rfl" )
+        , Accept
+        ]
+      )
+    , ( "qtn"
+      , [ MaybeGo ( 1 , "<" , 1288 , "A" )
+        , MaybeGo ( 0 , "<" , 908 , "R" )
+        , MaybeGo ( 2 , ">" , 152 , "A" )
+        , Reject
+        ]
+      )
+    , ( "gzg" , [ MaybeGo ( 3 , ">" , 1066 , "R" ) , Go "mnq" ] )
+    , ( "jv"
+      , [ MaybeGo ( 3 , "<" , 2957 , "A" )
+        , MaybeGo ( 2 , "<" , 689 , "zz" )
+        , Go "xqx"
+        ]
+      )
+    , ( "gz"
+      , [ MaybeGo ( 0 , ">" , 1177 , "A" )
+        , MaybeGo ( 3 , ">" , 3045 , "gcd" )
+        , MaybeGo ( 2 , "<" , 748 , "xj" )
+        , Go "lv"
+        ]
+      )
+    , ( "hpn" , [ MaybeGo ( 3 , ">" , 1992 , "nzd" ) , Accept ] )
+    , ( "cc" , [ MaybeGo ( 1 , "<" , 734 , "A" ) , Reject ] )
+    , ( "rcq" , [ MaybeGo ( 1 , ">" , 3330 , "ffd" ) , Go "sdd" ] )
+    , ( "rrv" , [ MaybeGo ( 1 , "<" , 3751 , "R" ) , Reject ] )
+    , ( "cgr"
+      , [ MaybeGo ( 3 , "<" , 1023 , "R" )
+        , MaybeGo ( 1 , "<" , 3177 , "A" )
+        , MaybeGo ( 1 , ">" , 3227 , "A" )
+        , Accept
+        ]
+      )
+    , ( "mzb"
+      , [ MaybeGo ( 2 , "<" , 185 , "R" )
+        , MaybeGo ( 1 , "<" , 2294 , "A" )
+        , Accept
+        ]
+      )
+    , ( "vhh" , [ MaybeGo ( 1 , "<" , 1253 , "R" ) , Reject ] )
+    , ( "fkk"
+      , [ MaybeGo ( 1 , "<" , 2575 , "pgt" )
+        , MaybeGo ( 0 , ">" , 1787 , "R" )
+        , MaybeGo ( 0 , "<" , 902 , "tj" )
+        , Reject
+        ]
+      )
+    , ( "hp" , [ MaybeGo ( 3 , "<" , 3126 , "A" ) , Reject ] )
+    , ( "tqt"
+      , [ MaybeGo ( 0 , ">" , 1763 , "R" )
+        , MaybeGo ( 2 , "<" , 2539 , "R" )
+        , Reject
+        ]
+      )
+    , ( "mqc"
+      , [ MaybeGo ( 0 , ">" , 2751 , "R" )
+        , MaybeGo ( 3 , "<" , 2721 , "lkx" )
+        , MaybeGo ( 3 , "<" , 3203 , "vf" )
+        , Go "rc"
+        ]
+      )
+    , ( "jl"
+      , [ MaybeGo ( 3 , ">" , 2490 , "A" )
+        , MaybeGo ( 0 , "<" , 1531 , "A" )
+        , Accept
+        ]
+      )
+    , ( "xj" , [ MaybeGo ( 3 , "<" , 2545 , "A" ) , Accept ] )
+    , ( "qm" , [ MaybeGo ( 1 , ">" , 606 , "xqg" ) , Go "zvq" ] )
+    , ( "xcv" , [ MaybeGo ( 2 , ">" , 534 , "R" ) , Go "mzb" ] )
+    , ( "bp"
+      , [ MaybeGo ( 0 , ">" , 3649 , "R" )
+        , MaybeGo ( 1 , "<" , 1264 , "A" )
+        , Reject
+        ]
+      )
+    , ( "hn"
+      , [ MaybeGo ( 1 , "<" , 1115 , "A" )
+        , MaybeGo ( 0 , "<" , 2632 , "R" )
+        , MaybeGo ( 0 , ">" , 2764 , "R" )
+        , Accept
+        ]
+      )
+    , ( "rzj"
+      , [ MaybeGo ( 1 , "<" , 1228 , "R" )
+        , MaybeGo ( 3 , "<" , 713 , "R" )
+        , Reject
+        ]
+      )
+    , ( "npt" , [ MaybeGo ( 2 , ">" , 1293 , "klr" ) , Go "mxh" ] )
+    , ( "gq"
+      , [ MaybeGo ( 3 , "<" , 1476 , "A" )
+        , MaybeGo ( 2 , "<" , 786 , "R" )
+        , MaybeGo ( 2 , ">" , 840 , "R" )
+        , Reject
+        ]
+      )
+    , ( "hck" , [ MaybeGo ( 1 , "<" , 3321 , "A" ) , Accept ] )
+    , ( "pvz"
+      , [ MaybeGo ( 1 , "<" , 108 , "A" )
+        , MaybeGo ( 3 , ">" , 2235 , "A" )
+        , Reject
+        ]
+      )
+    , ( "pph" , [ MaybeGo ( 3 , ">" , 3586 , "A" ) , Accept ] )
+    , ( "hlj"
+      , [ MaybeGo ( 3 , "<" , 492 , "R" )
+        , MaybeGo ( 0 , ">" , 1589 , "A" )
+        , Reject
+        ]
+      )
+    , ( "qjb" , [ MaybeGo ( 3 , "<" , 3285 , "A" ) , Accept ] )
+    , ( "ptb"
+      , [ MaybeGo ( 3 , "<" , 557 , "A" )
+        , MaybeGo ( 0 , "<" , 970 , "R" )
+        , Accept
+        ]
+      )
+    , ( "lpk"
+      , [ MaybeGo ( 0 , "<" , 587 , "pmb" )
+        , MaybeGo ( 2 , "<" , 3274 , "dh" )
+        , MaybeGo ( 1 , "<" , 3889 , "R" )
+        , Go "xks"
+        ]
+      )
+    , ( "jfg"
+      , [ MaybeGo ( 1 , "<" , 757 , "A" )
+        , MaybeGo ( 2 , "<" , 1311 , "A" )
+        , MaybeGo ( 1 , "<" , 1268 , "A" )
+        , Reject
+        ]
+      )
+    , ( "rtz"
+      , [ MaybeGo ( 2 , ">" , 209 , "df" )
+        , MaybeGo ( 1 , ">" , 639 , "cb" )
+        , Go "mnj"
+        ]
+      )
+    , ( "ghh"
+      , [ MaybeGo ( 1 , "<" , 1731 , "A" )
+        , MaybeGo ( 1 , ">" , 1765 , "A" )
+        , Reject
+        ]
+      )
+    , ( "qx"
+      , [ MaybeGo ( 2 , "<" , 312 , "A" )
+        , MaybeGo ( 2 , ">" , 412 , "A" )
+        , Reject
+        ]
+      )
+    , ( "lmx"
+      , [ MaybeGo ( 1 , ">" , 1337 , "R" )
+        , MaybeGo ( 2 , "<" , 1276 , "A" )
+        , Reject
+        ]
+      )
+    , ( "vp" , [ MaybeGo ( 3 , ">" , 3461 , "A" ) , Accept ] )
+    , ( "kkz" , [ MaybeGo ( 1 , ">" , 607 , "R" ) , Reject ] )
+    , ( "fm"
+      , [ MaybeGo ( 0 , ">" , 1486 , "R" )
+        , MaybeGo ( 1 , "<" , 2571 , "A" )
+        , MaybeGo ( 2 , ">" , 1309 , "R" )
+        , Accept
+        ]
+      )
+    , ( "fxb"
+      , [ MaybeGo ( 1 , "<" , 2661 , "R" )
+        , MaybeGo ( 0 , "<" , 2111 , "A" )
+        , Accept
+        ]
+      )
+    , ( "gg"
+      , [ MaybeGo ( 0 , ">" , 897 , "zhq" )
+        , MaybeGo ( 3 , ">" , 1653 , "qs" )
+        , Reject
+        ]
+      )
+    , ( "lls"
+      , [ MaybeGo ( 1 , ">" , 1995 , "A" )
+        , MaybeGo ( 1 , "<" , 1923 , "A" )
+        , Reject
+        ]
+      )
+    , ( "brn"
+      , [ MaybeGo ( 2 , ">" , 1086 , "A" )
+        , MaybeGo ( 2 , "<" , 935 , "A" )
+        , Accept
+        ]
+      )
+    , ( "jb"
+      , [ MaybeGo ( 0 , ">" , 3055 , "kd" )
+        , MaybeGo ( 1 , "<" , 1445 , "dm" )
+        , Go "lbs"
+        ]
+      )
+    , ( "td"
+      , [ MaybeGo ( 0 , "<" , 2197 , "R" )
+        , MaybeGo ( 0 , ">" , 2608 , "A" )
+        , Accept
+        ]
+      )
+    , ( "bv"
+      , [ MaybeGo ( 2 , "<" , 2458 , "R" )
+        , MaybeGo ( 1 , "<" , 3711 , "pt" )
+        , MaybeGo ( 1 , ">" , 3773 , "zhl" )
+        , Go "dkz"
+        ]
+      )
+    , ( "fsx"
+      , [ MaybeGo ( 2 , "<" , 2621 , "A" )
+        , MaybeGo ( 2 , "<" , 3519 , "R" )
+        , Reject
+        ]
+      )
+    , ( "slk"
+      , [ MaybeGo ( 2 , "<" , 847 , "kn" )
+        , MaybeGo ( 1 , "<" , 2666 , "nt" )
+        , MaybeGo ( 0 , "<" , 1985 , "mt" )
+        , Go "cmg"
+        ]
+      )
+    , ( "vkg"
+      , [ MaybeGo ( 1 , ">" , 304 , "sv" )
+        , MaybeGo ( 1 , "<" , 201 , "lqf" )
+        , Go "gc"
+        ]
+      )
+    , ( "lq"
+      , [ MaybeGo ( 0 , "<" , 3568 , "R" )
+        , MaybeGo ( 3 , ">" , 1780 , "R" )
+        , MaybeGo ( 1 , ">" , 696 , "A" )
+        , Reject
+        ]
+      )
+    , ( "jvb"
+      , [ MaybeGo ( 2 , "<" , 3938 , "A" )
+        , MaybeGo ( 2 , ">" , 3977 , "A" )
+        , MaybeGo ( 1 , ">" , 3920 , "A" )
+        , Accept
+        ]
+      )
+    , ( "gm"
+      , [ MaybeGo ( 1 , "<" , 364 , "R" )
+        , MaybeGo ( 1 , "<" , 438 , "R" )
+        , Reject
+        ]
+      )
+    , ( "rvs" , [ MaybeGo ( 2 , ">" , 1298 , "sx" ) , Go "xlv" ] )
+    , ( "rrq" , [ MaybeGo ( 0 , "<" , 2862 , "R" ) , Reject ] )
+    , ( "dhd"
+      , [ MaybeGo ( 3 , ">" , 990 , "R" )
+        , MaybeGo ( 1 , "<" , 3426 , "R" )
+        , Reject
+        ]
+      )
+    , ( "btm"
+      , [ MaybeGo ( 1 , "<" , 2792 , "xjs" )
+        , MaybeGo ( 0 , "<" , 2487 , "rcq" )
+        , Go "sz"
+        ]
+      )
+    , ( "grr"
+      , [ MaybeGo ( 2 , ">" , 2840 , "A" )
+        , MaybeGo ( 3 , "<" , 3459 , "R" )
+        , MaybeGo ( 1 , ">" , 3809 , "R" )
+        , Accept
+        ]
+      )
+    , ( "kk" , [ MaybeGo ( 1 , "<" , 1175 , "bg" ) , Go "td" ] )
+    , ( "gc"
+      , [ MaybeGo ( 3 , "<" , 2493 , "mmv" )
+        , MaybeGo ( 1 , "<" , 256 , "nk" )
+        , Go "kdx"
+        ]
+      )
+    , ( "qrp"
+      , [ MaybeGo ( 0 , ">" , 3233 , "nb" )
+        , MaybeGo ( 0 , ">" , 2759 , "bm" )
+        , Go "srn"
+        ]
+      )
+    , ( "bqq"
+      , [ MaybeGo ( 1 , ">" , 3706 , "A" )
+        , MaybeGo ( 1 , ">" , 3640 , "R" )
+        , Reject
+        ]
+      )
+    , ( "hbj"
+      , [ MaybeGo ( 3 , ">" , 1495 , "R" )
+        , MaybeGo ( 1 , "<" , 3875 , "R" )
+        , Reject
+        ]
+      )
+    , ( "prh"
+      , [ MaybeGo ( 3 , ">" , 2052 , "xvn" )
+        , MaybeGo ( 0 , "<" , 2877 , "rgb" )
+        , MaybeGo ( 3 , "<" , 1031 , "tjp" )
+        , Go "xh"
+        ]
+      )
+    , ( "qd" , [ MaybeGo ( 0 , ">" , 2236 , "gjq" ) , Go "cr" ] )
+    , ( "tg"
+      , [ MaybeGo ( 2 , "<" , 3036 , "bz" )
+        , MaybeGo ( 3 , ">" , 2191 , "fcv" )
+        , MaybeGo ( 0 , ">" , 825 , "qp" )
+        , Go "xrq"
+        ]
+      )
+    , ( "xpz"
+      , [ MaybeGo ( 2 , "<" , 3808 , "R" )
+        , MaybeGo ( 2 , ">" , 3872 , "A" )
+        , Reject
+        ]
+      )
+    , ( "xdb"
+      , [ MaybeGo ( 0 , ">" , 3728 , "A" )
+        , MaybeGo ( 2 , "<" , 1566 , "R" )
+        , MaybeGo ( 2 , "<" , 1677 , "R" )
+        , Accept
+        ]
+      )
+    , ( "sb"
+      , [ MaybeGo ( 2 , ">" , 1109 , "A" )
+        , MaybeGo ( 1 , "<" , 1078 , "R" )
+        , Accept
+        ]
+      )
+    , ( "qlh" , [ MaybeGo ( 3 , "<" , 1420 , "R" ) , Reject ] )
+    , ( "qk"
+      , [ MaybeGo ( 1 , ">" , 849 , "R" )
+        , MaybeGo ( 0 , "<" , 242 , "R" )
+        , MaybeGo ( 1 , "<" , 753 , "A" )
+        , Go "jln"
+        ]
+      )
+    , ( "mrk" , [ MaybeGo ( 2 , "<" , 3128 , "A" ) , Accept ] )
+    , ( "rqj"
+      , [ MaybeGo ( 2 , "<" , 2350 , "lls" )
+        , MaybeGo ( 1 , ">" , 2129 , "kt" )
+        , MaybeGo ( 2 , ">" , 2428 , "A" )
+        , Accept
+        ]
+      )
+    , ( "qv"
+      , [ MaybeGo ( 0 , ">" , 561 , "R" )
+        , MaybeGo ( 1 , "<" , 3759 , "R" )
+        , Reject
+        ]
+      )
+    , ( "nb"
+      , [ MaybeGo ( 2 , ">" , 2519 , "R" )
+        , MaybeGo ( 3 , ">" , 1151 , "R" )
+        , MaybeGo ( 2 , "<" , 1781 , "xdb" )
+        , Reject
+        ]
+      )
+    , ( "css"
+      , [ MaybeGo ( 0 , ">" , 776 , "cxn" )
+        , MaybeGo ( 1 , "<" , 3711 , "rch" )
+        , Go "hnj"
+        ]
+      )
+    , ( "xrq"
+      , [ MaybeGo ( 1 , ">" , 785 , "A" )
+        , MaybeGo ( 0 , "<" , 416 , "hj" )
+        , MaybeGo ( 1 , ">" , 700 , "A" )
+        , Go "nz"
+        ]
+      )
+    , ( "rch"
+      , [ MaybeGo ( 0 , ">" , 274 , "R" )
+        , MaybeGo ( 0 , ">" , 136 , "R" )
+        , Go "bs"
+        ]
+      )
+    , ( "rhh"
+      , [ MaybeGo ( 0 , "<" , 2975 , "tb" )
+        , MaybeGo ( 2 , ">" , 1112 , "zjf" )
+        , MaybeGo ( 0 , "<" , 3446 , "qg" )
+        , Go "gkc"
+        ]
+      )
+    , ( "fhq"
+      , [ MaybeGo ( 0 , ">" , 1057 , "vrs" )
+        , MaybeGo ( 3 , "<" , 2274 , "R" )
+        , Reject
+        ]
+      )
+    , ( "dc"
+      , [ MaybeGo ( 0 , "<" , 1435 , "bqk" )
+        , MaybeGo ( 1 , ">" , 419 , "glc" )
+        , MaybeGo ( 1 , "<" , 242 , "hlj" )
+        , Go "hpl"
+        ]
+      )
+    , ( "snm"
+      , [ MaybeGo ( 0 , "<" , 725 , "R" )
+        , MaybeGo ( 1 , "<" , 1713 , "A" )
+        , MaybeGo ( 0 , "<" , 879 , "A" )
+        , Reject
+        ]
+      )
+    , ( "pg" , [ MaybeGo ( 1 , ">" , 390 , "A" ) , Reject ] )
+    , ( "hb"
+      , [ MaybeGo ( 0 , ">" , 884 , "A" )
+        , MaybeGo ( 2 , "<" , 875 , "A" )
+        , MaybeGo ( 1 , ">" , 1324 , "R" )
+        , Accept
+        ]
+      )
+    , ( "lbs"
+      , [ MaybeGo ( 0 , ">" , 2854 , "R" )
+        , MaybeGo ( 2 , ">" , 785 , "R" )
+        , Accept
+        ]
+      )
+    , ( "mzm"
+      , [ MaybeGo ( 3 , ">" , 2314 , "bdt" )
+        , MaybeGo ( 3 , "<" , 1540 , "A" )
+        , MaybeGo ( 0 , "<" , 3283 , "A" )
+        , Go "pg"
+        ]
+      )
+    , ( "txd"
+      , [ MaybeGo ( 3 , ">" , 1260 , "R" )
+        , MaybeGo ( 2 , ">" , 2410 , "A" )
+        , Reject
+        ]
+      )
+    , ( "smk"
+      , [ MaybeGo ( 0 , "<" , 3796 , "lq" )
+        , MaybeGo ( 0 , "<" , 3880 , "R" )
+        , MaybeGo ( 3 , "<" , 1792 , "zs" )
+        , Reject
+        ]
+      )
+    , ( "rc" , [ MaybeGo ( 1 , ">" , 3702 , "R" ) , Reject ] )
+    , ( "gtb" , [ MaybeGo ( 2 , "<" , 1533 , "A" ) , Reject ] )
+    , ( "bbl"
+      , [ MaybeGo ( 1 , "<" , 2805 , "R" )
+        , MaybeGo ( 0 , ">" , 3597 , "R" )
+        , MaybeGo ( 1 , "<" , 2849 , "A" )
+        , Accept
+        ]
+      )
+    , ( "bbc"
+      , [ MaybeGo ( 2 , ">" , 3016 , "prh" )
+        , MaybeGo ( 2 , "<" , 2607 , "zhz" )
+        , MaybeGo ( 2 , ">" , 2815 , "fjx" )
+        , Go "jlq"
+        ]
+      )
+    , ( "rn"
+      , [ MaybeGo ( 0 , ">" , 2616 , "R" )
+        , MaybeGo ( 3 , ">" , 3454 , "A" )
+        , MaybeGo ( 1 , "<" , 1978 , "R" )
+        , Accept
+        ]
+      )
+    , ( "glc"
+      , [ MaybeGo ( 3 , "<" , 861 , "A" )
+        , MaybeGo ( 1 , ">" , 625 , "R" )
+        , Accept
+        ]
+      )
+    , ( "jbc"
+      , [ MaybeGo ( 2 , "<" , 396 , "cmx" )
+        , MaybeGo ( 2 , ">" , 419 , "hc" )
+        , Reject
+        ]
+      )
+    , ( "tb"
+      , [ MaybeGo ( 0 , "<" , 2314 , "tts" )
+        , MaybeGo ( 3 , "<" , 1629 , "gzg" )
+        , MaybeGo ( 0 , ">" , 2644 , "kz" )
+        , Go "mg"
+        ]
+      )
+    , ( "vml"
+      , [ MaybeGo ( 0 , "<" , 209 , "vg" )
+        , MaybeGo ( 1 , ">" , 3897 , "R" )
+        , Accept
+        ]
+      )
+    , ( "xm"
+      , [ MaybeGo ( 0 , "<" , 2530 , "R" )
+        , MaybeGo ( 2 , ">" , 175 , "R" )
+        , Reject
+        ]
+      )
+    , ( "zxd" , [ MaybeGo ( 2 , "<" , 2811 , "A" ) , Go "mkg" ] )
+    , ( "xvv"
+      , [ MaybeGo ( 2 , "<" , 599 , "R" )
+        , MaybeGo ( 2 , ">" , 844 , "A" )
+        , Accept
+        ]
+      )
+    , ( "bdt"
+      , [ MaybeGo ( 1 , ">" , 340 , "A" )
+        , MaybeGo ( 3 , ">" , 3192 , "R" )
+        , Accept
+        ]
+      )
+    , ( "qlc" , [ MaybeGo ( 1 , "<" , 1024 , "qvh" ) , Go "vx" ] )
+    , ( "pcx" , [ MaybeGo ( 3 , ">" , 1363 , "A" ) , Go "tcf" ] )
+    , ( "pcj" , [ MaybeGo ( 2 , ">" , 3615 , "vhd" ) , Go "hqz" ] )
+    , ( "ckf"
+      , [ MaybeGo ( 0 , "<" , 3624 , "A" )
+        , MaybeGo ( 0 , ">" , 3804 , "A" )
+        , MaybeGo ( 3 , ">" , 3001 , "A" )
+        , Reject
+        ]
+      )
+    , ( "rm"
+      , [ MaybeGo ( 0 , ">" , 3171 , "R" )
+        , MaybeGo ( 0 , ">" , 2793 , "A" )
+        , Reject
+        ]
+      )
+    , ( "lqf"
+      , [ MaybeGo ( 3 , ">" , 1779 , "A" )
+        , MaybeGo ( 2 , "<" , 2366 , "A" )
+        , MaybeGo ( 0 , "<" , 1301 , "R" )
+        , Go "jx"
+        ]
+      )
+    , ( "js"
+      , [ MaybeGo ( 1 , "<" , 2084 , "R" )
+        , MaybeGo ( 0 , "<" , 2870 , "R" )
+        , Reject
+        ]
+      )
+    , ( "hs"
+      , [ MaybeGo ( 3 , "<" , 1082 , "A" )
+        , MaybeGo ( 0 , ">" , 1329 , "R" )
+        , MaybeGo ( 2 , ">" , 320 , "A" )
+        , Accept
+        ]
+      )
+    , ( "xt"
+      , [ MaybeGo ( 1 , ">" , 958 , "gp" )
+        , MaybeGo ( 0 , ">" , 1443 , "tqt" )
+        , MaybeGo ( 0 , ">" , 713 , "mh" )
+        , Accept
+        ]
+      )
+    , ( "bcr"
+      , [ MaybeGo ( 3 , "<" , 2914 , "R" )
+        , MaybeGo ( 3 , ">" , 3566 , "A" )
+        , MaybeGo ( 2 , "<" , 296 , "A" )
+        , Reject
+        ]
+      )
+    , ( "lk"
+      , [ MaybeGo ( 0 , ">" , 1968 , "A" )
+        , MaybeGo ( 2 , ">" , 1002 , "R" )
+        , MaybeGo ( 0 , ">" , 1816 , "A" )
+        , Reject
+        ]
+      )
+    , ( "bf"
+      , [ MaybeGo ( 2 , ">" , 510 , "R" )
+        , MaybeGo ( 3 , ">" , 2009 , "A" )
+        , Reject
+        ]
+      )
+    , ( "pb" , [ MaybeGo ( 0 , ">" , 3849 , "R" ) , Accept ] )
+    , ( "sj"
+      , [ MaybeGo ( 1 , "<" , 1177 , "R" )
+        , MaybeGo ( 1 , ">" , 1213 , "R" )
+        , Accept
+        ]
+      )
+    , ( "spt" , [ MaybeGo ( 2 , ">" , 406 , "R" ) , Accept ] )
+    , ( "sz"
+      , [ MaybeGo ( 3 , ">" , 3282 , "dk" )
+        , MaybeGo ( 0 , ">" , 3252 , "qjx" )
+        , Go "vfv"
+        ]
+      )
+    , ( "kkb"
+      , [ MaybeGo ( 2 , "<" , 234 , "hr" )
+        , MaybeGo ( 1 , ">" , 1487 , "bcr" )
+        , Go "gk"
+        ]
+      )
+    , ( "lkx"
+      , [ MaybeGo ( 3 , ">" , 2236 , "R" )
+        , MaybeGo ( 0 , "<" , 2351 , "A" )
+        , MaybeGo ( 2 , ">" , 2888 , "A" )
+        , Accept
+        ]
+      )
+    , ( "mt" , [ MaybeGo ( 1 , "<" , 3297 , "jfp" ) , Go "sd" ] )
+    , ( "nt"
+      , [ MaybeGo ( 3 , ">" , 1658 , "A" )
+        , MaybeGo ( 1 , ">" , 2167 , "R" )
+        , MaybeGo ( 0 , "<" , 1701 , "A" )
+        , Go "knr"
+        ]
+      )
+    , ( "sq" , [ MaybeGo ( 1 , ">" , 1329 , "R" ) , Reject ] )
+    , ( "rhn"
+      , [ MaybeGo ( 0 , "<" , 963 , "R" )
+        , MaybeGo ( 3 , "<" , 2257 , "R" )
+        , Accept
+        ]
+      )
+    , ( "cl" , [ MaybeGo ( 3 , ">" , 1521 , "tz" ) , Go "rzj" ] )
+    , ( "cr" , [ MaybeGo ( 2 , "<" , 1417 , "fm" ) , Go "gtb" ] )
+    , ( "gfp" , [ MaybeGo ( 1 , ">" , 3428 , "zxd" ) , Go "kqq" ] )
+    , ( "jnp"
+      , [ MaybeGo ( 2 , "<" , 233 , "A" )
+        , MaybeGo ( 3 , ">" , 2408 , "R" )
+        , MaybeGo ( 0 , "<" , 3862 , "R" )
+        , Reject
+        ]
+      )
+    , ( "bcm"
+      , [ MaybeGo ( 3 , "<" , 3214 , "R" )
+        , MaybeGo ( 0 , "<" , 764 , "R" )
+        , Accept
+        ]
+      )
+    , ( "mnj"
+      , [ MaybeGo ( 0 , ">" , 2286 , "hhj" )
+        , MaybeGo ( 3 , ">" , 1392 , "gr" )
+        , Reject
+        ]
+      )
+    , ( "lbx"
+      , [ MaybeGo ( 1 , ">" , 2195 , "rt" )
+        , MaybeGo ( 2 , ">" , 3305 , "xbd" )
+        , Go "pht"
+        ]
+      )
+    , ( "kn"
+      , [ MaybeGo ( 0 , "<" , 1718 , "zpb" )
+        , MaybeGo ( 0 , ">" , 2652 , "A" )
+        , Go "pbd"
+        ]
+      )
+    , ( "kg" , [ MaybeGo ( 2 , ">" , 780 , "vp" ) , Reject ] )
+    , ( "qgp"
+      , [ MaybeGo ( 1 , ">" , 263 , "R" )
+        , MaybeGo ( 1 , ">" , 115 , "R" )
+        , MaybeGo ( 1 , "<" , 72 , "R" )
+        , Accept
+        ]
+      )
+    , ( "kd"
+      , [ MaybeGo ( 3 , "<" , 708 , "A" )
+        , MaybeGo ( 2 , ">" , 788 , "R" )
+        , MaybeGo ( 3 , "<" , 1456 , "A" )
+        , Accept
+        ]
+      )
+    , ( "zhz" , [ MaybeGo ( 1 , "<" , 3445 , "lz" ) , Go "cxp" ] )
+    , ( "ctn"
+      , [ MaybeGo ( 1 , ">" , 2884 , "npp" )
+        , MaybeGo ( 3 , ">" , 1983 , "R" )
+        , MaybeGo ( 1 , ">" , 2664 , "bbl" )
+        , Go "vq"
+        ]
+      )
+    , ( "bn"
+      , [ MaybeGo ( 3 , ">" , 789 , "A" )
+        , MaybeGo ( 1 , ">" , 376 , "A" )
+        , Accept
+        ]
+      )
+    , ( "tc" , [ MaybeGo ( 3 , "<" , 2245 , "R" ) , Go "mrk" ] )
+    , ( "fcd"
+      , [ MaybeGo ( 2 , "<" , 1130 , "R" )
+        , MaybeGo ( 3 , "<" , 3191 , "R" )
+        , Accept
+        ]
+      )
+    , ( "pt" , [ MaybeGo ( 1 , "<" , 3631 , "R" ) , Reject ] )
+    , ( "hgz"
+      , [ MaybeGo ( 2 , ">" , 1320 , "A" )
+        , MaybeGo ( 1 , ">" , 785 , "A" )
+        , MaybeGo ( 0 , "<" , 536 , "R" )
+        , Accept
+        ]
+      )
+    , ( "zkr"
+      , [ MaybeGo ( 0 , "<" , 918 , "R" )
+        , MaybeGo ( 2 , "<" , 2882 , "A" )
+        , Accept
+        ]
+      )
+    , ( "kpz"
+      , [ MaybeGo ( 2 , ">" , 1024 , "R" )
+        , MaybeGo ( 2 , ">" , 1016 , "R" )
+        , Accept
+        ]
+      )
+    , ( "bvp" , [ MaybeGo ( 3 , "<" , 2372 , "A" ) , Accept ] )
+    , ( "nx"
+      , [ MaybeGo ( 3 , ">" , 817 , "A" )
+        , MaybeGo ( 1 , ">" , 738 , "A" )
+        , MaybeGo ( 1 , "<" , 651 , "R" )
+        , Accept
+        ]
+      )
+    , ( "nzd" , [ MaybeGo ( 1 , "<" , 3103 , "A" ) , Reject ] )
+    , ( "nj" , [ MaybeGo ( 0 , ">" , 1965 , "bbc" ) , Go "gfp" ] )
+    , ( "cjn"
+      , [ MaybeGo ( 0 , ">" , 2243 , "R" )
+        , MaybeGo ( 1 , "<" , 709 , "R" )
+        , MaybeGo ( 0 , ">" , 1956 , "R" )
+        , Reject
+        ]
+      )
+    , ( "kgp"
+      , [ MaybeGo ( 2 , ">" , 1024 , "R" )
+        , MaybeGo ( 2 , "<" , 983 , "A" )
+        , Accept
+        ]
+      )
+    , ( "ht" , [ MaybeGo ( 0 , "<" , 2088 , "A" ) , Reject ] )
+    , ( "bgn" , [ MaybeGo ( 3 , ">" , 3068 , "A" ) , Reject ] )
+    , ( "mcg"
+      , [ MaybeGo ( 2 , "<" , 2768 , "R" )
+        , MaybeGo ( 1 , "<" , 3382 , "R" )
+        , Accept
+        ]
+      )
+    , ( "mj" , [ MaybeGo ( 1 , "<" , 3800 , "mzg" ) , Go "lvz" ] )
+    , ( "sk" , [ MaybeGo ( 1 , "<" , 662 , "R" ) , Reject ] )
+    , ( "dhk"
+      , [ MaybeGo ( 2 , "<" , 1975 , "R" )
+        , MaybeGo ( 1 , "<" , 2911 , "A" )
+        , MaybeGo ( 3 , ">" , 2707 , "A" )
+        , Reject
+        ]
+      )
+    , ( "qg"
+      , [ MaybeGo ( 1 , "<" , 687 , "mzm" )
+        , MaybeGo ( 0 , "<" , 3206 , "vhh" )
+        , MaybeGo ( 0 , "<" , 3319 , "rqd" )
+        , Go "tq"
+        ]
+      )
+    , ( "vl"
+      , [ MaybeGo ( 0 , ">" , 2211 , "R" )
+        , MaybeGo ( 2 , "<" , 3304 , "A" )
+        , MaybeGo ( 3 , "<" , 878 , "A" )
+        , Reject
+        ]
+      )
+    , ( "xs"
+      , [ MaybeGo ( 1 , "<" , 3677 , "rq" )
+        , MaybeGo ( 1 , "<" , 3749 , "R" )
+        , MaybeGo ( 2 , "<" , 2400 , "drg" )
+        , Reject
+        ]
+      )
+    , ( "jk"
+      , [ MaybeGo ( 0 , ">" , 2815 , "A" )
+        , MaybeGo ( 1 , "<" , 2839 , "A" )
+        , Reject
+        ]
+      )
+    , ( "bqf" , [ MaybeGo ( 0 , "<" , 1277 , "R" ) , Reject ] )
+    , ( "gr"
+      , [ MaybeGo ( 0 , "<" , 1904 , "A" )
+        , MaybeGo ( 1 , ">" , 372 , "R" )
+        , Accept
+        ]
+      )
+    , ( "jhn"
+      , [ MaybeGo ( 3 , ">" , 2149 , "tdc" )
+        , MaybeGo ( 2 , "<" , 2796 , "cgr" )
+        , Accept
+        ]
+      )
+    , ( "sc" , [ MaybeGo ( 2 , ">" , 803 , "A" ) , Accept ] )
+    , ( "xzs" , [ MaybeGo ( 1 , "<" , 1253 , "R" ) , Accept ] )
+    , ( "xls"
+      , [ MaybeGo ( 2 , ">" , 2741 , "R" )
+        , MaybeGo ( 2 , ">" , 2721 , "A" )
+        , MaybeGo ( 1 , "<" , 2100 , "R" )
+        , Reject
+        ]
+      )
+    , ( "sx" , [ MaybeGo ( 2 , "<" , 1357 , "kkz" ) , Go "fj" ] )
+    , ( "ljp"
+      , [ MaybeGo ( 3 , ">" , 1204 , "A" )
+        , MaybeGo ( 2 , ">" , 3115 , "A" )
+        , Accept
+        ]
+      )
+    , ( "dp"
+      , [ MaybeGo ( 0 , ">" , 3217 , "A" )
+        , MaybeGo ( 1 , ">" , 2662 , "A" )
+        , MaybeGo ( 0 , ">" , 3064 , "A" )
+        , Accept
+        ]
+      )
+    , ( "jp"
+      , [ MaybeGo ( 1 , ">" , 961 , "A" )
+        , MaybeGo ( 3 , ">" , 1784 , "A" )
+        , Accept
+        ]
+      )
+    , ( "pbz"
+      , [ MaybeGo ( 0 , "<" , 1645 , "fhq" )
+        , MaybeGo ( 1 , "<" , 2636 , "hg" )
+        , MaybeGo ( 0 , "<" , 2254 , "fck" )
+        , Go "pss"
+        ]
+      )
+    , ( "jx" , [ MaybeGo ( 1 , ">" , 122 , "R" ) , Accept ] )
+    , ( "hjh"
+      , [ MaybeGo ( 0 , ">" , 1552 , "A" )
+        , MaybeGo ( 3 , "<" , 907 , "A" )
+        , MaybeGo ( 3 , ">" , 1256 , "A" )
+        , Reject
+        ]
+      )
+    , ( "zs" , [ MaybeGo ( 2 , ">" , 1056 , "A" ) , Reject ] )
+    , ( "mmv"
+      , [ MaybeGo ( 1 , "<" , 262 , "R" )
+        , MaybeGo ( 0 , ">" , 1311 , "A" )
+        , MaybeGo ( 0 , "<" , 449 , "R" )
+        , Accept
+        ]
+      )
+    , ( "zpx"
+      , [ MaybeGo ( 1 , "<" , 3773 , "R" )
+        , MaybeGo ( 3 , ">" , 816 , "A" )
+        , Reject
+        ]
+      )
+    , ( "ch" , [ MaybeGo ( 3 , "<" , 2218 , "A" ) , Reject ] )
+    , ( "hhj"
+      , [ MaybeGo ( 0 , ">" , 2664 , "R" )
+        , MaybeGo ( 0 , "<" , 2502 , "A" )
+        , Reject
+        ]
+      )
+    , ( "pk" , [ MaybeGo ( 1 , "<" , 3621 , "R" ) , Accept ] )
+    , ( "zp" , [ MaybeGo ( 2 , ">" , 2648 , "A" ) , Accept ] )
+    , ( "cmg"
+      , [ MaybeGo ( 0 , "<" , 2985 , "brn" )
+        , MaybeGo ( 0 , ">" , 3380 , "R" )
+        , MaybeGo ( 0 , ">" , 3241 , "zn" )
+        , Reject
+        ]
+      )
+    , ( "mg" , [ MaybeGo ( 3 , ">" , 2602 , "fn" ) , Accept ] )
+    , ( "dkz"
+      , [ MaybeGo ( 1 , ">" , 3737 , "A" )
+        , MaybeGo ( 0 , "<" , 802 , "A" )
+        , Reject
+        ]
+      )
+    , ( "npp"
+      , [ MaybeGo ( 3 , "<" , 1927 , "R" )
+        , MaybeGo ( 1 , "<" , 3037 , "A" )
+        , Accept
+        ]
+      )
+    , ( "zc"
+      , [ MaybeGo ( 0 , "<" , 3640 , "R" )
+        , MaybeGo ( 1 , ">" , 631 , "R" )
+        , Accept
+        ]
+      )
+    , ( "cdv"
+      , [ MaybeGo ( 1 , "<" , 1246 , "R" )
+        , MaybeGo ( 2 , "<" , 1145 , "A" )
+        , Go "hlx"
+        ]
+      )
+    , ( "knr" , [ MaybeGo ( 3 , "<" , 1390 , "A" ) , Accept ] )
+    , ( "pmb"
+      , [ MaybeGo ( 2 , "<" , 3384 , "R" )
+        , MaybeGo ( 2 , ">" , 3487 , "R" )
+        , MaybeGo ( 3 , ">" , 3022 , "A" )
+        , Reject
+        ]
+      )
+    , ( "ph"
+      , [ MaybeGo ( 2 , ">" , 1933 , "R" )
+        , MaybeGo ( 1 , "<" , 1747 , "R" )
+        , Reject
+        ]
+      )
+    , ( "dx" , [ MaybeGo ( 3 , ">" , 2250 , "A" ) , Reject ] )
+    , ( "lb"
+      , [ MaybeGo ( 2 , "<" , 977 , "gg" )
+        , MaybeGo ( 0 , ">" , 674 , "fxn" )
+        , Go "zzp"
+        ]
+      )
+    , ( "pd"
+      , [ MaybeGo ( 2 , ">" , 714 , "R" )
+        , MaybeGo ( 3 , "<" , 705 , "R" )
+        , Accept
+        ]
+      )
+    , ( "lm" , [ MaybeGo ( 3 , ">" , 3149 , "A" ) , Reject ] )
+    , ( "kks"
+      , [ MaybeGo ( 1 , "<" , 591 , "vkg" )
+        , MaybeGo ( 1 , "<" , 885 , "tg" )
+        , MaybeGo ( 3 , ">" , 1503 , "hvj" )
+        , Go "rr"
+        ]
+      )
+    , ( "bz"
+      , [ MaybeGo ( 0 , ">" , 1564 , "A" )
+        , MaybeGo ( 3 , "<" , 2021 , "A" )
+        , MaybeGo ( 0 , "<" , 851 , "A" )
+        , Reject
+        ]
+      )
+    , ( "bhm"
+      , [ MaybeGo ( 0 , ">" , 3186 , "A" )
+        , MaybeGo ( 3 , ">" , 2907 , "js" )
+        , Go "lt"
+        ]
+      )
+    , ( "pj"
+      , [ MaybeGo ( 1 , "<" , 1029 , "lqj" )
+        , MaybeGo ( 1 , ">" , 1387 , "vr" )
+        , Reject
+        ]
+      )
+    , ( "plb"
+      , [ MaybeGo ( 0 , "<" , 3671 , "A" )
+        , MaybeGo ( 2 , "<" , 921 , "R" )
+        , Accept
+        ]
+      )
+    , ( "mxh"
+      , [ MaybeGo ( 1 , ">" , 1096 , "A" )
+        , MaybeGo ( 2 , ">" , 1255 , "R" )
+        , Go "vqc"
+        ]
+      )
+    , ( "jkp"
+      , [ MaybeGo ( 0 , "<" , 816 , "R" )
+        , MaybeGo ( 0 , ">" , 1084 , "A" )
+        , MaybeGo ( 2 , "<" , 2935 , "A" )
+        , Reject
+        ]
+      )
+    , ( "fn"
+      , [ MaybeGo ( 3 , "<" , 3288 , "R" )
+        , MaybeGo ( 0 , "<" , 2433 , "R" )
+        , MaybeGo ( 0 , ">" , 2525 , "A" )
+        , Reject
+        ]
+      )
+    , ( "nhl"
+      , [ MaybeGo ( 1 , "<" , 2352 , "R" )
+        , MaybeGo ( 0 , ">" , 2923 , "dp" )
+        , Go "jk"
+        ]
+      )
+    , ( "tj" , [ MaybeGo ( 3 , ">" , 710 , "A" ) , Accept ] )
+    , ( "jf"
+      , [ MaybeGo ( 3 , "<" , 1662 , "R" )
+        , MaybeGo ( 3 , ">" , 2786 , "lj" )
+        , MaybeGo ( 1 , "<" , 244 , "pvz" )
+        , Accept
+        ]
+      )
+    , ( "vb"
+      , [ MaybeGo ( 0 , "<" , 3555 , "R" )
+        , MaybeGo ( 0 , "<" , 3725 , "R" )
+        , Go "jnp"
+        ]
+      )
+    , ( "nq" , [ MaybeGo ( 0 , ">" , 2986 , "fcl" ) , Go "zzc" ] )
+    , ( "fnq"
+      , [ MaybeGo ( 2 , "<" , 503 , "R" )
+        , MaybeGo ( 2 , ">" , 510 , "sm" )
+        , MaybeGo ( 0 , ">" , 2449 , "A" )
+        , Go "pr"
+        ]
+      )
+    , ( "mkj"
+      , [ MaybeGo ( 3 , "<" , 1719 , "A" )
+        , MaybeGo ( 3 , ">" , 3137 , "R" )
+        , Accept
+        ]
+      )
+    , ( "sbv"
+      , [ MaybeGo ( 2 , "<" , 1373 , "A" )
+        , MaybeGo ( 0 , "<" , 1473 , "R" )
+        , Reject
+        ]
+      )
+    , ( "dk"
+      , [ MaybeGo ( 3 , ">" , 3679 , "hpj" )
+        , MaybeGo ( 2 , "<" , 567 , "R" )
+        , MaybeGo ( 1 , "<" , 3407 , "bh" )
+        , Go "rm"
+        ]
+      )
+    , ( "dd"
+      , [ MaybeGo ( 0 , ">" , 667 , "bd" )
+        , MaybeGo ( 1 , ">" , 1103 , "jhc" )
+        , MaybeGo ( 0 , "<" , 384 , "qk" )
+        , Go "vn"
+        ]
+      )
+    , ( "rpc" , [ MaybeGo ( 1 , "<" , 1054 , "R" ) , Accept ] )
+    , ( "rct" , [ MaybeGo ( 1 , ">" , 2928 , "R" ) , Accept ] )
+    , ( "cls"
+      , [ MaybeGo ( 0 , ">" , 651 , "R" )
+        , MaybeGo ( 1 , "<" , 3664 , "A" )
+        , Reject
+        ]
+      )
+    , ( "rr"
+      , [ MaybeGo ( 0 , "<" , 1350 , "hjg" )
+        , MaybeGo ( 0 , "<" , 1851 , "jh" )
+        , Go "mv"
+        ]
+      )
+    , ( "mk" , [ MaybeGo ( 1 , "<" , 406 , "R" ) , Reject ] )
+    , ( "vj" , [ MaybeGo ( 2 , ">" , 50 , "A" ) , Reject ] )
+    , ( "rfl"
+      , [ MaybeGo ( 3 , ">" , 3583 , "R" )
+        , MaybeGo ( 2 , ">" , 353 , "R" )
+        , Accept
+        ]
+      )
+    , ( "sr" , [ MaybeGo ( 2 , ">" , 3689 , "zzs" ) , Go "pk" ] )
+    , ( "crf"
+      , [ MaybeGo ( 3 , ">" , 2533 , "bqq" )
+        , MaybeGo ( 1 , ">" , 3663 , "R" )
+        , MaybeGo ( 3 , "<" , 2209 , "A" )
+        , Accept
+        ]
+      )
+    , ( "hc" , [ MaybeGo ( 1 , ">" , 464 , "A" ) , Reject ] )
+    , ( "qt"
+      , [ MaybeGo ( 3 , "<" , 292 , "qds" )
+        , MaybeGo ( 1 , "<" , 3916 , "ptb" )
+        , MaybeGo ( 3 , "<" , 524 , "ns" )
+        , Go "scg"
+        ]
+      )
+    , ( "gkc" , [ MaybeGo ( 2 , "<" , 988 , "xvh" ) , Go "smk" ] )
+    , ( "rd" , [ MaybeGo ( 3 , ">" , 1755 , "nq" ) , Go "qrp" ] )
+    , ( "kvq"
+      , [ MaybeGo ( 2 , "<" , 2814 , "fsh" )
+        , MaybeGo ( 0 , "<" , 3395 , "gvm" )
+        , Go "crl"
+        ]
+      )
+    , ( "lp"
+      , [ MaybeGo ( 1 , ">" , 3819 , "md" )
+        , MaybeGo ( 2 , ">" , 2795 , "ldq" )
+        , MaybeGo ( 3 , "<" , 702 , "vc" )
+        , Go "css"
+        ]
+      )
+    , ( "lqj" , [ MaybeGo ( 0 , "<" , 1273 , "R" ) , Accept ] )
+    , ( "gdq"
+      , [ MaybeGo ( 3 , "<" , 1090 , "R" )
+        , MaybeGo ( 1 , ">" , 376 , "A" )
+        , Accept
+        ]
+      )
+    , ( "rg"
+      , [ MaybeGo ( 2 , "<" , 3585 , "ljp" )
+        , MaybeGo ( 1 , "<" , 2211 , "A" )
+        , MaybeGo ( 0 , "<" , 3630 , "A" )
+        , Reject
+        ]
+      )
+    , ( "tqs"
+      , [ MaybeGo ( 2 , ">" , 1227 , "lzv" )
+        , MaybeGo ( 3 , "<" , 1984 , "ql" )
+        , Go "btm"
+        ]
+      )
+    , ( "hvj" , [ MaybeGo ( 3 , ">" , 2773 , "xt" ) , Go "kj" ] )
+    , ( "kdx"
+      , [ MaybeGo ( 1 , ">" , 282 , "R" )
+        , MaybeGo ( 1 , ">" , 268 , "R" )
+        , Reject
+        ]
+      )
+    , ( "rh"
+      , [ MaybeGo ( 3 , ">" , 2433 , "A" )
+        , MaybeGo ( 2 , "<" , 651 , "A" )
+        , MaybeGo ( 0 , "<" , 3472 , "R" )
+        , Accept
+        ]
+      )
+    , ( "jtz"
+      , [ MaybeGo ( 1 , "<" , 1294 , "qjb" )
+        , MaybeGo ( 2 , "<" , 848 , "sc" )
+        , MaybeGo ( 1 , "<" , 1356 , "hb" )
+        , Go "mc"
+        ]
+      )
+    , ( "fxn"
+      , [ MaybeGo ( 2 , "<" , 1011 , "A" )
+        , MaybeGo ( 1 , "<" , 634 , "kpz" )
+        , MaybeGo ( 1 , "<" , 1226 , "R" )
+        , Reject
+        ]
+      )
+    , ( "nm"
+      , [ MaybeGo ( 0 , ">" , 1332 , "sdp" )
+        , MaybeGo ( 2 , ">" , 3454 , "fx" )
+        , MaybeGo ( 2 , "<" , 3290 , "qpx" )
+        , Go "rj"
+        ]
+      )
+    , ( "jgt"
+      , [ MaybeGo ( 1 , "<" , 1321 , "R" )
+        , MaybeGo ( 0 , "<" , 3410 , "R" )
+        , Accept
+        ]
+      )
+    , ( "vhd" , [ MaybeGo ( 0 , ">" , 581 , "A" ) , Go "crm" ] )
+    , ( "klr" , [ MaybeGo ( 0 , ">" , 863 , "sdv" ) , Reject ] )
+    , ( "ss" , [ MaybeGo ( 3 , "<" , 2152 , "R" ) , Go "jq" ] )
+    , ( "xvh"
+      , [ MaybeGo ( 1 , "<" , 735 , "A" )
+        , MaybeGo ( 1 , ">" , 1413 , "mkj" )
+        , MaybeGo ( 2 , ">" , 931 , "A" )
+        , Go "plb"
+        ]
+      )
+    , ( "bcd"
+      , [ MaybeGo ( 3 , ">" , 1882 , "ctg" )
+        , MaybeGo ( 3 , "<" , 1552 , "sbv" )
+        , Go "mz"
+        ]
+      )
+    , ( "R" , [ Reject ] )
+    , ( "xh" , [ MaybeGo ( 1 , "<" , 3422 , "A" ) , Accept ] )
+    , ( "jh"
+      , [ MaybeGo ( 2 , "<" , 2753 , "svc" )
+        , MaybeGo ( 1 , ">" , 974 , "hjh" )
+        , MaybeGo ( 2 , "<" , 3488 , "R" )
+        , Reject
+        ]
+      )
+    , ( "xks"
+      , [ MaybeGo ( 1 , "<" , 3949 , "A" )
+        , MaybeGo ( 3 , "<" , 2950 , "R" )
+        , Reject
+        ]
+      )
+    , ( "qbx" , [ MaybeGo ( 1 , ">" , 3852 , "R" ) , Accept ] )
+    , ( "fjx"
+      , [ MaybeGo ( 0 , "<" , 3231 , "pmr" )
+        , MaybeGo ( 3 , ">" , 2189 , "ckf" )
+        , MaybeGo ( 1 , "<" , 3402 , "R" )
+        , Go "jd"
+        ]
+      )
+    , ( "sh"
+      , [ MaybeGo ( 2 , ">" , 243 , "R" )
+        , MaybeGo ( 1 , "<" , 886 , "A" )
+        , Reject
+        ]
+      )
+    , ( "zhq" , [ MaybeGo ( 3 , "<" , 1894 , "R" ) , Accept ] )
+    , ( "xvn" , [ MaybeGo ( 2 , "<" , 3364 , "A" ) , Reject ] )
+    , ( "rgb"
+      , [ MaybeGo ( 3 , "<" , 1147 , "R" )
+        , MaybeGo ( 0 , "<" , 2534 , "A" )
+        , Accept
+        ]
+      )
+    , ( "mqs" , [ MaybeGo ( 2 , ">" , 473 , "R" ) , Reject ] )
+    , ( "fcl"
+      , [ MaybeGo ( 1 , "<" , 651 , "A" )
+        , MaybeGo ( 0 , "<" , 3400 , "R" )
+        , MaybeGo ( 3 , "<" , 3038 , "bp" )
+        , Go "mmp"
+        ]
+      )
+    , ( "nck" , [ MaybeGo ( 2 , ">" , 2589 , "rv" ) , Go "nvd" ] )
+    , ( "sdd"
+      , [ MaybeGo ( 1 , "<" , 3059 , "R" )
+        , MaybeGo ( 0 , ">" , 1469 , "grz" )
+        , MaybeGo ( 2 , ">" , 643 , "A" )
+        , Go "bcm"
+        ]
+      )
+    , ( "sv"
+      , [ MaybeGo ( 1 , ">" , 492 , "gsq" )
+        , MaybeGo ( 0 , ">" , 1070 , "R" )
+        , MaybeGo ( 2 , ">" , 2386 , "A" )
+        , Go "mk"
+        ]
+      )
+    , ( "kz"
+      , [ MaybeGo ( 1 , ">" , 1079 , "A" )
+        , MaybeGo ( 2 , ">" , 1082 , "zpt" )
+        , Reject
+        ]
+      )
+    , ( "ctx" , [ MaybeGo ( 3 , ">" , 3156 , "zsv" ) , Go "hth" ] )
+    , ( "zt" , [ MaybeGo ( 3 , ">" , 1459 , "qtx" ) , Go "fkk" ] )
+    , ( "rv" , [ MaybeGo ( 0 , "<" , 977 , "blv" ) , Go "tc" ] )
+    , ( "ng"
+      , [ MaybeGo ( 2 , "<" , 779 , "R" )
+        , MaybeGo ( 3 , "<" , 926 , "A" )
+        , Reject
+        ]
+      )
+    , ( "xn"
+      , [ MaybeGo ( 2 , ">" , 564 , "pkp" )
+        , MaybeGo ( 2 , "<" , 217 , "zh" )
+        , Reject
+        ]
+      )
+    , ( "pgt" , [ MaybeGo ( 3 , "<" , 871 , "R" ) , Accept ] )
+    , ( "pf"
+      , [ MaybeGo ( 1 , "<" , 624 , "xgc" )
+        , MaybeGo ( 3 , "<" , 2448 , "nkb" )
+        , Go "dd"
+        ]
+      )
+    , ( "bd"
+      , [ MaybeGo ( 2 , ">" , 322 , "A" )
+        , MaybeGo ( 0 , ">" , 1042 , "A" )
+        , Go "qtn"
+        ]
+      )
+    , ( "drg" , [ MaybeGo ( 3 , "<" , 532 , "R" ) , Reject ] )
+    , ( "tk"
+      , [ MaybeGo ( 0 , "<" , 220 , "bvp" )
+        , MaybeGo ( 1 , "<" , 802 , "bt" )
+        , Go "gqh"
+        ]
+      )
+    , ( "cb"
+      , [ MaybeGo ( 1 , "<" , 785 , "cjn" )
+        , MaybeGo ( 3 , ">" , 2054 , "dnc" )
+        , Go "xm"
+        ]
+      )
+    , ( "pdk"
+      , [ MaybeGo ( 3 , ">" , 2676 , "vlq" )
+        , MaybeGo ( 1 , ">" , 386 , "jkj" )
+        , Go "dn"
+        ]
+      )
+    , ( "zzc" , [ MaybeGo ( 3 , ">" , 3127 , "R" ) , Go "hn" ] )
+    , ( "tr"
+      , [ MaybeGo ( 2 , ">" , 520 , "rgf" )
+        , MaybeGo ( 2 , ">" , 486 , "fnq" )
+        , Go "kk"
+        ]
+      )
+    , ( "rsx" , [ MaybeGo ( 3 , "<" , 436 , "R" ) , Accept ] )
+    , ( "zm"
+      , [ MaybeGo ( 1 , "<" , 352 , "vb" )
+        , MaybeGo ( 0 , ">" , 3441 , "cc" )
+        , MaybeGo ( 1 , ">" , 578 , "vvj" )
+        , Go "sl"
+        ]
+      )
+    , ( "dj"
+      , [ MaybeGo ( 2 , ">" , 220 , "R" )
+        , MaybeGo ( 3 , "<" , 1186 , "A" )
+        , Reject
+        ]
+      )
+    , ( "ndg"
+      , [ MaybeGo ( 0 , "<" , 1971 , "R" )
+        , MaybeGo ( 2 , "<" , 3265 , "R" )
+        , Reject
+        ]
+      )
+    , ( "zpb" , [ MaybeGo ( 0 , "<" , 745 , "R" ) , Reject ] )
+    , ( "tf"
+      , [ MaybeGo ( 2 , "<" , 3254 , "A" )
+        , MaybeGo ( 2 , "<" , 3353 , "A" )
+        , MaybeGo ( 0 , ">" , 1084 , "A" )
+        , Accept
+        ]
+      )
+    , ( "rk" , [ MaybeGo ( 1 , ">" , 322 , "A" ) , Accept ] )
+    , ( "zr" , [ MaybeGo ( 0 , "<" , 978 , "A" ) , Reject ] )
+    , ( "bfp" , [ MaybeGo ( 3 , ">" , 3213 , "R" ) , Reject ] )
+    , ( "mqg"
+      , [ MaybeGo ( 2 , ">" , 2380 , "R" )
+        , MaybeGo ( 3 , "<" , 2169 , "rlb" )
+        , MaybeGo ( 2 , "<" , 2245 , "cv" )
+        , Reject
+        ]
+      )
+    , ( "rgf"
+      , [ MaybeGo ( 1 , "<" , 688 , "A" )
+        , MaybeGo ( 3 , ">" , 2496 , "bfp" )
+        , Accept
+        ]
+      )
+    , ( "vt" , [ MaybeGo ( 0 , ">" , 2628 , "kvq" ) , Go "dzs" ] )
+    , ( "df"
+      , [ MaybeGo ( 0 , ">" , 2352 , "R" )
+        , MaybeGo ( 1 , "<" , 538 , "ffg" )
+        , MaybeGo ( 3 , ">" , 1850 , "kkj" )
+        , Go "nx"
+        ]
+      )
+    , ( "hth"
+      , [ MaybeGo ( 1 , "<" , 3818 , "cls" )
+        , MaybeGo ( 1 , ">" , 3880 , "R" )
+        , MaybeGo ( 2 , "<" , 2449 , "qbx" )
+        , Reject
+        ]
+      )
+    , ( "gtg"
+      , [ MaybeGo ( 0 , "<" , 433 , "tk" )
+        , MaybeGo ( 0 , "<" , 769 , "bsc" )
+        , MaybeGo ( 3 , ">" , 2477 , "npt" )
+        , Go "rvs"
+        ]
+      )
+    , ( "tz" , [ MaybeGo ( 3 , ">" , 2615 , "R" ) , Reject ] )
+    , ( "dzs"
+      , [ MaybeGo ( 1 , "<" , 2395 , "lbx" )
+        , MaybeGo ( 1 , "<" , 2840 , "pbz" )
+        , MaybeGo ( 0 , "<" , 1544 , "rsr" )
+        , Go "glm"
+        ]
+      )
+    , ( "ptn" , [ MaybeGo ( 2 , ">" , 1251 , "R" ) , Accept ] )
+    , ( "xgc"
+      , [ MaybeGo ( 3 , "<" , 2067 , "pcx" )
+        , MaybeGo ( 3 , ">" , 3152 , "zg" )
+        , Go "pdk"
+        ]
+      )
+    , ( "nn" , [ MaybeGo ( 1 , "<" , 915 , "rk" ) , Accept ] )
+    , ( "fx"
+      , [ MaybeGo ( 2 , "<" , 3812 , "A" )
+        , MaybeGo ( 1 , ">" , 3924 , "R" )
+        , MaybeGo ( 1 , "<" , 3887 , "R" )
+        , Reject
+        ]
+      )
+    , ( "dzr"
+      , [ MaybeGo ( 2 , "<" , 3025 , "ctx" )
+        , MaybeGo ( 1 , ">" , 3794 , "bk" )
+        , Go "pcj"
+        ]
+      )
+    , ( "lxk"
+      , [ MaybeGo ( 3 , "<" , 851 , "prx" )
+        , MaybeGo ( 3 , ">" , 1176 , "tp" )
+        , MaybeGo ( 3 , ">" , 1014 , "R" )
+        , Go "dhp"
+        ]
+      )
+    , ( "dhp" , [ MaybeGo ( 2 , ">" , 3587 , "R" ) , Reject ] )
+    , ( "crm"
+      , [ MaybeGo ( 2 , "<" , 3752 , "A" )
+        , MaybeGo ( 1 , ">" , 3702 , "R" )
+        , MaybeGo ( 1 , "<" , 3609 , "A" )
+        , Accept
+        ]
+      )
+    , ( "qfd"
+      , [ MaybeGo ( 3 , "<" , 3141 , "A" )
+        , MaybeGo ( 1 , ">" , 1998 , "A" )
+        , MaybeGo ( 1 , ">" , 1909 , "A" )
+        , Accept
+        ]
+      )
+    , ( "vqc" , [ MaybeGo ( 3 , "<" , 3350 , "R" ) , Reject ] )
+    , ( "vdq"
+      , [ MaybeGo ( 0 , "<" , 1197 , "R" )
+        , MaybeGo ( 1 , ">" , 835 , "A" )
+        , MaybeGo ( 2 , ">" , 3752 , "A" )
+        , Reject
+        ]
+      )
+    , ( "fp" , [ MaybeGo ( 1 , ">" , 471 , "cq" ) , Reject ] )
+    , ( "bs" , [ MaybeGo ( 3 , ">" , 1109 , "R" ) , Accept ] )
+    , ( "kqq"
+      , [ MaybeGo ( 2 , ">" , 3249 , "rhn" )
+        , MaybeGo ( 3 , "<" , 1835 , "R" )
+        , Accept
+        ]
+      )
+    , ( "in" , [ MaybeGo ( 1 , "<" , 1799 , "jjp" ) , Go "bdz" ] )
+    , ( "gnv"
+      , [ MaybeGo ( 1 , ">" , 3707 , "rrv" )
+        , MaybeGo ( 1 , ">" , 3637 , "A" )
+        , Accept
+        ]
+      )
+    , ( "qj"
+      , [ MaybeGo ( 1 , "<" , 1135 , "bqf" )
+        , MaybeGo ( 1 , ">" , 1244 , "R" )
+        , Go "sj"
+        ]
+      )
+    , ( "mq" , [ MaybeGo ( 2 , "<" , 48 , "A" ) , Reject ] )
+    , ( "fg"
+      , [ MaybeGo ( 1 , "<" , 1099 , "czb" )
+        , MaybeGo ( 0 , ">" , 2564 , "nhj" )
+        , MaybeGo ( 1 , ">" , 1409 , "qvt" )
+        , Go "drf"
+        ]
+      )
+    , ( "pr"
+      , [ MaybeGo ( 0 , ">" , 1956 , "R" )
+        , MaybeGo ( 3 , ">" , 1500 , "A" )
+        , MaybeGo ( 1 , ">" , 843 , "R" )
+        , Accept
+        ]
+      )
+    , ( "lj"
+      , [ MaybeGo ( 3 , ">" , 3244 , "A" )
+        , MaybeGo ( 1 , "<" , 382 , "A" )
+        , Reject
+        ]
+      )
+    , ( "sbz" , [ MaybeGo ( 2 , ">" , 644 , "R" ) , Accept ] )
+    , ( "fr"
+      , [ MaybeGo ( 2 , ">" , 1217 , "jfg" )
+        , MaybeGo ( 1 , ">" , 1190 , "lm" )
+        , Reject
+        ]
+      )
+    , ( "hj"
+      , [ MaybeGo ( 2 , ">" , 3369 , "R" )
+        , MaybeGo ( 0 , ">" , 255 , "A" )
+        , Accept
+        ]
+      )
+    , ( "md"
+      , [ MaybeGo ( 3 , "<" , 799 , "qt" )
+        , MaybeGo ( 0 , "<" , 620 , "vml" )
+        , MaybeGo ( 2 , ">" , 3124 , "nm" )
+        , Go "hq"
+        ]
+      )
+    , ( "ngb"
+      , [ MaybeGo ( 0 , "<" , 798 , "A" )
+        , MaybeGo ( 1 , "<" , 3645 , "R" )
+        , MaybeGo ( 3 , "<" , 2497 , "R" )
+        , Accept
+        ]
+      )
+    , ( "vvj"
+      , [ MaybeGo ( 0 , "<" , 3300 , "R" )
+        , MaybeGo ( 1 , ">" , 790 , "sh" )
+        , Reject
+        ]
+      )
+    , ( "zsv" , [ MaybeGo ( 2 , ">" , 2555 , "grr" ) , Accept ] )
+    , ( "mxd"
+      , [ MaybeGo ( 3 , "<" , 2598 , "A" )
+        , MaybeGo ( 2 , "<" , 3726 , "xl" )
+        , MaybeGo ( 1 , "<" , 3903 , "A" )
+        , Go "bgn"
+        ]
+      )
+    , ( "sl" , [ MaybeGo ( 0 , ">" , 3321 , "lbz" ) , Accept ] )
+    , ( "qh" , [ MaybeGo ( 0 , "<" , 3604 , "A" ) , Accept ] )
+    , ( "nc" , [ MaybeGo ( 0 , ">" , 2858 , "A" ) , Go "dj" ] )
+    , ( "fh"
+      , [ MaybeGo ( 2 , "<" , 2968 , "A" )
+        , MaybeGo ( 0 , ">" , 527 , "A" )
+        , Accept
+        ]
+      )
+    , ( "tp"
+      , [ MaybeGo ( 2 , ">" , 3324 , "A" )
+        , MaybeGo ( 1 , "<" , 3763 , "R" )
+        , MaybeGo ( 2 , "<" , 3097 , "R" )
+        , Accept
+        ]
+      )
+    , ( "czb"
+      , [ MaybeGo ( 0 , "<" , 2169 , "vd" )
+        , MaybeGo ( 1 , ">" , 579 , "hsk" )
+        , MaybeGo ( 2 , "<" , 735 , "gm" )
+        , Go "jf"
+        ]
+      )
+    , ( "lvz" , [ MaybeGo ( 2 , ">" , 3026 , "rhk" ) , Go "hbj" ] )
+    ]
+, [ [ ( 1 , 102 )
+    , ( 103 , 34 )
+    , ( 137 , 72 )
+    , ( 209 , 11 )
+    , ( 220 , 22 )
+    , ( 242 , 14 )
+    , ( 256 , 18 )
+    , ( 274 , 1 )
+    , ( 275 , 49 )
+    , ( 324 , 2 )
+    , ( 326 , 40 )
+    , ( 366 , 11 )
+    , ( 377 , 7 )
+    , ( 384 , 18 )
+    , ( 402 , 14 )
+    , ( 416 , 17 )
+    , ( 433 , 6 )
+    , ( 439 , 3 )
+    , ( 442 , 6 )
+    , ( 448 , 1 )
+    , ( 449 , 13 )
+    , ( 462 , 66 )
+    , ( 528 , 8 )
+    , ( 536 , 11 )
+    , ( 547 , 15 )
+    , ( 562 , 20 )
+    , ( 582 , 5 )
+    , ( 587 , 2 )
+    , ( 589 , 18 )
+    , ( 607 , 12 )
+    , ( 619 , 1 )
+    , ( 620 , 2 )
+    , ( 622 , 15 )
+    , ( 637 , 15 )
+    , ( 652 , 16 )
+    , ( 668 , 6 )
+    , ( 674 , 1 )
+    , ( 675 , 39 )
+    , ( 714 , 11 )
+    , ( 725 , 9 )
+    , ( 734 , 11 )
+    , ( 745 , 19 )
+    , ( 764 , 5 )
+    , ( 769 , 8 )
+    , ( 777 , 14 )
+    , ( 791 , 7 )
+    , ( 798 , 4 )
+    , ( 802 , 14 )
+    , ( 816 , 10 )
+    , ( 826 , 23 )
+    , ( 849 , 2 )
+    , ( 851 , 3 )
+    , ( 854 , 2 )
+    , ( 856 , 5 )
+    , ( 861 , 3 )
+    , ( 864 , 15 )
+    , ( 879 , 6 )
+    , ( 885 , 8 )
+    , ( 893 , 5 )
+    , ( 898 , 3 )
+    , ( 901 , 1 )
+    , ( 902 , 5 )
+    , ( 907 , 1 )
+    , ( 908 , 10 )
+    , ( 918 , 11 )
+    , ( 929 , 2 )
+    , ( 931 , 6 )
+    , ( 937 , 24 )
+    , ( 961 , 2 )
+    , ( 963 , 2 )
+    , ( 965 , 5 )
+    , ( 970 , 3 )
+    , ( 973 , 4 )
+    , ( 977 , 1 )
+    , ( 978 , 45 )
+    , ( 1023 , 3 )
+    , ( 1026 , 3 )
+    , ( 1029 , 14 )
+    , ( 1043 , 15 )
+    , ( 1058 , 13 )
+    , ( 1071 , 14 )
+    , ( 1085 , 4 )
+    , ( 1089 , 21 )
+    , ( 1110 , 12 )
+    , ( 1122 , 2 )
+    , ( 1124 , 8 )
+    , ( 1132 , 43 )
+    , ( 1175 , 3 )
+    , ( 1178 , 19 )
+    , ( 1197 , 15 )
+    , ( 1212 , 61 )
+    , ( 1273 , 4 )
+    , ( 1277 , 6 )
+    , ( 1283 , 8 )
+    , ( 1291 , 1 )
+    , ( 1292 , 9 )
+    , ( 1301 , 6 )
+    , ( 1307 , 5 )
+    , ( 1312 , 18 )
+    , ( 1330 , 3 )
+    , ( 1333 , 11 )
+    , ( 1344 , 3 )
+    , ( 1347 , 3 )
+    , ( 1350 , 12 )
+    , ( 1362 , 8 )
+    , ( 1370 , 15 )
+    , ( 1385 , 24 )
+    , ( 1409 , 24 )
+    , ( 1433 , 2 )
+    , ( 1435 , 9 )
+    , ( 1444 , 26 )
+    , ( 1470 , 3 )
+    , ( 1473 , 3 )
+    , ( 1476 , 11 )
+    , ( 1487 , 44 )
+    , ( 1531 , 2 )
+    , ( 1533 , 11 )
+    , ( 1544 , 9 )
+    , ( 1553 , 12 )
+    , ( 1565 , 25 )
+    , ( 1590 , 9 )
+    , ( 1599 , 12 )
+    , ( 1611 , 34 )
+    , ( 1645 , 5 )
+    , ( 1650 , 32 )
+    , ( 1682 , 19 )
+    , ( 1701 , 17 )
+    , ( 1718 , 7 )
+    , ( 1725 , 14 )
+    , ( 1739 , 25 )
+    , ( 1764 , 24 )
+    , ( 1788 , 26 )
+    , ( 1814 , 3 )
+    , ( 1817 , 14 )
+    , ( 1831 , 6 )
+    , ( 1837 , 14 )
+    , ( 1851 , 53 )
+    , ( 1904 , 35 )
+    , ( 1939 , 18 )
+    , ( 1957 , 4 )
+    , ( 1961 , 5 )
+    , ( 1966 , 3 )
+    , ( 1969 , 2 )
+    , ( 1971 , 14 )
+    , ( 1985 , 25 )
+    , ( 2010 , 34 )
+    , ( 2044 , 44 )
+    , ( 2088 , 23 )
+    , ( 2111 , 2 )
+    , ( 2113 , 56 )
+    , ( 2169 , 28 )
+    , ( 2197 , 15 )
+    , ( 2212 , 12 )
+    , ( 2224 , 13 )
+    , ( 2237 , 7 )
+    , ( 2244 , 5 )
+    , ( 2249 , 5 )
+    , ( 2254 , 33 )
+    , ( 2287 , 27 )
+    , ( 2314 , 37 )
+    , ( 2351 , 2 )
+    , ( 2353 , 38 )
+    , ( 2391 , 42 )
+    , ( 2433 , 17 )
+    , ( 2450 , 24 )
+    , ( 2474 , 13 )
+    , ( 2487 , 10 )
+    , ( 2497 , 5 )
+    , ( 2502 , 24 )
+    , ( 2526 , 4 )
+    , ( 2530 , 4 )
+    , ( 2534 , 16 )
+    , ( 2550 , 10 )
+    , ( 2560 , 5 )
+    , ( 2565 , 33 )
+    , ( 2598 , 11 )
+    , ( 2609 , 8 )
+    , ( 2617 , 12 )
+    , ( 2629 , 3 )
+    , ( 2632 , 13 )
+    , ( 2645 , 8 )
+    , ( 2653 , 12 )
+    , ( 2665 , 27 )
+    , ( 2692 , 49 )
+    , ( 2741 , 8 )
+    , ( 2749 , 3 )
+    , ( 2752 , 3 )
+    , ( 2755 , 5 )
+    , ( 2760 , 5 )
+    , ( 2765 , 9 )
+    , ( 2774 , 6 )
+    , ( 2780 , 14 )
+    , ( 2794 , 19 )
+    , ( 2813 , 3 )
+    , ( 2816 , 3 )
+    , ( 2819 , 13 )
+    , ( 2832 , 23 )
+    , ( 2855 , 4 )
+    , ( 2859 , 3 )
+    , ( 2862 , 8 )
+    , ( 2870 , 7 )
+    , ( 2877 , 46 )
+    , ( 2923 , 1 )
+    , ( 2924 , 5 )
+    , ( 2929 , 34 )
+    , ( 2963 , 12 )
+    , ( 2975 , 10 )
+    , ( 2985 , 2 )
+    , ( 2987 , 3 )
+    , ( 2990 , 44 )
+    , ( 3034 , 22 )
+    , ( 3056 , 9 )
+    , ( 3065 , 26 )
+    , ( 3091 , 7 )
+    , ( 3098 , 6 )
+    , ( 3104 , 3 )
+    , ( 3107 , 65 )
+    , ( 3172 , 15 )
+    , ( 3187 , 19 )
+    , ( 3206 , 12 )
+    , ( 3218 , 13 )
+    , ( 3231 , 3 )
+    , ( 3234 , 4 )
+    , ( 3238 , 4 )
+    , ( 3242 , 11 )
+    , ( 3253 , 30 )
+    , ( 3283 , 9 )
+    , ( 3292 , 8 )
+    , ( 3300 , 19 )
+    , ( 3319 , 3 )
+    , ( 3322 , 12 )
+    , ( 3334 , 27 )
+    , ( 3361 , 10 )
+    , ( 3371 , 10 )
+    , ( 3381 , 6 )
+    , ( 3387 , 7 )
+    , ( 3394 , 1 )
+    , ( 3395 , 5 )
+    , ( 3400 , 10 )
+    , ( 3410 , 17 )
+    , ( 3427 , 15 )
+    , ( 3442 , 4 )
+    , ( 3446 , 26 )
+    , ( 3472 , 36 )
+    , ( 3508 , 18 )
+    , ( 3526 , 29 )
+    , ( 3555 , 13 )
+    , ( 3568 , 3 )
+    , ( 3571 , 27 )
+    , ( 3598 , 6 )
+    , ( 3604 , 14 )
+    , ( 3618 , 6 )
+    , ( 3624 , 6 )
+    , ( 3630 , 10 )
+    , ( 3640 , 10 )
+    , ( 3650 , 21 )
+    , ( 3671 , 13 )
+    , ( 3684 , 41 )
+    , ( 3725 , 4 )
+    , ( 3729 , 63 )
+    , ( 3792 , 4 )
+    , ( 3796 , 9 )
+    , ( 3805 , 45 )
+    , ( 3850 , 12 )
+    , ( 3862 , 18 )
+    , ( 3880 , 121 )
+    ]
+  , [ ( 1 , 71 )
+    , ( 72 , 36 )
+    , ( 108 , 8 )
+    , ( 116 , 7 )
+    , ( 123 , 78 )
+    , ( 201 , 22 )
+    , ( 223 , 7 )
+    , ( 230 , 12 )
+    , ( 242 , 2 )
+    , ( 244 , 12 )
+    , ( 256 , 6 )
+    , ( 262 , 2 )
+    , ( 264 , 5 )
+    , ( 269 , 14 )
+    , ( 283 , 10 )
+    , ( 293 , 12 )
+    , ( 305 , 18 )
+    , ( 323 , 12 )
+    , ( 335 , 6 )
+    , ( 341 , 11 )
+    , ( 352 , 12 )
+    , ( 364 , 9 )
+    , ( 373 , 2 )
+    , ( 375 , 2 )
+    , ( 377 , 5 )
+    , ( 382 , 5 )
+    , ( 387 , 4 )
+    , ( 391 , 9 )
+    , ( 400 , 6 )
+    , ( 406 , 14 )
+    , ( 420 , 18 )
+    , ( 438 , 27 )
+    , ( 465 , 7 )
+    , ( 472 , 2 )
+    , ( 474 , 19 )
+    , ( 493 , 16 )
+    , ( 509 , 29 )
+    , ( 538 , 20 )
+    , ( 558 , 8 )
+    , ( 566 , 13 )
+    , ( 579 , 1 )
+    , ( 580 , 6 )
+    , ( 586 , 5 )
+    , ( 591 , 15 )
+    , ( 606 , 1 )
+    , ( 607 , 1 )
+    , ( 608 , 16 )
+    , ( 624 , 2 )
+    , ( 626 , 6 )
+    , ( 632 , 2 )
+    , ( 634 , 6 )
+    , ( 640 , 11 )
+    , ( 651 , 9 )
+    , ( 660 , 2 )
+    , ( 662 , 25 )
+    , ( 687 , 1 )
+    , ( 688 , 9 )
+    , ( 697 , 2 )
+    , ( 699 , 2 )
+    , ( 701 , 8 )
+    , ( 709 , 24 )
+    , ( 733 , 1 )
+    , ( 734 , 1 )
+    , ( 735 , 4 )
+    , ( 739 , 14 )
+    , ( 753 , 3 )
+    , ( 756 , 1 )
+    , ( 757 , 3 )
+    , ( 760 , 5 )
+    , ( 765 , 4 )
+    , ( 769 , 15 )
+    , ( 784 , 1 )
+    , ( 785 , 6 )
+    , ( 791 , 2 )
+    , ( 793 , 9 )
+    , ( 802 , 17 )
+    , ( 819 , 2 )
+    , ( 821 , 15 )
+    , ( 836 , 8 )
+    , ( 844 , 6 )
+    , ( 850 , 13 )
+    , ( 863 , 22 )
+    , ( 885 , 1 )
+    , ( 886 , 29 )
+    , ( 915 , 14 )
+    , ( 929 , 2 )
+    , ( 931 , 28 )
+    , ( 959 , 3 )
+    , ( 962 , 7 )
+    , ( 969 , 6 )
+    , ( 975 , 8 )
+    , ( 983 , 15 )
+    , ( 998 , 2 )
+    , ( 1000 , 20 )
+    , ( 1020 , 3 )
+    , ( 1023 , 1 )
+    , ( 1024 , 5 )
+    , ( 1029 , 25 )
+    , ( 1054 , 15 )
+    , ( 1069 , 9 )
+    , ( 1078 , 2 )
+    , ( 1080 , 6 )
+    , ( 1086 , 11 )
+    , ( 1097 , 2 )
+    , ( 1099 , 5 )
+    , ( 1104 , 11 )
+    , ( 1115 , 20 )
+    , ( 1135 , 40 )
+    , ( 1175 , 2 )
+    , ( 1177 , 14 )
+    , ( 1191 , 23 )
+    , ( 1214 , 6 )
+    , ( 1220 , 6 )
+    , ( 1226 , 2 )
+    , ( 1228 , 17 )
+    , ( 1245 , 8 )
+    , ( 1253 , 5 )
+    , ( 1258 , 6 )
+    , ( 1264 , 4 )
+    , ( 1268 , 20 )
+    , ( 1288 , 4 )
+    , ( 1292 , 2 )
+    , ( 1294 , 23 )
+    , ( 1317 , 4 )
+    , ( 1321 , 4 )
+    , ( 1325 , 5 )
+    , ( 1330 , 8 )
+    , ( 1338 , 3 )
+    , ( 1341 , 15 )
+    , ( 1356 , 6 )
+    , ( 1362 , 25 )
+    , ( 1387 , 1 )
+    , ( 1388 , 3 )
+    , ( 1391 , 19 )
+    , ( 1410 , 4 )
+    , ( 1414 , 9 )
+    , ( 1423 , 22 )
+    , ( 1445 , 22 )
+    , ( 1467 , 21 )
+    , ( 1488 , 15 )
+    , ( 1503 , 6 )
+    , ( 1509 , 5 )
+    , ( 1514 , 3 )
+    , ( 1517 , 2 )
+    , ( 1519 , 30 )
+    , ( 1549 , 6 )
+    , ( 1555 , 20 )
+    , ( 1575 , 31 )
+    , ( 1606 , 21 )
+    , ( 1627 , 31 )
+    , ( 1658 , 1 )
+    , ( 1659 , 42 )
+    , ( 1701 , 12 )
+    , ( 1713 , 18 )
+    , ( 1731 , 16 )
+    , ( 1747 , 19 )
+    , ( 1766 , 33 )
+    , ( 1799 , 111 )
+    , ( 1910 , 13 )
+    , ( 1923 , 55 )
+    , ( 1978 , 18 )
+    , ( 1996 , 2 )
+    , ( 1998 , 1 )
+    , ( 1999 , 52 )
+    , ( 2051 , 13 )
+    , ( 2064 , 20 )
+    , ( 2084 , 16 )
+    , ( 2100 , 30 )
+    , ( 2130 , 38 )
+    , ( 2168 , 7 )
+    , ( 2175 , 4 )
+    , ( 2179 , 4 )
+    , ( 2183 , 13 )
+    , ( 2196 , 15 )
+    , ( 2211 , 4 )
+    , ( 2215 , 1 )
+    , ( 2216 , 78 )
+    , ( 2294 , 2 )
+    , ( 2296 , 56 )
+    , ( 2352 , 3 )
+    , ( 2355 , 7 )
+    , ( 2362 , 33 )
+    , ( 2395 , 65 )
+    , ( 2460 , 19 )
+    , ( 2479 , 6 )
+    , ( 2485 , 71 )
+    , ( 2556 , 15 )
+    , ( 2571 , 4 )
+    , ( 2575 , 25 )
+    , ( 2600 , 19 )
+    , ( 2619 , 17 )
+    , ( 2636 , 25 )
+    , ( 2661 , 2 )
+    , ( 2663 , 2 )
+    , ( 2665 , 40 )
+    , ( 2705 , 87 )
+    , ( 2792 , 13 )
+    , ( 2805 , 34 )
+    , ( 2839 , 1 )
+    , ( 2840 , 9 )
+    , ( 2849 , 36 )
+    , ( 2885 , 26 )
+    , ( 2911 , 18 )
+    , ( 2929 , 69 )
+    , ( 2998 , 39 )
+    , ( 3037 , 22 )
+    , ( 3059 , 15 )
+    , ( 3074 , 29 )
+    , ( 3103 , 45 )
+    , ( 3148 , 29 )
+    , ( 3177 , 29 )
+    , ( 3206 , 22 )
+    , ( 3228 , 38 )
+    , ( 3266 , 31 )
+    , ( 3297 , 7 )
+    , ( 3304 , 17 )
+    , ( 3321 , 10 )
+    , ( 3331 , 48 )
+    , ( 3379 , 3 )
+    , ( 3382 , 20 )
+    , ( 3402 , 5 )
+    , ( 3407 , 15 )
+    , ( 3422 , 4 )
+    , ( 3426 , 3 )
+    , ( 3429 , 16 )
+    , ( 3445 , 15 )
+    , ( 3460 , 65 )
+    , ( 3525 , 28 )
+    , ( 3553 , 8 )
+    , ( 3561 , 48 )
+    , ( 3609 , 12 )
+    , ( 3621 , 10 )
+    , ( 3631 , 7 )
+    , ( 3638 , 3 )
+    , ( 3641 , 4 )
+    , ( 3645 , 19 )
+    , ( 3664 , 13 )
+    , ( 3677 , 20 )
+    , ( 3697 , 6 )
+    , ( 3703 , 4 )
+    , ( 3707 , 1 )
+    , ( 3708 , 3 )
+    , ( 3711 , 10 )
+    , ( 3721 , 17 )
+    , ( 3738 , 5 )
+    , ( 3743 , 6 )
+    , ( 3749 , 2 )
+    , ( 3751 , 8 )
+    , ( 3759 , 4 )
+    , ( 3763 , 8 )
+    , ( 3771 , 2 )
+    , ( 3773 , 22 )
+    , ( 3795 , 4 )
+    , ( 3799 , 1 )
+    , ( 3800 , 10 )
+    , ( 3810 , 8 )
+    , ( 3818 , 2 )
+    , ( 3820 , 27 )
+    , ( 3847 , 6 )
+    , ( 3853 , 19 )
+    , ( 3872 , 3 )
+    , ( 3875 , 5 )
+    , ( 3880 , 1 )
+    , ( 3881 , 5 )
+    , ( 3886 , 1 )
+    , ( 3887 , 2 )
+    , ( 3889 , 2 )
+    , ( 3891 , 6 )
+    , ( 3897 , 1 )
+    , ( 3898 , 5 )
+    , ( 3903 , 13 )
+    , ( 3916 , 2 )
+    , ( 3918 , 3 )
+    , ( 3921 , 4 )
+    , ( 3925 , 24 )
+    , ( 3949 , 52 )
+    ]
+  , [ ( 1 , 47 )
+    , ( 48 , 3 )
+    , ( 51 , 6 )
+    , ( 57 , 23 )
+    , ( 80 , 8 )
+    , ( 88 , 38 )
+    , ( 126 , 12 )
+    , ( 138 , 15 )
+    , ( 153 , 20 )
+    , ( 173 , 3 )
+    , ( 176 , 9 )
+    , ( 185 , 18 )
+    , ( 203 , 2 )
+    , ( 205 , 5 )
+    , ( 210 , 7 )
+    , ( 217 , 4 )
+    , ( 221 , 12 )
+    , ( 233 , 11 )
+    , ( 244 , 18 )
+    , ( 262 , 22 )
+    , ( 284 , 12 )
+    , ( 296 , 3 )
+    , ( 299 , 13 )
+    , ( 312 , 4 )
+    , ( 316 , 5 )
+    , ( 321 , 2 )
+    , ( 323 , 2 )
+    , ( 325 , 7 )
+    , ( 332 , 15 )
+    , ( 347 , 2 )
+    , ( 349 , 5 )
+    , ( 354 , 7 )
+    , ( 361 , 14 )
+    , ( 375 , 21 )
+    , ( 396 , 11 )
+    , ( 407 , 4 )
+    , ( 411 , 2 )
+    , ( 413 , 7 )
+    , ( 420 , 24 )
+    , ( 444 , 15 )
+    , ( 459 , 6 )
+    , ( 465 , 9 )
+    , ( 474 , 13 )
+    , ( 487 , 10 )
+    , ( 497 , 6 )
+    , ( 503 , 8 )
+    , ( 511 , 9 )
+    , ( 520 , 1 )
+    , ( 521 , 14 )
+    , ( 535 , 25 )
+    , ( 560 , 5 )
+    , ( 565 , 2 )
+    , ( 567 , 32 )
+    , ( 599 , 14 )
+    , ( 613 , 10 )
+    , ( 623 , 14 )
+    , ( 637 , 7 )
+    , ( 644 , 1 )
+    , ( 645 , 6 )
+    , ( 651 , 11 )
+    , ( 662 , 17 )
+    , ( 679 , 3 )
+    , ( 682 , 7 )
+    , ( 689 , 2 )
+    , ( 691 , 7 )
+    , ( 698 , 9 )
+    , ( 707 , 8 )
+    , ( 715 , 6 )
+    , ( 721 , 14 )
+    , ( 735 , 8 )
+    , ( 743 , 5 )
+    , ( 748 , 6 )
+    , ( 754 , 21 )
+    , ( 775 , 4 )
+    , ( 779 , 2 )
+    , ( 781 , 5 )
+    , ( 786 , 3 )
+    , ( 789 , 15 )
+    , ( 804 , 21 )
+    , ( 825 , 16 )
+    , ( 841 , 4 )
+    , ( 845 , 2 )
+    , ( 847 , 1 )
+    , ( 848 , 4 )
+    , ( 852 , 17 )
+    , ( 869 , 6 )
+    , ( 875 , 28 )
+    , ( 903 , 18 )
+    , ( 921 , 11 )
+    , ( 932 , 3 )
+    , ( 935 , 42 )
+    , ( 977 , 6 )
+    , ( 983 , 5 )
+    , ( 988 , 7 )
+    , ( 995 , 8 )
+    , ( 1003 , 8 )
+    , ( 1011 , 6 )
+    , ( 1017 , 8 )
+    , ( 1025 , 17 )
+    , ( 1042 , 15 )
+    , ( 1057 , 26 )
+    , ( 1083 , 4 )
+    , ( 1087 , 23 )
+    , ( 1110 , 3 )
+    , ( 1113 , 2 )
+    , ( 1115 , 15 )
+    , ( 1130 , 13 )
+    , ( 1143 , 2 )
+    , ( 1145 , 23 )
+    , ( 1168 , 27 )
+    , ( 1195 , 17 )
+    , ( 1212 , 6 )
+    , ( 1218 , 10 )
+    , ( 1228 , 24 )
+    , ( 1252 , 4 )
+    , ( 1256 , 20 )
+    , ( 1276 , 7 )
+    , ( 1283 , 4 )
+    , ( 1287 , 7 )
+    , ( 1294 , 5 )
+    , ( 1299 , 4 )
+    , ( 1303 , 7 )
+    , ( 1310 , 5 )
+    , ( 1315 , 6 )
+    , ( 1321 , 11 )
+    , ( 1332 , 13 )
+    , ( 1345 , 3 )
+    , ( 1348 , 9 )
+    , ( 1357 , 16 )
+    , ( 1373 , 30 )
+    , ( 1403 , 14 )
+    , ( 1417 , 116 )
+    , ( 1533 , 33 )
+    , ( 1566 , 35 )
+    , ( 1601 , 76 )
+    , ( 1677 , 104 )
+    , ( 1781 , 19 )
+    , ( 1800 , 134 )
+    , ( 1934 , 27 )
+    , ( 1961 , 14 )
+    , ( 1975 , 53 )
+    , ( 2028 , 109 )
+    , ( 2137 , 65 )
+    , ( 2202 , 37 )
+    , ( 2239 , 6 )
+    , ( 2245 , 105 )
+    , ( 2350 , 16 )
+    , ( 2366 , 15 )
+    , ( 2381 , 6 )
+    , ( 2387 , 13 )
+    , ( 2400 , 11 )
+    , ( 2411 , 18 )
+    , ( 2429 , 3 )
+    , ( 2432 , 17 )
+    , ( 2449 , 9 )
+    , ( 2458 , 62 )
+    , ( 2520 , 19 )
+    , ( 2539 , 17 )
+    , ( 2556 , 24 )
+    , ( 2580 , 5 )
+    , ( 2585 , 5 )
+    , ( 2590 , 17 )
+    , ( 2607 , 14 )
+    , ( 2621 , 8 )
+    , ( 2629 , 20 )
+    , ( 2649 , 11 )
+    , ( 2660 , 39 )
+    , ( 2699 , 23 )
+    , ( 2722 , 20 )
+    , ( 2742 , 11 )
+    , ( 2753 , 15 )
+    , ( 2768 , 19 )
+    , ( 2787 , 9 )
+    , ( 2796 , 15 )
+    , ( 2811 , 3 )
+    , ( 2814 , 2 )
+    , ( 2816 , 25 )
+    , ( 2841 , 36 )
+    , ( 2877 , 5 )
+    , ( 2882 , 4 )
+    , ( 2886 , 3 )
+    , ( 2889 , 15 )
+    , ( 2904 , 31 )
+    , ( 2935 , 4 )
+    , ( 2939 , 29 )
+    , ( 2968 , 9 )
+    , ( 2977 , 40 )
+    , ( 3017 , 8 )
+    , ( 3025 , 2 )
+    , ( 3027 , 2 )
+    , ( 3029 , 7 )
+    , ( 3036 , 25 )
+    , ( 3061 , 36 )
+    , ( 3097 , 19 )
+    , ( 3116 , 9 )
+    , ( 3125 , 3 )
+    , ( 3128 , 31 )
+    , ( 3159 , 30 )
+    , ( 3189 , 9 )
+    , ( 3198 , 51 )
+    , ( 3249 , 1 )
+    , ( 3250 , 4 )
+    , ( 3254 , 11 )
+    , ( 3265 , 5 )
+    , ( 3270 , 4 )
+    , ( 3274 , 4 )
+    , ( 3278 , 11 )
+    , ( 3289 , 1 )
+    , ( 3290 , 2 )
+    , ( 3292 , 12 )
+    , ( 3304 , 2 )
+    , ( 3306 , 19 )
+    , ( 3325 , 28 )
+    , ( 3353 , 11 )
+    , ( 3364 , 6 )
+    , ( 3370 , 13 )
+    , ( 3383 , 1 )
+    , ( 3384 , 18 )
+    , ( 3402 , 12 )
+    , ( 3414 , 37 )
+    , ( 3451 , 4 )
+    , ( 3455 , 33 )
+    , ( 3488 , 29 )
+    , ( 3517 , 2 )
+    , ( 3519 , 12 )
+    , ( 3531 , 25 )
+    , ( 3556 , 8 )
+    , ( 3564 , 21 )
+    , ( 3585 , 3 )
+    , ( 3588 , 18 )
+    , ( 3606 , 10 )
+    , ( 3616 , 12 )
+    , ( 3628 , 38 )
+    , ( 3666 , 12 )
+    , ( 3678 , 12 )
+    , ( 3690 , 36 )
+    , ( 3726 , 26 )
+    , ( 3752 , 1 )
+    , ( 3753 , 55 )
+    , ( 3808 , 4 )
+    , ( 3812 , 6 )
+    , ( 3818 , 55 )
+    , ( 3873 , 65 )
+    , ( 3938 , 40 )
+    , ( 3978 , 23 )
+    ]
+  , [ ( 1 , 201 )
+    , ( 202 , 90 )
+    , ( 292 , 7 )
+    , ( 299 , 61 )
+    , ( 360 , 38 )
+    , ( 398 , 11 )
+    , ( 409 , 21 )
+    , ( 430 , 3 )
+    , ( 433 , 3 )
+    , ( 436 , 56 )
+    , ( 492 , 12 )
+    , ( 504 , 20 )
+    , ( 524 , 8 )
+    , ( 532 , 9 )
+    , ( 541 , 8 )
+    , ( 549 , 4 )
+    , ( 553 , 4 )
+    , ( 557 , 2 )
+    , ( 559 , 24 )
+    , ( 583 , 29 )
+    , ( 612 , 6 )
+    , ( 618 , 28 )
+    , ( 646 , 3 )
+    , ( 649 , 53 )
+    , ( 702 , 3 )
+    , ( 705 , 3 )
+    , ( 708 , 3 )
+    , ( 711 , 2 )
+    , ( 713 , 42 )
+    , ( 755 , 35 )
+    , ( 790 , 9 )
+    , ( 799 , 4 )
+    , ( 803 , 2 )
+    , ( 805 , 12 )
+    , ( 817 , 5 )
+    , ( 822 , 29 )
+    , ( 851 , 10 )
+    , ( 861 , 10 )
+    , ( 871 , 7 )
+    , ( 878 , 2 )
+    , ( 880 , 6 )
+    , ( 886 , 10 )
+    , ( 896 , 9 )
+    , ( 905 , 2 )
+    , ( 907 , 19 )
+    , ( 926 , 50 )
+    , ( 976 , 15 )
+    , ( 991 , 5 )
+    , ( 996 , 19 )
+    , ( 1015 , 8 )
+    , ( 1023 , 8 )
+    , ( 1031 , 3 )
+    , ( 1034 , 10 )
+    , ( 1044 , 23 )
+    , ( 1067 , 15 )
+    , ( 1082 , 8 )
+    , ( 1090 , 20 )
+    , ( 1110 , 37 )
+    , ( 1147 , 5 )
+    , ( 1152 , 25 )
+    , ( 1177 , 5 )
+    , ( 1182 , 4 )
+    , ( 1186 , 19 )
+    , ( 1205 , 12 )
+    , ( 1217 , 29 )
+    , ( 1246 , 11 )
+    , ( 1257 , 4 )
+    , ( 1261 , 7 )
+    , ( 1268 , 8 )
+    , ( 1276 , 64 )
+    , ( 1340 , 8 )
+    , ( 1348 , 11 )
+    , ( 1359 , 5 )
+    , ( 1364 , 26 )
+    , ( 1390 , 3 )
+    , ( 1393 , 22 )
+    , ( 1415 , 2 )
+    , ( 1417 , 3 )
+    , ( 1420 , 12 )
+    , ( 1432 , 4 )
+    , ( 1436 , 7 )
+    , ( 1443 , 13 )
+    , ( 1456 , 4 )
+    , ( 1460 , 16 )
+    , ( 1476 , 20 )
+    , ( 1496 , 5 )
+    , ( 1501 , 3 )
+    , ( 1504 , 4 )
+    , ( 1508 , 6 )
+    , ( 1514 , 8 )
+    , ( 1522 , 3 )
+    , ( 1525 , 15 )
+    , ( 1540 , 12 )
+    , ( 1552 , 12 )
+    , ( 1564 , 1 )
+    , ( 1565 , 24 )
+    , ( 1589 , 8 )
+    , ( 1597 , 29 )
+    , ( 1626 , 3 )
+    , ( 1629 , 25 )
+    , ( 1654 , 5 )
+    , ( 1659 , 3 )
+    , ( 1662 , 11 )
+    , ( 1673 , 36 )
+    , ( 1709 , 3 )
+    , ( 1712 , 7 )
+    , ( 1719 , 15 )
+    , ( 1734 , 22 )
+    , ( 1756 , 4 )
+    , ( 1760 , 20 )
+    , ( 1780 , 5 )
+    , ( 1785 , 7 )
+    , ( 1792 , 30 )
+    , ( 1822 , 2 )
+    , ( 1824 , 5 )
+    , ( 1829 , 6 )
+    , ( 1835 , 6 )
+    , ( 1841 , 10 )
+    , ( 1851 , 16 )
+    , ( 1867 , 16 )
+    , ( 1883 , 2 )
+    , ( 1885 , 9 )
+    , ( 1894 , 12 )
+    , ( 1906 , 5 )
+    , ( 1911 , 16 )
+    , ( 1927 , 4 )
+    , ( 1931 , 8 )
+    , ( 1939 , 45 )
+    , ( 1984 , 7 )
+    , ( 1991 , 2 )
+    , ( 1993 , 3 )
+    , ( 1996 , 4 )
+    , ( 2000 , 10 )
+    , ( 2010 , 10 )
+    , ( 2020 , 1 )
+    , ( 2021 , 31 )
+    , ( 2052 , 1 )
+    , ( 2053 , 2 )
+    , ( 2055 , 12 )
+    , ( 2067 , 83 )
+    , ( 2150 , 2 )
+    , ( 2152 , 10 )
+    , ( 2162 , 1 )
+    , ( 2163 , 6 )
+    , ( 2169 , 21 )
+    , ( 2190 , 2 )
+    , ( 2192 , 5 )
+    , ( 2197 , 12 )
+    , ( 2209 , 9 )
+    , ( 2218 , 18 )
+    , ( 2236 , 1 )
+    , ( 2237 , 2 )
+    , ( 2239 , 6 )
+    , ( 2245 , 6 )
+    , ( 2251 , 6 )
+    , ( 2257 , 7 )
+    , ( 2264 , 9 )
+    , ( 2273 , 1 )
+    , ( 2274 , 15 )
+    , ( 2289 , 26 )
+    , ( 2315 , 40 )
+    , ( 2355 , 4 )
+    , ( 2359 , 13 )
+    , ( 2372 , 21 )
+    , ( 2393 , 16 )
+    , ( 2409 , 11 )
+    , ( 2420 , 8 )
+    , ( 2428 , 6 )
+    , ( 2434 , 14 )
+    , ( 2448 , 30 )
+    , ( 2478 , 13 )
+    , ( 2491 , 2 )
+    , ( 2493 , 4 )
+    , ( 2497 , 28 )
+    , ( 2525 , 9 )
+    , ( 2534 , 11 )
+    , ( 2545 , 35 )
+    , ( 2580 , 18 )
+    , ( 2598 , 5 )
+    , ( 2603 , 2 )
+    , ( 2605 , 10 )
+    , ( 2615 , 1 )
+    , ( 2616 , 3 )
+    , ( 2619 , 4 )
+    , ( 2623 , 4 )
+    , ( 2627 , 17 )
+    , ( 2644 , 1 )
+    , ( 2645 , 14 )
+    , ( 2659 , 18 )
+    , ( 2677 , 31 )
+    , ( 2708 , 13 )
+    , ( 2721 , 53 )
+    , ( 2774 , 13 )
+    , ( 2787 , 108 )
+    , ( 2895 , 13 )
+    , ( 2908 , 6 )
+    , ( 2914 , 2 )
+    , ( 2916 , 12 )
+    , ( 2928 , 22 )
+    , ( 2950 , 7 )
+    , ( 2957 , 45 )
+    , ( 3002 , 14 )
+    , ( 3016 , 7 )
+    , ( 3023 , 11 )
+    , ( 3034 , 4 )
+    , ( 3038 , 8 )
+    , ( 3046 , 23 )
+    , ( 3069 , 11 )
+    , ( 3080 , 46 )
+    , ( 3126 , 2 )
+    , ( 3128 , 9 )
+    , ( 3137 , 1 )
+    , ( 3138 , 3 )
+    , ( 3141 , 9 )
+    , ( 3150 , 3 )
+    , ( 3153 , 4 )
+    , ( 3157 , 34 )
+    , ( 3191 , 2 )
+    , ( 3193 , 2 )
+    , ( 3195 , 8 )
+    , ( 3203 , 7 )
+    , ( 3210 , 4 )
+    , ( 3214 , 29 )
+    , ( 3243 , 2 )
+    , ( 3245 , 10 )
+    , ( 3255 , 28 )
+    , ( 3283 , 2 )
+    , ( 3285 , 3 )
+    , ( 3288 , 18 )
+    , ( 3306 , 14 )
+    , ( 3320 , 30 )
+    , ( 3350 , 28 )
+    , ( 3378 , 4 )
+    , ( 3382 , 62 )
+    , ( 3444 , 3 )
+    , ( 3447 , 8 )
+    , ( 3455 , 4 )
+    , ( 3459 , 3 )
+    , ( 3462 , 41 )
+    , ( 3503 , 64 )
+    , ( 3567 , 16 )
+    , ( 3583 , 1 )
+    , ( 3584 , 3 )
+    , ( 3587 , 93 )
+    , ( 3680 , 321 )
+    ]
+  ]
+)
