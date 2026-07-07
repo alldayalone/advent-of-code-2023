@@ -1,0 +1,6 @@
+[ %a -> b
+, %c -> inv
+, broadcaster -> a, b, c
+, %b -> c
+, &inv -> a
+]
