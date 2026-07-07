@@ -1,0 +1,11 @@
+[ broadcaster -LOW-> a
+, broadcaster -LOW-> a
+, broadcaster -LOW-> a
+, broadcaster -LOW-> a
+, broadcaster -LOW-> a
+, broadcaster -LOW-> a
+, broadcaster -LOW-> a
+, broadcaster -LOW-> a
+, broadcaster -LOW-> a
+, broadcaster -LOW-> a
+]
