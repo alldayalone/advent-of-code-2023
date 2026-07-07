@@ -292,3 +292,9 @@ executable problem192
     build-depends:    base, matrix, PSQueue, time, split, hashable, unordered-containers, regex-tdfa, pretty-show
     hs-source-dirs:   src/19_2
     default-language: Haskell2010
+
+executable problem201
+    main-is:          Main.hs
+    build-depends:    base, time, pretty-show
+    hs-source-dirs:   src/20_1
+    default-language: Haskell2010
