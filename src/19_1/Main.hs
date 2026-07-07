@@ -75,7 +75,7 @@ parsePart s = map read (getAllTextMatches (s =~ "[0-9]+"))
 
 solve :: (WorkflowMap, [Part]) -> [Int]
 solve (_, []) = []
-solve (wfMap, (part:parts)) = (runWorkflow (go "in") : solve (wfMap, parts))
+solve (wfMap, part:parts) = runWorkflow (go "in") : solve (wfMap, parts)
   where 
     go :: String -> [WorkflowStep]
     go label = fromJust $ HashMap.lookup label wfMap
