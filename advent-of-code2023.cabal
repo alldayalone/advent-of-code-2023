@@ -295,6 +295,6 @@ executable problem192
 
 executable problem201
     main-is:          Main.hs
-    build-depends:    base, time, pretty-show, unordered-containers
+    build-depends:    base, time, pretty-show, unordered-containers, regex-tdfa, split
     hs-source-dirs:   src/20_1
     default-language: Haskell2010

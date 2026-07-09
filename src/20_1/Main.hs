@@ -8,34 +8,47 @@ module Main (main) where
 import Data.Time
 import Text.Show.Pretty (ppShowList)
 import Data.List (intercalate)
-import Data.HashMap.Strict as HashMap (HashMap, fromList, insert, lookup, empty, adjust, elems)
-import Data.Maybe (fromJust)
+import Data.HashMap.Strict as HashMap (HashMap, elems, fromList, insert, lookup, empty, adjust, elems)
+import Data.Maybe (fromMaybe)
 import Data.Char
+import Text.Regex.TDFA     
+import Data.List.Split (splitOn)
+import Control.Arrow ((&&&))
 
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
-  contents <- readFile "src/20_1/input_test.txt"
+  contents <- readFile "src/20_1/input_test2.txt"
   writeFile ("src/20_1/output" ++ show utcNow ++ ".txt") . ppShowList . solve . parse $ contents
 
-type Input = String
+type Input = State
 type Output = Log
 
 parse :: String -> Input
-parse = id
+parse str = fmap addConjunctionMemory state
+  where
+    state = HashMap.fromList . map parseLine . lines $ str
+    addConjunctionMemory m@(Conjunction {}) = m{ memory }
+      where
+        memory = HashMap.fromList . map ((id &&& const Low) . name) . filter (elem m.name . dests) $ HashMap.elems state
+    addConjunctionMemory m = m
+
+parseLine :: String -> (String, Module)
+parseLine s = case moduleType of
+  "" -> (name, Broadcast { name, dests })
+  "%" -> (name, FlipFlop { name, dests, activated = False })
+  "&" -> (name, Conjunction { name, dests, memory = HashMap.empty })
+  where
+    regex = "([%&]?)([a-z]+) -> ([a-z, ]+)$"
+    (_, _, _, groups) = s =~ regex :: (String, String, String, [String])
+    (moduleType:name:destsStr:_) = groups
+    dests = splitOn ", " destsStr
 
 solve :: Input -> Output
-solve _ = tick [] initState [initSignal]
+solve state = tick [] state [initSignal]
 
 initSignal :: Signal
 initSignal = Signal { from = "button", signalKind = Low, to = "broadcaster" }
-initState :: State
-initState = HashMap.fromList 
-  [ ("broadcaster", Broadcast { name = "broadcaster", dests = ["a", "b", "c"] })
-  , ("a", FlipFlop { name = "a",  dest = "b", activated = False}) 
-  , ("b", FlipFlop { name = "b",  dest = "c", activated = False}) 
-  , ("c", FlipFlop { name = "c",  dest = "inv", activated = False})
-  , ("inv", Conjunction { name = "inv",  dest = "a", memory = HashMap.fromList [("a", Low), ("b", Low), ("c", Low)] }) ]
 
 data SignalKind = High | Low 
   deriving (Show, Eq)
@@ -50,12 +63,13 @@ instance Show Signal where
 type ConjunctionMemory = HashMap String SignalKind
 data Module = 
   Broadcast { name :: String, dests :: [String] }
-  | FlipFlop { name :: String, dest :: String, activated :: Bool }
-  | Conjunction { name :: String, dest :: String, memory :: ConjunctionMemory }
+  | FlipFlop { name :: String, dests :: [String], activated :: Bool }
+  | Conjunction { name :: String, dests :: [String], memory :: ConjunctionMemory }
+  | Undefined
 instance Show Module where
   show (Broadcast { name, dests }) = name ++ " -> " ++ intercalate ", " dests
-  show (FlipFlop { name, dest }) = "%" ++ name ++ " -> " ++ dest
-  show (Conjunction { name, dest }) = "&" ++ name ++ " -> " ++ dest
+  show (FlipFlop { name, dests }) = "%" ++ name ++ " -> " ++ intercalate ", " dests
+  show (Conjunction { name, dests }) = "&" ++ name ++ " -> " ++ intercalate ", " dests
 
 type Log = [Signal]
 type State = HashMap String Module
@@ -66,11 +80,12 @@ tick log state [] = log
 tick log state (signal:queue) = tick (log ++ [signal]) newState (queue ++ newSignals)
   where 
     newState = HashMap.adjust stateUpdater signal.to state
-    mod = fromJust $ HashMap.lookup signal.to newState
+    mod = fromMaybe Undefined (HashMap.lookup signal.to newState)
     newSignals = case mod of 
       Broadcast { .. } -> [ Signal { from=signal.to, to = dest, signalKind=signal.signalKind } | dest <- dests ]
-      FlipFlop { .. } -> [ Signal {from = signal.to, to = dest, signalKind = flipFlopSignal activated} | signal.signalKind == Low ]
-      Conjunction {..} -> [ Signal {from = signal.to, to = dest, signalKind = conjunctionSignal memory}]
+      FlipFlop { .. } -> [ Signal {from = signal.to, to = dest, signalKind = flipFlopSignal activated} | signal.signalKind == Low, dest <- dests]
+      Conjunction {..} -> [ Signal {from = signal.to, to = dest, signalKind = conjunctionSignal memory} | dest <- dests ]
+      Undefined -> []
 
     stateUpdater :: Module -> Module
     stateUpdater m@(FlipFlop {..}) = m{ activated = not activated }
