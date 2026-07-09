@@ -1,9 +1,14 @@
 {-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE OverloadedRecordDot #-}
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE RecordWildCards #-}
+
 module Main (main) where
 import Data.Time
 import Text.Show.Pretty (ppShowList)
 import Data.List (intercalate)
-import Data.HashMap.Strict as HashMap (HashMap, fromList, lookup)
+import Data.HashMap.Strict as HashMap (HashMap, fromList, insert, lookup, empty, adjust, elems)
 import Data.Maybe (fromJust)
 import Data.Char
 
@@ -26,11 +31,11 @@ initSignal :: Signal
 initSignal = Signal { from = "button", signalKind = Low, to = "broadcaster" }
 initState :: State
 initState = HashMap.fromList 
-  [ ("broadcaster", Module { name = "broadcaster", moduleKind = Broadcast, destinations = ["a", "b", "c"], activated = False })
-  , ("a", Module { name = "a", moduleKind = FlipFlop, destinations = ["b"], activated = False}) 
-  , ("b", Module { name = "b", moduleKind = FlipFlop, destinations = ["c"], activated = False}) 
-  , ("c", Module { name = "c", moduleKind = FlipFlop, destinations = ["inv"], activated = False})
-  , ("inv", Module { name = "inv", moduleKind = Conjunction, destinations = ["a"], activated = False}) ]
+  [ ("broadcaster", Broadcast { name = "broadcaster", dests = ["a", "b", "c"] })
+  , ("a", FlipFlop { name = "a",  dest = "b", activated = False}) 
+  , ("b", FlipFlop { name = "b",  dest = "c", activated = False}) 
+  , ("c", FlipFlop { name = "c",  dest = "inv", activated = False})
+  , ("inv", Conjunction { name = "inv",  dest = "a", memory = HashMap.fromList [("a", Low), ("b", Low), ("c", Low)] }) ]
 
 data SignalKind = High | Low 
   deriving (Show, Eq)
@@ -40,22 +45,17 @@ data Signal = Signal
     to :: String,
     signalKind :: SignalKind }
 instance Show Signal where
-  show (Signal { from = from, to = to, signalKind = signalKind}) = from ++ " -" ++ (map toLower . show) signalKind ++ "-> " ++ to
+  show (Signal { from, to, signalKind }) = from ++ " -" ++ (map toLower . show) signalKind ++ "-> " ++ to
 
-data ModuleKind = Broadcast | FlipFlop | Conjunction
-  deriving (Eq)
-instance Show ModuleKind where
-  show :: ModuleKind -> String
-  show Broadcast = ""
-  show FlipFlop = "%"
-  show Conjunction = "&"
-data Module = Module
-  { moduleKind :: ModuleKind,
-    name :: String,
-    destinations :: [String],
-    activated :: Bool }
+type ConjunctionMemory = HashMap String SignalKind
+data Module = 
+  Broadcast { name :: String, dests :: [String] }
+  | FlipFlop { name :: String, dest :: String, activated :: Bool }
+  | Conjunction { name :: String, dest :: String, memory :: ConjunctionMemory }
 instance Show Module where
-  show (Module { moduleKind = moduleKind, name = name, destinations = destinations }) = show moduleKind ++ name ++ " -> " ++ intercalate ", " destinations
+  show (Broadcast { name, dests }) = name ++ " -> " ++ intercalate ", " dests
+  show (FlipFlop { name, dest }) = "%" ++ name ++ " -> " ++ dest
+  show (Conjunction { name, dest }) = "&" ++ name ++ " -> " ++ dest
 
 type Log = [Signal]
 type State = HashMap String Module
@@ -63,16 +63,23 @@ type Queue = [Signal]
 
 tick :: Log -> State -> Queue -> Log
 tick log state [] = log
-tick log state (signal@(Signal { from=from, to=to, signalKind=signalKind }):queue) = tick (log ++ [signal]) state (queue ++ newSignals)
+tick log state (signal:queue) = tick (log ++ [signal]) newState (queue ++ newSignals)
   where 
-    mod@(Module { name=name, destinations=destinations, moduleKind=moduleKind, activated=activated }) = fromJust $ HashMap.lookup to state
-    newSignals
-      | moduleKind == Broadcast = map (\dest -> Signal { from = to, to = dest, signalKind = signalKind }) destinations
-      | moduleKind == FlipFlop && signalKind == High = []
-      | moduleKind == FlipFlop && signalKind == Low = map (\dest -> Signal { from = to, to = dest, signalKind = flipFlopSignal activated }) destinations
+    newState = HashMap.adjust stateUpdater signal.to state
+    mod = fromJust $ HashMap.lookup signal.to newState
+    newSignals = case mod of 
+      Broadcast { .. } -> [ Signal { from=signal.to, to = dest, signalKind=signal.signalKind } | dest <- dests ]
+      FlipFlop { .. } -> [ Signal {from = signal.to, to = dest, signalKind = flipFlopSignal activated} | signal.signalKind == Low ]
+      Conjunction {..} -> [ Signal {from = signal.to, to = dest, signalKind = conjunctionSignal memory}]
 
-    newState = state
+    stateUpdater :: Module -> Module
+    stateUpdater m@(FlipFlop {..}) = m{ activated = not activated }
+    stateUpdater m@(Conjunction{..}) = m{memory = HashMap.insert signal.from signal.signalKind memory}
+    stateUpdater m = m
 
 flipFlopSignal :: Bool -> SignalKind
-flipFlopSignal False = High
-toggle True = Low
+flipFlopSignal True = High
+flipFlopSignal False = Low
+
+conjunctionSignal :: ConjunctionMemory -> SignalKind
+conjunctionSignal memory = if all (== High) (HashMap.elems memory) then Low else High

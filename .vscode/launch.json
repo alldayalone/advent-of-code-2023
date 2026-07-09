@@ -79,6 +79,15 @@
       "logFile": "${workspaceFolder}/.vscode/phoityne.log",
       "logLevel": "DEBUG",
       "forceInspect": false
-    }
+    },
+    {
+      "type": "haskell-debugger",
+      "request": "launch",
+      "name": "Debug Haskell Executable",
+      "projectRoot": "${workspaceFolder}",
+      "entryFile": "${relativeFile}",
+      "entryPoint": "main",
+      "entryArgs": [],
+  },
   ]
 }
