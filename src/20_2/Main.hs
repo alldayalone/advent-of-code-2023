@@ -18,8 +18,8 @@ import Control.Arrow ((&&&), (***), first, second)
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
-  contents <- readFile "src/20_2/input_test2.txt"
-  writeFile ("src/20_2/output" ++ show utcNow ++ ".txt") . show . start 1 . parse $ contents
+  contents <- readFile "src/20_2/input.txt"
+  writeFile ("src/20_2/output" ++ show utcNow ++ ".txt") . ppShowList . start 1 ([], []) . parse $ contents
 
 type Input = State
 type Output = Int
@@ -44,13 +44,20 @@ parseLine s = case moduleType of
     (moduleType:name:destsStr:_) = groups
     dests = splitOn ", " destsStr
 
-start :: Int -> State -> Int
-start 100000 _ = 100000
-start x state = if any matchesTarget log then x else start (x+1) newState
+start :: Int -> ([State], [Log]) -> State -> [String]
+start 10000 (states, _) _ = fmap stateToStr states
+  where
+    stateToStr :: State -> String
+    stateToStr = concatMap modToStr . HashMap.elems
+    modToStr (Broadcast { name, dests }) = "b"
+    modToStr (FlipFlop { activated }) = if activated then "1" else "0"
+    modToStr (Conjunction { name, dests }) = "&"
+start x (states, logs) state = if any matchesTarget log then [show x] else start (x+1) (states ++ [state], logs ++ [log]) newState
   where
     (log, newState) = tick ([], state) [initSignal]
-    matchesTarget (Signal { to="inv", signalKind=Low}) = True
+    matchesTarget (Signal { to="rx", signalKind=Low}) = True
     matchesTarget _                 = False
+   
 
 cont :: [Log] -> [(Int, Int)]
 cont = map countLog
