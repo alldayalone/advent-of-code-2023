@@ -13,16 +13,16 @@ import Data.Maybe (fromMaybe)
 import Data.Char
 import Text.Regex.TDFA     
 import Data.List.Split (splitOn)
-import Control.Arrow ((&&&))
+import Control.Arrow ((&&&), (***), first, second)
 
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
-  contents <- readFile "src/20_1/input_test2.txt"
-  writeFile ("src/20_1/output" ++ show utcNow ++ ".txt") . ppShowList . solve . parse $ contents
+  contents <- readFile "src/20_1/input.txt"
+  writeFile ("src/20_1/output" ++ show utcNow ++ ".txt") . show . countTotal . cont . start 0 ([], []) . parse $ contents
 
 type Input = State
-type Output = Log
+type Output = Int
 
 parse :: String -> Input
 parse str = fmap addConjunctionMemory state
@@ -44,8 +44,27 @@ parseLine s = case moduleType of
     (moduleType:name:destsStr:_) = groups
     dests = splitOn ", " destsStr
 
-solve :: Input -> Output
-solve state = tick [] state [initSignal]
+start :: Int -> ([State], [Log]) -> State -> [Log]
+start 1001 (_, logs) _ = logs 
+start x (states, logs) state = if newState `elem` states then logs ++ [log] else start (x+1) (states ++ [state], logs ++ [log]) newState
+  where
+    (log, newState) = tick ([], state) [initSignal]
+
+cont :: [Log] -> [(Int, Int)]
+cont = map countLog
+
+countTotal :: [(Int, Int)] -> Int
+countTotal = uncurry (*) . (sum *** sum) . unzip . take 1000 . cycle
+
+countLog :: Log -> (Int, Int)
+countLog = foldr countHighLow (0,0)
+
+mulTuple = uncurry (*)
+
+
+countHighLow :: Signal -> (Int, Int) -> (Int, Int)
+countHighLow (Signal { signalKind = Low }) = first (+1)
+countHighLow (Signal { signalKind = High }) = second (+1)
 
 initSignal :: Signal
 initSignal = Signal { from = "button", signalKind = Low, to = "broadcaster" }
@@ -66,6 +85,7 @@ data Module =
   | FlipFlop { name :: String, dests :: [String], activated :: Bool }
   | Conjunction { name :: String, dests :: [String], memory :: ConjunctionMemory }
   | Undefined
+  deriving (Eq)
 instance Show Module where
   show (Broadcast { name, dests }) = name ++ " -> " ++ intercalate ", " dests
   show (FlipFlop { name, dests }) = "%" ++ name ++ " -> " ++ intercalate ", " dests
@@ -75,9 +95,9 @@ type Log = [Signal]
 type State = HashMap String Module
 type Queue = [Signal]
 
-tick :: Log -> State -> Queue -> Log
-tick log state [] = log
-tick log state (signal:queue) = tick (log ++ [signal]) newState (queue ++ newSignals)
+tick :: (Log, State) -> Queue -> (Log, State)
+tick (log, state) [] = (log, state)
+tick (log, state) (signal:queue) = tick (log ++ [signal], newState) (queue ++ newSignals)
   where 
     newState = HashMap.adjust stateUpdater signal.to state
     mod = fromMaybe Undefined (HashMap.lookup signal.to newState)
@@ -88,7 +108,7 @@ tick log state (signal:queue) = tick (log ++ [signal]) newState (queue ++ newSig
       Undefined -> []
 
     stateUpdater :: Module -> Module
-    stateUpdater m@(FlipFlop {..}) = m{ activated = not activated }
+    stateUpdater m@(FlipFlop {..}) = if signal.signalKind == High then m else m{ activated = not activated }
     stateUpdater m@(Conjunction{..}) = m{memory = HashMap.insert signal.from signal.signalKind memory}
     stateUpdater m = m
 
