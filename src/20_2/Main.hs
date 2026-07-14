@@ -18,8 +18,8 @@ import Control.Arrow ((&&&), (***), first, second)
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
-  contents <- readFile "src/20_2/input.txt"
-  writeFile ("src/20_2/output" ++ show utcNow ++ ".txt") . show . countTotal . cont . start 0 ([], []) . parse $ contents
+  contents <- readFile "src/20_2/input_test2.txt"
+  writeFile ("src/20_2/output" ++ show utcNow ++ ".txt") . show . start 1 . parse $ contents
 
 type Input = State
 type Output = Int
@@ -44,11 +44,13 @@ parseLine s = case moduleType of
     (moduleType:name:destsStr:_) = groups
     dests = splitOn ", " destsStr
 
-start :: Int -> ([State], [Log]) -> State -> [Log]
-start 1001 (_, logs) _ = logs 
-start x (states, logs) state = if newState `elem` states then logs ++ [log] else start (x+1) (states ++ [state], logs ++ [log]) newState
+start :: Int -> State -> Int
+start 100000 _ = 100000
+start x state = if any matchesTarget log then x else start (x+1) newState
   where
     (log, newState) = tick ([], state) [initSignal]
+    matchesTarget (Signal { to="inv", signalKind=Low}) = True
+    matchesTarget _                 = False
 
 cont :: [Log] -> [(Int, Int)]
 cont = map countLog
