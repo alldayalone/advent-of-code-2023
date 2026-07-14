@@ -6,10 +6,10 @@
 
 module Main (main) where
 import Data.Time
-import Text.Show.Pretty (ppShowList)
+import Text.Show.Pretty (ppShowList, ppShow)
 import Data.List (intercalate)
-import Data.HashMap.Strict as HashMap (HashMap, elems, fromList, insert, lookup, empty, adjust, elems)
-import Data.Maybe (fromMaybe)
+import Data.HashMap.Strict as HashMap (HashMap, lookupDefault, keys, elems, fromList, insert, insertWith, lookup, empty, adjust, elems)
+import Data.Maybe (fromMaybe, fromJust)
 import Data.Char
 import Text.Regex.TDFA     
 import Data.List.Split (splitOn)
@@ -19,19 +19,24 @@ main :: IO ()
 main = do
   utcNow   <- getCurrentTime
   contents <- readFile "src/20_2/input.txt"
-  writeFile ("src/20_2/output" ++ show utcNow ++ ".txt") . ppShowList . start 1 ([], []) . parse $ contents
+  writeFile ("src/20_2/output" ++ show utcNow ++ ".txt") . ppShowList . snd . start 1 ([], []) . parse $ contents
 
-type Input = State
+type ActivationMap = HashMap String Int
+type Input = (State, ActivationMap)
 type Output = Int
 
 parse :: String -> Input
-parse str = fmap addConjunctionMemory state
+parse str = (fmap addConjunctionMemory state, activationMap)
   where
     state = HashMap.fromList . map parseLine . lines $ str
     addConjunctionMemory m@(Conjunction {}) = m{ memory }
       where
         memory = HashMap.fromList . map ((id &&& const Low) . name) . filter (elem m.name . dests) $ HashMap.elems state
     addConjunctionMemory m = m
+    activationMap = HashMap.fromList . map (name &&& const 0). filter f . HashMap.elems $ state
+      where
+        f FlipFlop {} = True
+        f _ = False
 
 parseLine :: String -> (String, Module)
 parseLine s = case moduleType of
@@ -44,19 +49,40 @@ parseLine s = case moduleType of
     (moduleType:name:destsStr:_) = groups
     dests = splitOn ", " destsStr
 
-start :: Int -> ([State], [Log]) -> State -> [String]
-start 10000 (states, _) _ = fmap stateToStr states
+
+countResult :: String -> (State, ActivationMap) -> [Int]
+countResult ogName (state, activationMap) = case mod of
+  FlipFlop { name } -> [fromJust . HashMap.lookup name $ activationMap]
+  Conjunction { name } -> concat . fmap (\k -> countResult k (state, activationMap)) . HashMap.keys . memory . fromJust . HashMap.lookup name $ state
+  _ -> [1] 
   where
-    stateToStr :: State -> String
-    stateToStr = concatMap modToStr . HashMap.elems
-    modToStr (Broadcast { name, dests }) = "b"
-    modToStr (FlipFlop { activated }) = if activated then "1" else "0"
-    modToStr (Conjunction { name, dests }) = "&"
-start x (states, logs) state = if any matchesTarget log then [show x] else start (x+1) (states ++ [state], logs ++ [log]) newState
+    mod = HashMap.lookupDefault Undefined ogName state 
+
+start :: Int -> ([State], [Log]) -> Input -> (State, ActivationMap)
+-- start 10000 (states, _) _ = fmap stateToStr states
+--   where
+--     stateToStr :: State -> String
+--     stateToStr = concatMap modToStr . HashMap.elems
+--     modToStr (Broadcast { name, dests }) = "b"
+--     modToStr (FlipFlop { activated }) = if activated then "1" else "0"
+--     modToStr (Conjunction { name, dests }) = "&"
+start x (states, logs) (state, activationMap) = if activationMapFull then (newState, activationMap) else start (x+1) (states ++ [state], logs ++ [log]) (newState, newActivationMap)
   where
     (log, newState) = tick ([], state) [initSignal]
     matchesTarget (Signal { to="rx", signalKind=Low}) = True
     matchesTarget _                 = False
+
+    newActivationMap = foldr upd activationMap . filter f . HashMap.elems $ newState
+      where
+        f :: Module -> Bool
+        f FlipFlop { activated } = activated 
+        f _ = False
+
+    upd :: Module -> HashMap String Int -> HashMap String Int
+    upd mod = HashMap.insertWith f mod.name x
+      where f new old = if old == 0 then new else old
+
+    activationMapFull = all (>0) $ HashMap.elems activationMap
    
 
 cont :: [Log] -> [(Int, Int)]
