@@ -19,7 +19,7 @@ main :: IO ()
 main = do
   utcNow   <- getCurrentTime
   contents <- readFile "src/20_2/input.txt"
-  writeFile ("src/20_2/output" ++ show utcNow ++ ".txt") . ppShowList . snd . start 1 ([], []) . parse $ contents
+  writeFile ("src/20_2/output" ++ show utcNow ++ ".txt") . ppShow . start 1 ([], []) . parse $ contents
 
 type ActivationMap = HashMap String Int
 type Input = (State, ActivationMap)
@@ -58,18 +58,26 @@ countResult ogName (state, activationMap) = case mod of
   where
     mod = HashMap.lookupDefault Undefined ogName state 
 
-start :: Int -> ([State], [Log]) -> Input -> (State, ActivationMap)
--- start 10000 (states, _) _ = fmap stateToStr states
---   where
---     stateToStr :: State -> String
---     stateToStr = concatMap modToStr . HashMap.elems
---     modToStr (Broadcast { name, dests }) = "b"
---     modToStr (FlipFlop { activated }) = if activated then "1" else "0"
---     modToStr (Conjunction { name, dests }) = "&"
-start x (states, logs) (state, activationMap) = if activationMapFull then (newState, activationMap) else start (x+1) (states ++ [state], logs ++ [log]) (newState, newActivationMap)
+start :: Int -> ([State], [Log]) -> Input -> [String]
+start 10000 (states, logs) _ = fmap logToStr logs
+  where
+    logToStr :: Log -> String
+    logToStr = show . any f
+      where f (Signal { to="zh", from="pd", signalKind=High}) = True
+            f _ = False
+
+    stateToStr :: State -> String
+    stateToStr = concatMap modToStr . HashMap.elems
+    modToStr (Conjunction { name, memory }) = if name == "xc" then "(" ++ (concatMap show . HashMap.elems) memory ++ ")" else ""
+    modToStr _ = ""
+
+    -- modToStr (Broadcast { name, dests }) = "b"
+    -- modToStr (FlipFlop { activated }) = if activated then "1" else "0"
+    -- modToStr (Conjunction { name, dests, memory }) = "(" ++ (concatMap show . HashMap.elems) memory ++ ")"
+start x (states, logs) (state, activationMap) = if any matchesTarget log then ["finish"] else start (x+1) (states ++ [state], logs ++ [log]) (newState, newActivationMap)
   where
     (log, newState) = tick ([], state) [initSignal]
-    matchesTarget (Signal { to="rx", signalKind=Low}) = True
+    matchesTarget (Signal { to="output", signalKind=Low}) = True
     matchesTarget _                 = False
 
     newActivationMap = foldr upd activationMap . filter f . HashMap.elems $ newState
@@ -82,7 +90,7 @@ start x (states, logs) (state, activationMap) = if activationMapFull then (newSt
     upd mod = HashMap.insertWith f mod.name x
       where f new old = if old == 0 then new else old
 
-    activationMapFull = all (>0) $ HashMap.elems activationMap
+    -- activationMapFull = False--all (>0) $ HashMap.elems activationMap
    
 
 cont :: [Log] -> [(Int, Int)]
@@ -105,7 +113,13 @@ initSignal :: Signal
 initSignal = Signal { from = "button", signalKind = Low, to = "broadcaster" }
 
 data SignalKind = High | Low 
-  deriving (Show, Eq)
+  deriving (Eq)
+
+
+instance Show SignalKind where
+  show High = "1"
+  show Low = "0"
+
 
 data Signal = Signal 
   { from :: String,

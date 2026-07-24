@@ -1,0 +1,8 @@
+so it's 
+
+```
+ghci> foldl1 lcm [3847, 4001, 3823,3877]
+228134431501037
+```
+
+for each 4 clusters that cycle (found visually)
