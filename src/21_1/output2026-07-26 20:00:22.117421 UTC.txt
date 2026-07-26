@@ -1,0 +1,13 @@
+(┌                                                                                         ┐
+│  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0 │
+│  Just 0  Just 0  Just 0  Just 0  Just 0 Nothing Nothing Nothing  Just 0 Nothing  Just 0 │
+│  Just 0 Nothing Nothing Nothing  Just 0 Nothing Nothing  Just 0  Just 0 Nothing  Just 0 │
+│  Just 0  Just 0 Nothing  Just 0 Nothing  Just 0  Just 0  Just 0 Nothing  Just 0  Just 0 │
+│  Just 0  Just 0  Just 0  Just 0 Nothing  Just 0 Nothing  Just 0  Just 0  Just 0  Just 0 │
+│  Just 0 Nothing Nothing  Just 0  Just 0  Just 0 Nothing Nothing Nothing Nothing  Just 0 │
+│  Just 0 Nothing Nothing  Just 0  Just 0 Nothing  Just 0  Just 0  Just 0 Nothing  Just 0 │
+│  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0 Nothing Nothing  Just 0  Just 0 │
+│  Just 0 Nothing Nothing  Just 0 Nothing  Just 0 Nothing Nothing Nothing Nothing  Just 0 │
+│  Just 0 Nothing Nothing  Just 0  Just 0 Nothing Nothing  Just 0 Nothing Nothing  Just 0 │
+│  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0  Just 0 │
+└                                                                                         ┘,[(5,5)])
