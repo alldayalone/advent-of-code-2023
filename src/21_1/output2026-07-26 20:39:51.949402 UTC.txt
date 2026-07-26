@@ -1,0 +1,13 @@
+┌                                                                                         ┐
+│ Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 │
+│ Just 99 Just 99 Just 99 Just 99 Just 99 Nothing Nothing Nothing Just 99 Nothing Just 99 │
+│ Just 99 Nothing Nothing Nothing Just 99 Nothing Nothing Just 99 Just 99 Nothing Just 99 │
+│ Just 99 Just 99 Nothing Just 99 Nothing Just 99 Just 99 Just 99 Nothing Just 99 Just 99 │
+│ Just 99 Just 99 Just 99 Just 99 Nothing  Just 1 Nothing Just 99 Just 99 Just 99 Just 99 │
+│ Just 99 Nothing Nothing Just 99  Just 1 Just 99 Nothing Nothing Nothing Nothing Just 99 │
+│ Just 99 Nothing Nothing Just 99 Just 99 Nothing Just 99 Just 99 Just 99 Nothing Just 99 │
+│ Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Nothing Nothing Just 99 Just 99 │
+│ Just 99 Nothing Nothing Just 99 Nothing Just 99 Nothing Nothing Nothing Nothing Just 99 │
+│ Just 99 Nothing Nothing Just 99 Just 99 Nothing Nothing Just 99 Nothing Nothing Just 99 │
+│ Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 Just 99 │
+└                                                                                         ┘
