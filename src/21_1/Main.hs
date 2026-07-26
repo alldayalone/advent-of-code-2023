@@ -1,7 +1,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Main (main) where
-import Data.Matrix as Matrix (Matrix, fromLists, mapPos)
+import Data.Matrix as Matrix
 import Control.Arrow ((&&&), (>>>), second)
 import Data.Time
 import Data.Maybe 
@@ -9,43 +9,51 @@ import Data.Maybe
 main :: IO ()
 main = do
   utcNow   <- getCurrentTime
-  contents <- readFile "src/21_1/input_test.txt"
-  writeFile ("src/21_1/output" ++ show utcNow ++ ".txt") . show . solve . parse $ contents
+  contents <- readFile "src/21_1/input.txt"
+  writeFile ("src/21_1/output" ++ show utcNow ++ ".txt") . show . (id &&& countResults) . solve . parse $ contents
 
 
 type Pos = (Int, Int)
 type TimeToReach = Int
 type Elem = (Pos, TimeToReach) 
 
-maxTime :: Int
-maxTime = 99
--- maxTime = maxBound
+maxSteps :: Int
+maxSteps = 99
+-- maxSteps = maxBound
 
-parse :: String -> (Matrix (Maybe Int), [Elem])
-parse = lines >>> fmap (fmap parseChar) >>> Matrix.fromLists &&& findAllPos isEntryPoint
+nSteps :: Int
+nSteps = 64
+
+parse :: String -> Matrix (Maybe Int)
+parse = lines >>> fmap (fmap parseChar) >>> Matrix.fromLists
   where 
     parseChar '#' = Nothing
     parseChar 'S' = Just 0
-    parseChar _ = Just maxTime
+    parseChar _ = Just maxSteps
 
+findAllPos :: (Maybe Int -> Bool) -> Matrix (Maybe Int) -> [Elem]
+findAllPos cond = fmap fromJust . filter isJust . Matrix.toList . Matrix.mapPos mapper
+  where 
+    mapper :: Pos -> Maybe Int -> Maybe Elem
+    mapper pos element = if cond element then Just (pos, fromJust element) else Nothing
+
+
+countResults :: Matrix (Maybe Int) -> Int
+countResults = length . filter id . fmap ((\x ->x<maxSteps && even (x + nSteps)) . fromMaybe maxSteps) . Matrix.toList
+
+solve :: Matrix (Maybe Int) -> Matrix (Maybe Int)
+solve m = fst . (!! nSteps) . iterate step $ (m, 0)
+
+step :: (Matrix (Maybe Int), Int) -> (Matrix (Maybe Int), Int)
+step (m, stepCount) = (propagateAll m (findAllPos isEntryPoint m), stepCount + 1)
+  where
     isEntryPoint :: Maybe Int -> Bool
     isEntryPoint x
-      | fmap (< maxTime) x == Just True = True
+      | fmap (== stepCount) x == Just True = True
       | otherwise = False
 
-findAllPos :: (Maybe Int -> Bool) -> [[Maybe Int]] -> [Elem]
-findAllPos cond lists = foldr f [] (zip lists [1..])
-  where 
-    f :: ([Maybe Int], Int) -> [Elem] -> [Elem]
-    f (ls, y) acc = acc ++ matches
-      where
-        matches = fmap (\(element, x) -> ((x, y), fromJust element)) . filter (\(element, _) -> cond element) $ zip ls [1..]
-
-solve :: (Matrix (Maybe Int), [Elem]) -> Matrix (Maybe Int)
-solve (m, queue) = foldr propagate m queue
-
-
--- propagateAll (Matrix (Maybe Int), [Pos]) -> Matrix (Maybe Int)
+propagateAll :: Matrix (Maybe Int) -> [Elem] -> Matrix (Maybe Int)
+propagateAll = foldr propagate
 
 propagate :: Elem -> Matrix (Maybe Int) -> Matrix (Maybe Int)
 propagate ((x1, y1), ttr) = Matrix.mapPos mapper
@@ -56,4 +64,4 @@ propagate ((x1, y1), ttr) = Matrix.mapPos mapper
       | x2 == x1+1 && y2 == y1 = fmap (min (ttr + 1)) element
       | x2 == x1 && y2 == y1-1 = fmap (min (ttr + 1)) element
       | x2 == x1 && y2 == y1+1 = fmap (min (ttr + 1)) element
-      | otherwise = Just maxTime
+      | otherwise = element
