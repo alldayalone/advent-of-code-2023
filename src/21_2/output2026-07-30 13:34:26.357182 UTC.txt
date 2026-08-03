@@ -1,0 +1,13 @@
+(┌                                                                                         ┐
+│ Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 │
+│ Only 99 Only 99 Only 99 Only 99 Only 99    Wall    Wall    Wall Only 99    Wall Only 99 │
+│ Only 99    Wall    Wall    Wall Only 99    Wall    Wall Only 99 Only 99    Wall Only 99 │
+│ Only 99 Only 99    Wall Only 99    Wall Only 99 Only 99 Only 99    Wall Only 99 Only 99 │
+│ Only 99 Only 99 Only 99 Only 99    Wall  Only 0    Wall Only 99 Only 99 Only 99 Only 99 │
+│ Only 99    Wall    Wall Only 99  Only 0  Only 0    Wall    Wall    Wall    Wall Only 99 │
+│ Only 99    Wall    Wall Only 99 Only 99    Wall Only 99 Only 99 Only 99    Wall Only 99 │
+│ Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99    Wall    Wall Only 99 Only 99 │
+│ Only 99    Wall    Wall Only 99    Wall Only 99    Wall    Wall    Wall    Wall Only 99 │
+│ Only 99    Wall    Wall Only 99 Only 99    Wall    Wall Only 99    Wall    Wall Only 99 │
+│ Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 Only 99 │
+└                                                                                         ┘,3)

@@ -1,0 +1,13 @@
+(┌                                                                                         ┐
+│ Only 10 Only 10  Only 9  Only 8  Only 9 Only 10 Only 10  Only 9  Only 8  Only 9 Only 10 │
+│  Only 9 Only 10 Only 10  Only 9 Only 10    Wall    Wall    Wall  Only 7    Wall Only 10 │
+│  Only 8    Wall    Wall    Wall Only 11    Wall    Wall  Only 5  Only 6    Wall  Only 9 │
+│  Only 7  Only 6    Wall  Only 4    Wall  Only 2  Only 3  Only 4    Wall  Only 8  Only 8 │
+│  Only 6  Only 5  Only 4  Only 3    Wall  Only 1    Wall  Only 5  Only 6  Only 7  Only 7 │
+│  Only 7    Wall    Wall  Only 2  Only 1  Only 0    Wall    Wall    Wall    Wall  Only 8 │
+│  Only 8    Wall    Wall  Only 3  Only 2    Wall  Only 6  Only 7  Only 8    Wall  Only 9 │
+│  Only 7  Only 6  Only 5  Only 4  Only 3  Only 4  Only 5    Wall    Wall  Only 9  Only 8 │
+│  Only 8    Wall    Wall  Only 5    Wall  Only 5    Wall    Wall    Wall    Wall  Only 9 │
+│  Only 9    Wall    Wall  Only 6  Only 7    Wall    Wall Only 11    Wall    Wall Only 10 │
+│ Only 10  Only 9  Only 8  Only 7  Only 8  Only 9 Only 10 Only 10  Only 9 Only 10 Only 11 │
+└                                                                                         ┘,42)

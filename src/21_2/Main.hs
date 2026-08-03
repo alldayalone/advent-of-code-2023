@@ -2,7 +2,7 @@
 
 module Main (main) where
 import Data.Matrix as Matrix
-import Control.Arrow ((&&&), (>>>), second)
+import Control.Arrow ((&&&), (***), (>>>), first, second)
 import Data.Time
 import Data.Maybe 
 
@@ -17,51 +17,95 @@ type Pos = (Int, Int)
 type TimeToReach = Int
 type Elem = (Pos, TimeToReach) 
 
-maxSteps :: Int
-maxSteps = 99
--- maxSteps = maxBound
+data Cell = Wall | Unvisited | Only Int | Both Int Int 
+  deriving (Eq)
+
+instance Show Cell where
+  show Wall = "#"
+  show Unvisited = "."
+  -- show (Only x) = show . flip mod 2 $ x
+  show (Only x) = show x
+  show (Both x y) = show y
+type Field = Matrix Cell
+
+
+isWall Wall = True
+isWall _ = False
+isVisitable = not . isWall
+
+doesCount :: Cell -> Bool
+doesCount Wall = False
+doesCount Unvisited = False
+doesCount (Only x) = even (x + nSteps)
+doesCount (Both x y) = True
 
 nSteps :: Int
-nSteps = 12
+nSteps = 130
 
-parse :: String -> Matrix (Maybe Int)
+parse :: String -> Field
 parse = lines >>> fmap (fmap parseChar) >>> Matrix.fromLists
   where 
-    parseChar '#' = Nothing
-    parseChar 'S' = Just 0
-    parseChar _ = Just maxSteps
+    parseChar '#' = Wall
+    parseChar 'S' = Only 0
+    parseChar _ = Unvisited
 
-findAllPos :: (Maybe Int -> Bool) -> Matrix (Maybe Int) -> [Elem]
-findAllPos cond = fmap fromJust . filter isJust . Matrix.toList . Matrix.mapPos mapper
+findAllPos :: Int -> Field -> [Elem]
+findAllPos stepCount = fmap fromJust . filter isJust . Matrix.toList . Matrix.mapPos mapper
   where 
-    mapper :: Pos -> Maybe Int -> Maybe Elem
-    mapper pos element = if cond element then Just (pos, fromJust element) else Nothing
+    mapper :: Pos -> Cell -> Maybe Elem
+    mapper pos Wall = Nothing
+    mapper pos Unvisited = Nothing
+    mapper pos (Only x) = if isEntryPoint x then Just (pos, stepCount+1) else Nothing
+    mapper pos (Both x y) = if any isEntryPoint [x, y] then Just (pos, stepCount+1) else Nothing
 
+    isEntryPoint :: Int -> Bool
+    isEntryPoint = (== stepCount)
 
-countResults :: Matrix (Maybe Int) -> Int
-countResults = length . filter id . fmap ((\x ->x<maxSteps && even (x + nSteps)) . fromMaybe maxSteps) . Matrix.toList
+countResults :: Field -> Int
+countResults = length . filter id . fmap doesCount . Matrix.toList
 
-solve :: Matrix (Maybe Int) -> Matrix (Maybe Int)
+solve :: Field -> Field
 solve m = fst . (!! nSteps) . iterate step $ (m, 0)
 
-step :: (Matrix (Maybe Int), Int) -> (Matrix (Maybe Int), Int)
-step (m, stepCount) = (propagateAll m (findAllPos isEntryPoint m), stepCount + 1)
-  where
-    isEntryPoint :: Maybe Int -> Bool
-    isEntryPoint x
-      | fmap (== stepCount) x == Just True = True
-      | otherwise = False
+step :: (Field, Int) -> (Field, Int)
+step (m, stepCount) = (propagateAll m (findAllPos stepCount m), stepCount + 1)
 
-propagateAll :: Matrix (Maybe Int) -> [Elem] -> Matrix (Maybe Int)
+propagateAll :: Field -> [Elem] -> Field
 propagateAll = foldr propagate
 
-propagate :: Elem -> Matrix (Maybe Int) -> Matrix (Maybe Int)
-propagate ((x1, y1), ttr) = Matrix.mapPos mapper
+
+propagate :: Elem -> Field -> Field
+propagate (p1, ttr) m = Matrix.mapPos mapper m
   where 
-    mapper (x2, y2) element
-      | isNothing element = element
-      | x2 == x1-1 && y2 == y1 = fmap (min (ttr + 1)) element
-      | x2 == x1+1 && y2 == y1 = fmap (min (ttr + 1)) element
-      | x2 == x1 && y2 == y1-1 = fmap (min (ttr + 1)) element
-      | x2 == x1 && y2 == y1+1 = fmap (min (ttr + 1)) element
-      | otherwise = element
+    addition x y = x + y
+    -- modcol = addition 1 . flip mod (Matrix.ncols m) . subtract 1
+    -- modrow = addition 1 . flip mod (Matrix.nrows m) . subtract 1
+    modcol = id
+    modrow = id
+
+    mapper :: Pos -> Cell -> Cell
+    mapper p2 element = case element of
+      Wall -> element
+      Unvisited
+        | indexMatch -> Only ttr
+        | otherwise -> element
+      (Only x)
+        | indexMatch && even (x + ttr) -> Only (min x ttr)
+        -- | indexMatch && odd (x + ttr) -> Both (min x ttr) (max x ttr)
+        | otherwise -> element
+      (Both x y)
+        | indexMatch && even (x + ttr) -> Both (min x ttr) y
+        | indexMatch && even (y + ttr) -> Both x (min y ttr)
+        | otherwise -> element
+      where
+        indexMatch
+          | p2 == first  (modrow . addition 1) p1 = True
+          | p2 == first  (modrow . subtract 1) p1 = True
+          | p2 == second (modcol . addition 1) p1 = True
+          | p2 == second (modcol . subtract 1) p1 = True
+          | otherwise = False
+      --   | 
+      -- | isWall element = element
+      -- | isOnly
+     
+      -- | otherwise = element

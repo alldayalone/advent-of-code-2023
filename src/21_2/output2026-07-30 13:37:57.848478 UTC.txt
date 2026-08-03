@@ -1,0 +1,13 @@
+(┌                                                                                                               ┐
+│ Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited │
+│ Unvisited Unvisited Unvisited Unvisited Unvisited      Wall      Wall      Wall Unvisited      Wall Unvisited │
+│ Unvisited      Wall      Wall      Wall Unvisited      Wall      Wall Unvisited Unvisited      Wall Unvisited │
+│ Unvisited Unvisited      Wall Unvisited      Wall Unvisited Unvisited Unvisited      Wall Unvisited Unvisited │
+│ Unvisited Unvisited Unvisited Unvisited      Wall    Only 0      Wall Unvisited Unvisited Unvisited Unvisited │
+│ Unvisited      Wall      Wall Unvisited    Only 0    Only 0      Wall      Wall      Wall      Wall Unvisited │
+│ Unvisited      Wall      Wall Unvisited Unvisited      Wall Unvisited Unvisited Unvisited      Wall Unvisited │
+│ Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited      Wall      Wall Unvisited Unvisited │
+│ Unvisited      Wall      Wall Unvisited      Wall Unvisited      Wall      Wall      Wall      Wall Unvisited │
+│ Unvisited      Wall      Wall Unvisited Unvisited      Wall      Wall Unvisited      Wall      Wall Unvisited │
+│ Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited Unvisited │
+└                                                                                                               ┘,3)
