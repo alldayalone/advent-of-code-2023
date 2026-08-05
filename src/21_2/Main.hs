@@ -31,17 +31,20 @@ type Field = Matrix Cell
 
 -- metasolve :: Matrix Cell -> [Int]
 -- metasolve field = [stepsPartialSide, stepsPartialMixedSide, n, n_half, n_half_index, m, r, nFullEven, countFullEven, nFullOdd, countFullOdd, nPartialSide, countS, countN, countE, countW, nPartialMixedSide, countSE,  countSW, countNE, countNW] -- nFullEven * countFullEven + nFullOdd * countFullOdd + nPartialSide * (countS + countN + countE + countW) + nPartialMixedSide * (countSE + countSW + countNE + countNW)
-metasolve field = nFullEven * countFullEven + nFullOdd * countFullOdd + nPartialSide * (countS + countN + countE + countW) + nPartialMixedSide * (countSE + countSW + countNE + countNW)
+metasolve field = nFullEven * countFullEven + nFullOdd * countFullOdd + nPartialSide * (countS + countN + countE + countW) + nPartialSide2 * (countS2 + countN2 + countE2 + countW2) + nPartialMixedSide * (countSE + countSW + countNE + countNW) + nPartialMixedSide2 * (countSE2 + countSW2 + countNE2 + countNW2)
   where
     n = Matrix.ncols field -- размер матрицы
     n_half = n `div` 2
     n_half_index = n_half + 1
     m = nTotalSteps -- общее кол-во шагов
     r = (m + 1) `div` n -- "радиус" заполнения ромба
-    nFullEven = (r - r `mod` 2) ^ 2 -- кол-во четных заполненных полей (n x n)
-    nFullOdd = (r - (r+1) `mod` 2) ^ 2 -- кол-во нечетных заполненных (например, центр)
+    nFullEven = (r - r `mod` 2) ^ 2 - nPartialSide2*4*(if even r then 1 else 0) -- кол-во четных заполненных полей (n x n)
+    nFullOdd = (r - (r+1) `mod` 2) ^ 2 - nPartialSide2*4*(if odd r then 1 else 0) -- кол-во нечетных заполненных (например, центр)
     nPartialSide = 1 -- старт с (0, (n-1)/2) и тд
     nPartialMixedSide = max (r-1) 0 -- старт с (0, 0) и тд
+
+    nPartialSide2 = 1
+    nPartialMixedSide2 = max r 0
 
     solvedFieldCenter = solve n (Matrix.setElem (Only 0) (n_half_index, n_half_index) field)
     countFullOdd = countResults doesCountEven solvedFieldCenter
@@ -70,6 +73,31 @@ metasolve field = nFullEven * countFullEven + nFullOdd * countFullOdd + nPartial
     countSW = countResults doesCountMixedSide solvedFieldSW 
     countNE = countResults doesCountMixedSide solvedFieldNE 
     countNW = countResults doesCountMixedSide solvedFieldNW 
+
+    -- Extra layer!!!!
+    stepsPartialSide2 = m - n_half - (r-2)*n - 1
+    stepsPartialMixedSide2 = m - 2*n_half - (r-1)*n - 2
+    solvedFieldS2 = solve stepsPartialSide2 (Matrix.setElem (Only 0) (1, n_half_index) field)
+    solvedFieldN2 = solve stepsPartialSide2 (Matrix.setElem (Only 0) (n, n_half_index) field)
+    solvedFieldE2 = solve stepsPartialSide2 (Matrix.setElem (Only 0) (n_half_index, 1) field)
+    solvedFieldW2 = solve stepsPartialSide2 (Matrix.setElem (Only 0) (n_half_index, n) field)
+
+    solvedFieldSE2 = solve stepsPartialMixedSide2 (Matrix.setElem (Only 0) (1, 1) field)
+    solvedFieldSW2 = solve stepsPartialMixedSide2 (Matrix.setElem (Only 0) (1, n) field)
+    solvedFieldNE2 = solve stepsPartialMixedSide2 (Matrix.setElem (Only 0) (n, 1) field)
+    solvedFieldNW2 = solve stepsPartialMixedSide2 (Matrix.setElem (Only 0) (n, n) field)
+
+    doesCountSide2 = if even r then doesCountEven else doesCountOdd
+    countS2 = countResults doesCountSide2 solvedFieldS2
+    countN2 = countResults doesCountSide2 solvedFieldN2 
+    countE2 = countResults doesCountSide2 solvedFieldE2 
+    countW2 = countResults doesCountSide2 solvedFieldW2 
+
+    doesCountMixedSide2 = if odd r then doesCountEven else doesCountOdd
+    countSE2 = countResults doesCountMixedSide2 solvedFieldSE2 
+    countSW2 = countResults doesCountMixedSide2 solvedFieldSW2 
+    countNE2 = countResults doesCountMixedSide2 solvedFieldNE2 
+    countNW2 = countResults doesCountMixedSide2 solvedFieldNW2
 
 
 isWall Wall = True
