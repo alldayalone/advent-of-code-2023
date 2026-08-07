@@ -6,7 +6,7 @@ import Control.Arrow
 import Data.Time
 import Data.List.Split
 import Text.Show.Pretty
-import Data.List.Unique
+import Data.List.Unique (complex)
 import Data.Sort
 
 main :: IO ()
@@ -70,3 +70,7 @@ settle' settled (b:bs)
   | otherwise = settle' (settled ++ [b]) bs
     where supporters = findSupporters b settled
 settle' settled [] = settled
+
+uniq = complex >>> fst3
+
+fst3 (x, _, _) = x
