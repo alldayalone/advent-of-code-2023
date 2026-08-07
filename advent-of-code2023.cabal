@@ -319,6 +319,6 @@ executable problem212
 
 executable problem221
     main-is:          Main.hs
-    build-depends:    base, time, split, pretty-show, sort
+    build-depends:    base, time, split, pretty-show, sort, Unique
     hs-source-dirs:   src/22_1
     default-language: Haskell2010
