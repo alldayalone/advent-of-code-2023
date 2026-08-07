@@ -316,3 +316,9 @@ executable problem212
     build-depends:    base, time, matrix
     hs-source-dirs:   src/21_2
     default-language: Haskell2010
+
+executable problem221
+    main-is:          Main.hs
+    build-depends:    base, time, split
+    hs-source-dirs:   src/22_1
+    default-language: Haskell2010
