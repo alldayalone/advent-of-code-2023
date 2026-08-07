@@ -13,7 +13,7 @@ main :: IO ()
 main = do
   utcNow   <- getCurrentTime
   contents <- readFile "src/22_1/input.txt"
-  writeFile ("src/22_1/output" ++ show utcNow ++ ".txt") . ppShowList . solve . settle . parse $ contents
+  writeFile ("src/22_1/output" ++ show utcNow ++ ".txt") . show . solve . settle . parse $ contents
 
 data Vec3 = Vec3
   { x :: Int,
@@ -59,11 +59,10 @@ findSupportees b = filter (isSupportee b)
 isSupportee :: Block -> Block -> Bool
 isSupportee (Block {..}) (Block { start=start2, end=end2}) = x end >= x start2 && x start <= x end2 && y end >= y start2 && y start <= y end2 && z start == z end2 - 1
 
--- solve :: [Block] -> Int
--- solve bs = length bs - (length . uniq . concat . filter (length >>> (==1)) $ [findSupporters b bs | b <- bs])
+solve' :: [Block] -> Int
+solve' bs = length bs - (length . uniq . concat . filter (length >>> (==1)) $ [findSupporters b bs | b <- bs])
 
-solve bs = [(b, findSupporters b bs) | b <- bs]
-
+solve = sortOn base >>> solve'
 
 settle' :: [Block] -> [Block] -> [Block]
 settle' settled (b:bs)
