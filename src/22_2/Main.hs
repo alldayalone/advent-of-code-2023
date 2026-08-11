@@ -92,23 +92,28 @@ settle' settled [] = settled
 type Memo = HashMap (HashSet Block) Int
 -- solve' :: [Block] -> HashMap String Int
 solve' bs = 
-  sum . HM.filterWithKey isSingletonHS $ memo
+  length . HM.filterWithKey toCountZeroDrops $ memo
   -- HM.mapKeys setToLetter memo
   -- HM.mapKeys blockToLetter . HM.map setToLetter $ supportees
+  -- HM.mapKeys blockToLetter . HM.map setToLetter $ supportees
+  -- HM.mapKeys blockToLetter . HM.map setToLetter $ supporters
   where 
     bsHS = HS.fromList bs
 
     isSingletonHS :: HashSet Block -> Int -> Bool
     isSingletonHS hs _ = HS.size hs == 1
 
-    setToLetter :: HashSet Block -> String
-    setToLetter = fmap blockToLetter . HS.toList
+    toCountZeroDrops:: HashSet Block -> Int -> Bool
+    toCountZeroDrops hs drops = HS.size hs == 1 && drops == 0
 
-    blockToLetter :: Block -> Char
+    setToLetter :: HashSet Block -> String
+    setToLetter = concatMap blockToLetter . HS.toList
+
+    blockToLetter :: Block -> String
     blockToLetter = (letters !)
 
-    letters :: HashMap Block Char
-    letters = HM.fromList (zip bs ['A'..'Z'])
+    letters :: HashMap Block String
+    letters = HM.fromList (zip bs [[c1, c2, c3] | c1 <- ['A'..'Z'], c2 <- ['A'..'Z'], c3 <- ['A'..'Z']])
 
     memo :: Memo
     memo = foldr (dp . HS.singleton) (HM.singleton HS.empty 0) bs
@@ -138,3 +143,7 @@ fst3 (x, _, _) = x
 
 intToLetter :: Int -> Char
 intToLetter n = chr (n + 64)
+
+-- Blackbird operator
+(...) :: (c -> d) -> (a -> b -> c) -> a -> b -> d
+(...) = (.) . (.)
