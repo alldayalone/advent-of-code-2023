@@ -90,13 +90,8 @@ settle' settled [] = settled
 
 
 type Memo = HashMap (HashSet Block) Int
--- solve' :: [Block] -> HashMap String Int
-solve' bs = 
-  length . HM.filterWithKey toCountZeroDrops $ memo
-  -- HM.mapKeys setToLetter memo
-  -- HM.mapKeys blockToLetter . HM.map setToLetter $ supportees
-  -- HM.mapKeys blockToLetter . HM.map setToLetter $ supportees
-  -- HM.mapKeys blockToLetter . HM.map setToLetter $ supporters
+solve' :: [Block] -> Int
+solve' bs = sum . fmap (bt HS.empty . HS.singleton) $ bs
   where 
     bsHS = HS.fromList bs
 
@@ -115,26 +110,25 @@ solve' bs =
     letters :: HashMap Block String
     letters = HM.fromList (zip bs [[c1, c2, c3] | c1 <- ['A'..'Z'], c2 <- ['A'..'Z'], c3 <- ['A'..'Z']])
 
-    memo :: Memo
-    memo = foldr (dp . HS.singleton) (HM.singleton HS.empty 0) bs
-
     supporters :: HashMap Block (HashSet Block)
     supporters = HM.fromList [(b, findSupportersHS bsHS b) | b <- bs]
 
     supportees :: HashMap Block (HashSet Block)
     supportees = HM.fromList [(b, findSupporteesHS bsHS b) | b <- bs]
 
-    dp :: HashSet Block -> Memo -> Memo
-    dp bs memo = if isNothing (HM.lookupKey bs memo) then memo_v3 else memo
+    -- all blocks (that are dropped from the beginning of chain drop)
+    -- fwdbs (forward blocks, aka front line of destruction)
+    bt :: HashSet Block -> HashSet Block -> Int
+    bt allbs fwdbs
+      | HS.null fwdbs = HS.size allbs - 1 -- (minus one because we only count OTHER dropped blocks)
+      | otherwise = bt nextallbs nextfwdbs
       where
-        ds = dropped bs
-        memo_v2 = dp ds memo
-        result = HS.size ds + memo_v2 ! ds
-        memo_v3 = HM.insert bs result memo_v2
+        nextfwdbs = dropped fwdbs
+        nextallbs = allbs <> fwdbs
 
-    -- {B,C} -> {D,E} -> filter D -> {B,C} -> {B,C} - {B,C} -> [] -> True -> {D,E}
-    dropped :: HashSet Block -> HashSet Block
-    dropped bs = foldMap (supportees !) >>> HS.filter ((supporters !) >>> flip HS.difference bs >>> null) $ bs
+        -- {B,C} -> {D,E} -> filter D -> {B,C} -> {B,C} - {B,C} -> [] -> True -> {D,E}
+        dropped :: HashSet Block -> HashSet Block
+        dropped = foldMap (supportees !) >>> HS.filter ((supporters !) >>> flip HS.difference nextallbs >>> null)
 
 -- uniq = complex >>> fst3
 
