@@ -334,3 +334,9 @@ executable problem231
     build-depends:    base, time, matrix, vector
     hs-source-dirs:   src/23_1
     default-language: Haskell2010
+
+executable problem232
+    main-is:          Main.hs
+    build-depends:    base, time, matrix, vector
+    hs-source-dirs:   src/23_2
+    default-language: Haskell2010
