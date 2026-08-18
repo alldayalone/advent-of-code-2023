@@ -337,6 +337,6 @@ executable problem231
 
 executable problem232
     main-is:          Main.hs
-    build-depends:    base, time, matrix, vector, containers, graphite, graphviz, unordered-containers
+    build-depends:    base, time, matrix, vector, containers, graphite, graphviz, unordered-containers, hashable
     hs-source-dirs:   src/23_2
     default-language: Haskell2010
